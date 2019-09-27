@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	</head>
+	<body>	
+<input id="a"> </input>
+<input id="b"> </input>
+<input id="c"> </input>
+<div id="test"> </div>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work(){
+		var inA = document.getElementById("a");
+		var inB = document.getElementById("b"); 
+		var inC = document.getElementById("c"); 		
+		var intest = document.getElementById("test");
+		var A = parseFloat(inA.value);
+		var B = parseFloat(inB.value);
+		var C = parseFloat(inC.value);
+		if (B > A && B < C) 
+		{		
+		  result = "Выполняется"
+		}
+		 else 
+		 {
+		 result = "Не выполняется"
+		 }	
+		
+		intest.innerHTML = result; 
+			}
+		</script>
+	</body>
+</html>
