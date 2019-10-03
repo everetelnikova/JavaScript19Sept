@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data"> Данные </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		let inData = document.getElementById("data");
+		let str  = inData.value;
+		let data = str.split (' ').map(Number); // преобразует данные-строки в данные числа
+		let divOut = document.getElementById ("out");
+		let result = " ";
+		if (data === "") 
+		{
+		divOut.innerHTML = "Исходная строка пуста";
+		}
+		else{
+		let total = data.reduce((sum, current) => sum + current, 0); // метод позволяет получить 1 значение из массива, sum - последнее значение reduce, current - элемент массива
+		let aver = total/ data.length;
+		aver = aver.toFixed(4);
+		let deviation = data.map(item => item- aver); 
+		 for (let i=0; i< deviation.length; i++)
+		 {
+		 
+		 deviation[i]= Math.abs(deviation[i]);
+		 deviation[i]=deviation[i].toFixed(4);
+		 divOut.innerHTML = " "+deviation +  " " ;
+		 }		 
+		
+		//divOut.innerHTML = deviation ;
+			}
+		}
+	</script>
+</body>
+</html>

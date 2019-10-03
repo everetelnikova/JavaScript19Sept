@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="N"> </input>
+<div id="test"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		var inN = document.getElementById("N");
+		var intest = document.getElementById("test");
+		var N = parseFloat(inN.value);
+		result = "  ";
+		if  (N>=0)
+		{
+			var n = 0;
+			for (var number = 0; number <= N; number++)
+			{ 
+			result = result + number + "-" + n  +"</br>";
+			if (n <3) 
+			{ n=++n}
+			else {n=0}
+			}
+			
+		}
+		else { result = "Значение N должно быть неотрицательным"}
+		intest.innerHTML = result;	
+		}
+	</script>
+</body>
+</html>

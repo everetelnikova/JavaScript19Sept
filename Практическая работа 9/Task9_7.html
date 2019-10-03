@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data"> Данные </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		let inData = document.getElementById("data");
+		let str  = inData.value;
+		let data = str.split (';');
+		let divOut = document.getElementById ("out");
+		
+		if (str.trim() === "") 
+		{
+		divOut.innerHTML = "Исходная строка пуста";
+		}
+		let result = "";
+		let len = data.length;
+		let x = 0;
+			for (x= 0;data[x] < data[x+1]; x++)
+			{
+				if (data[x] < data[x+1])
+				{
+				result = "Значение отсортированы по возрастанию"
+				}
+				
+			}
+		result = "Элемент со значением " + data[x+1] + "  на индексе " + (x+1) + " нарушает закономерность"
+		divOut.innerHTML = result ;
+		}
+	</script>
+</body>
+</html>

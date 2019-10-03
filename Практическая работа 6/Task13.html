@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="A"> A</input>
+<input id="B"> B</input>
+<div id="test"> </div>
+<button onclick="work()"> Press me </button>	
+		<script>
+		function work()
+		{
+		var inA = document.getElementById("A");
+		var inB = document.getElementById("B");
+		var intest = document.getElementById("test");
+		var A = parseFloat(inA.value);
+		var B = parseFloat(inB.value);
+		result = "  ";
+		if (A<=B){
+		while(A<=B){	
+			result =  result + A + "; ";
+			A = A+1;
+			}	
+		}
+		else {result = "Значение A должно быть не больше значения B"}
+		intest.innerHTML = result; 
+		}
+	</script>
+</body>
+</html>

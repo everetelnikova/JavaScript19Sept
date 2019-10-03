@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="A"> A</input>
+<input id="B"> B</input>
+<div id="msg"> </div></br>
+<div id="test"> </div>
+<button onclick="work()"> Press me </button>	
+		<script>
+		function work()
+		{
+		var inA = document.getElementById("A");
+		var inB = document.getElementById("B");
+		var intest = document.getElementById("test");
+		var inmsg = document.getElementById("msg");
+		var A = parseFloat(inA.value);
+		var B = parseFloat(inB.value);
+		result = "  ";
+		msg = " ";
+		if (A==B){
+		result = "";
+		msg = "Границы равны";
+		}	
+		if (A<B){
+		while(A<B){	
+			result = result + A + " ";
+			A = A+1;
+			}		
+			msg = "От А до B";
+		}
+		if (A>B){
+		while(A>B){	
+			result = result + B + " ";
+			B = B+1;
+			}
+			msg = "От B до A";			
+		}	
+		intest.innerHTML =  result + B; 
+		inmsg.innerHTML =  msg; 
+		}
+	</script>
+</body>
+</html>

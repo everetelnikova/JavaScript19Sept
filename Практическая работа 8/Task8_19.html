@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data_1"> 1 </input>
+<input id="data_2"> 2 </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		let inData1 = document.getElementById("data_1");
+		let inData2 = document.getElementById("data_2");
+		let str1  = inData1.value;
+		let str2  = inData2.value;
+		let data1 = str1.split (' ');
+		let data2 = str2.split (' ');
+		let divOut = document.getElementById ("out");
+		
+		if (str1.trim() === "") 
+		{
+		divOut.innerHTML = "Пусто";
+		}
+		
+		if (str2.trim() === "") 
+		{
+		divOut.innerHTML = "Пусто";
+		}
+		var result = "";
+		let len_1 = data1.length;
+		let len_2 = data2.length;
+
+				 for (let b = 0; (b < data1.length || b <data2.length); b++)
+				 {
+					if (data1[b]=== data2[b])
+					{
+					 result= "";					
+					}
+					else 
+					{
+					result = result + "Массивы начинают различаться на индексе"	+ " "+ b;
+					}
+				 
+				 }
+divOut.innerHTML = result ;
+		}
+	</script>
+</body>
+</html>

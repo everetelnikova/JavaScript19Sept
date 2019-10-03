@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="a"> </input>
+<input id="data"> </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		var inA = document.getElementById("a");
+		var inData = document.getElementById("data");
+		var a = parseFloat(inA.value);
+		var str  = inData.value;
+		var data = str.split (' ');
+		var divOut = document.getElementById ("out");
+		
+		if (str.trim() === "") 
+		{
+		divOut.innerHTML = "Строка пуста";
+		}
+		
+			else if (0 <= a && a < data.length) {
+			divOut.innerHTML = data[a];
+			}
+		else{		
+		divOut.innerHTML = "Число А должно быть в интервале (0, размер массива)";
+		}
+		}
+	</script>
+</body>
+</html>
