@@ -23,16 +23,21 @@
 		let total = data.reduce((sum, current) => sum + current, 0); // метод позволяет получить 1 значение из массива, sum - последнее значение reduce, current - элемент массива
 		let aver = total/ data.length;
 		aver = aver.toFixed(4);
-		let deviation = data.map(item => item- aver); 
+		let deviation = data.map(item => Math.abs( item- aver)); 
+		
+		let result =  deviation.reduce((emp, current) => emp + " " + current.toFixed(4),"");
+		
+	
+		
 		 for (let i=0; i< deviation.length; i++)
 		 {
 		 
 		 deviation[i]= Math.abs(deviation[i]);
 		 deviation[i]=deviation[i].toFixed(4);
-		 divOut.innerHTML = " "+deviation +  " " ;
+		                                                                                                                                                                                                                                                  
 		 }		 
 		
-		//divOut.innerHTML = deviation ;
+		divOut.innerHTML = result;
 			}
 		}
 	</script>

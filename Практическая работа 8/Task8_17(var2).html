@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data"> </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		var inData = document.getElementById("data");
+		var str  = inData.value;					//  введенные данные
+		var data = str.split (' ');					// разделяем в массив через пробел
+		var divOut = document.getElementById ("out");
+		var result = "";
+		let morse = { "---":"С",
+					 "...":"О"
+					 }; 
+		for (let n= 0; n<data.length; n++)
+		{
+		let err = data[n]
+			if ( err in morse)
+			{
+				let code = data[n];		 
+				result = result + morse[code];			 
+			}
+			else 
+			{
+			result = result +"?";
+			}
+			divOut.innerHTML = result;
+		
+		}
+		}
+	</script>
+</body>
+</html>

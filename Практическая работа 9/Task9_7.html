@@ -18,19 +18,29 @@
 		if (str.trim() === "") 
 		{
 		divOut.innerHTML = "Исходная строка пуста";
+		return;
 		}
 		let result = "";
 		let len = data.length;
 		let x = 0;
-			for (x= 0;data[x] < data[x+1]; x++)
+		let y = -1;
+			for (x= 0; x <data.length; x++)
 			{
-				if (data[x] < data[x+1])
+				if (data[x] > data[x+1])
 				{
-				result = "Значение отсортированы по возрастанию"
+				y= x;
+				break;
 				}
-				
+
 			}
-		result = "Элемент со значением " + data[x+1] + "  на индексе " + (x+1) + " нарушает закономерность"
+			if (y>=0)
+			{
+			result = "Элемент со значением " + data[x+1] + "  на индексе " + (x+1) + " нарушает закономерность"
+			}
+			else
+			{
+			result = "Значение отсортированы по возрастанию"
+			}
 		divOut.innerHTML = result ;
 		}
 	</script>
