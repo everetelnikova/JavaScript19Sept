@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data">Данные </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		var inData = document.getElementById("data");
+		var str  = inData.value;
+		var divOut = document.getElementById ("out");
+		let result = ["a", "b", "c", "d", "e", "f", "g", "h"];
+		let output = "";
+		if (str.trim() === "") 
+		{
+		divOut.innerHTML = "Строка пуста";
+		}
+			for (let i = 0; i< result.length; i++)
+			{
+			if (str == result[i])
+			{
+			result.length = i+1;
+			}		
+			}
+		divOut.innerHTML = result;
+		}
+	</script>
+</body>
+</html>
