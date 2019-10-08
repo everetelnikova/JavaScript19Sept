@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<div id="out"> </div> <br/>
+<button id="leftcoat" onclick="goatleft()"> Goat </button>
+<button id="rightcoat" onclick="goatright()" disabled="true" >Goat </button> <br/>
+
+<button id="leftcabbage" onclick="cabbageleft()"> Cabbage </button>
+<button id="rightcabbage" onclick="cabbageright()" disabled="true" > Cabbage </button> <br/>
+
+<button id="leftwolf" onclick="wolfleft()"> Wolf </button>
+<button id="rightwolf" onclick="wolfright()" disabled="true" > Wolf </button> <br/>
+
+<button id="leftpeasant" onclick="peasantleft()"> Peasant </button>
+<button id="rightpeasant" onclick="peasantright()" disabled="true" > Peasant </button> <br/>
+	
+	<script>
+	let divOut = document.getElementById ("out");
+	let positionP = 0;
+	let positionG = 0;
+	let positionC = 0;
+	let positionW = 0;
+	let start = 0;
+	function goatleft()
+	{
+	if(positionP == 0)
+	{
+	let btnR = document.getElementById ("rightcoat");
+	btnR.disabled = false;
+	let btnL = document.getElementById ("leftcoat");
+	btnL.disabled = true;
+	peasantleft();
+	let msg = "Коза на правом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionG = 1;
+	}
+	}
+	
+	function goatright()
+	{
+	if (positionP == 1)
+	{
+	let btnL = document.getElementById ("rightcoat");
+	btnL.disabled = true;
+	let btnR = document.getElementById ("leftcoat");
+	btnR.disabled = false;
+	peasantright();
+	let msg = "Коза на левом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionG = 0;
+	}
+	}
+
+	function cabbageleft()
+	{
+	if (positionP == 0)
+	{
+	let btnR = document.getElementById ("rightcabbage");
+	btnR.disabled = false;
+	let btnL = document.getElementById ("leftcabbage");
+	btnL.disabled = true;
+	peasantleft();
+	let msg = "Капуста на правом берегу";
+	divOut.innerHTML = msg;
+	positionC = 1;
+	check();
+	}
+	}	
+	
+	function cabbageright()
+	{
+	if (positionP == 1)
+	{
+	let btnL = document.getElementById ("rightcabbage");
+	btnL.disabled = true;
+	let btnR = document.getElementById ("leftcabbage");
+	btnR.disabled = false;
+	peasantright();
+	let msg = "Капуста на левом берегу";
+	divOut.innerHTML = msg;
+	positionC = 0;
+	check();
+	}
+	}
+	
+	function wolfleft()
+	{
+	if (positionP == 0)
+	{
+	let btnR = document.getElementById ("rightwolf");
+	btnR.disabled = false;
+	let btnL = document.getElementById ("leftwolf");
+	btnL.disabled = true;
+	peasantleft();
+	let msg = "Волк на правом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionW = 1;
+	
+	}
+	}	
+	
+	function wolfright()
+	{
+	if (positionP == 1)
+	{
+	let btnL = document.getElementById ("rightwolf");
+	btnL.disabled = true;
+	let btnR = document.getElementById ("leftwolf");
+	btnR.disabled = false;
+	peasantright();
+	let msg = "Волк на левом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionW = 0;
+	}
+	}
+	
+	function peasantleft()
+	{
+	let btnR = document.getElementById ("rightpeasant");
+	btnR.disabled = false;
+	let btnL = document.getElementById ("leftpeasant");
+	btnL.disabled = true;	
+	let msg = "Крестьянин на правом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionP = 1;
+	}	
+	
+	function peasantright()
+	{
+	let btnL = document.getElementById ("rightpeasant");
+	btnL.disabled = true;
+	let btnR = document.getElementById ("leftpeasant");
+	btnR.disabled = false;
+	let msg = "Крестьянин на левом берегу";
+	check();
+	divOut.innerHTML = msg;
+	positionP = 0;
+	}
+	
+	function check()
+	{
+	 if (positionC == 0 && positionG == 0 && positionW == 1 && positionP == 1 || positionC == 1 && positionG == 1 && positionW == 0 && positionP == 0 || positionC == 0 && positionG == 1 && positionW == 1 && positionP == 0 || positionC == 1 && positionG == 0 && positionW == 0 && positionP == 1 )
+	 {
+	 	let btnL = document.getElementById ("rightpeasant");
+		let btnR = document.getElementById ("leftpeasant");	
+		btnL.disabled = true;
+		btnR.disabled = true;
+		let msg = "Вы проиграли";
+		divOut.innerHTML = msg;
+	 }
+	 
+	if (positionC == 1 && positionG == 1 && positionW == 1 && positionP == 1 )
+	{
+		let btnL = document.getElementById ("rightpeasant");
+		let btnR = document.getElementById ("leftpeasant");	
+		btnL.disabled = true;
+		btnR.disabled = true;
+		let msg = "Вы выиграли";
+		divOut.innerHTML = msg;
+	}
+	
+	}
+	
+	
+	
+	</script>
+</body>
+</html>
