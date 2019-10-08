@@ -11,13 +11,6 @@
 <button onclick="work1()"> Translate to Morse</button>	<br/>
 <button onclick="printmorse()">print Morse</button>	<br/>
 		<script>
-		function work()
-		{
-		let inData = document.getElementById("data");
-		let str  = inData.value;					//  введенные данные
-		let data = str.split (' ');					// разделяем в массив через пробел
-		let divOut = document.getElementById ("out");
-		let result = "";
 		let morse = { 
 					"..--..":"?",
 					".-":"А",
@@ -63,6 +56,13 @@
 					"----.":"9",
 					"-----":"0"
 					 }; 
+		function work()
+		{
+		let inData = document.getElementById("data");
+		let str  = inData.value;					//  введенные данные
+		let data = str.split (' ');					// разделяем в массив через пробел
+		let divOut = document.getElementById ("out");
+		let result = "";
 		for (let n= 0; n<data.length; n++)
 		{
 		let err = data[n]
@@ -82,52 +82,7 @@
 		function printmorse()
 		{
 		let list= "";
-		let divMcode = document.getElementById ("mcode");
-		let morse = { 
-					"..--..":"?",
-					".-":"А",
-					"-...":"Б",
-					".--":"В",
-					"--.":"Г",
-					"-..":"Д",
-					".":"Е",
-					"...-":"Ж",
-					"--..":"З",
-					"..":"И",
-					".---":"Й",
-					"-.-":"К",
-					".-..":"Л",
-					"--":"М",
-					"-.":"Н",
-					"---":"О",
-					".--.":"П",
-					".-.":"Р",
-					"...":"С",
-					"-":"Т",
-					"..-":"У",
-					"..-.":"Ф",
-					"....":"Х",
-					"-.-.":"Ц",
-					"---.":"Ч",
-					"----":"Ш",
-					"--.-":"Щ",
-					"--.--":"Ъ",
-					"-.--":"Ы",
-					"-..-":"Ь", //ВЗЯТО С ИНТЕРНЕТА
-					"..-..":"Э",
-					"..--":"Ю",
-					".-.-":"Я",
-					".----":"1",
-					"..---":"2",
-					"...--":"3",
-					"....-":"4",
-					".....":"5",
-					"-....":"6",
-					"--...":"7",
-					"---..":"8",
-					"----.":"9",
-					"-----":"0"
-					 }; 
+		let divMcode = document.getElementById ("mcode");		
 		for (let key in morse)
 		{
 		list =list + key + " : " + morse[key] + "</br>";
@@ -138,70 +93,21 @@
 		{
 		let inData = document.getElementById("data");
 		let str  = inData.value;					//  введенные данные
-		let data = str.split (' ');					// разделяем в массив через пробел
+		let strUni = str.toUpperCase();
+		let data = strUni.split ('');					// разделяем в массив через пробел
 		let divOut = document.getElementById ("out");
 		let result = "";
-		let morse = { 
-					"..--..":"?",
-					".-":"А",
-					"-...":"Б",
-					".--":"В",
-					"--.":"Г",
-					"-..":"Д",
-					".":"Е",
-					"...-":"Ж",
-					"--..":"З",
-					"..":"И",
-					".---":"Й",
-					"-.-":"К",
-					".-..":"Л",
-					"--":"М",
-					"-.":"Н",
-					"---":"О",
-					".--.":"П",
-					".-.":"Р",
-					"...":"С",
-					"-":"Т",
-					"..-":"У",
-					"..-.":"Ф",
-					"....":"Х",
-					"-.-.":"Ц",
-					"---.":"Ч",
-					"----":"Ш",
-					"--.-":"Щ",
-					"--.--":"Ъ",
-					"-.--":"Ы",
-					"-..-":"Ь", //ВЗЯТО С ИНТЕРНЕТА
-					"..-..":"Э",
-					"..--":"Ю",
-					".-.-":"Я",
-					".----":"1",
-					"..---":"2",
-					"...--":"3",
-					"....-":"4",
-					".....":"5",
-					"-....":"6",
-					"--...":"7",
-					"---..":"8",
-					"----.":"9",
-					"-----":"0"
-					 }; 
 		for (let n= 0; n<data.length; n++)
 		{
-			for ( value of Object.values(morse))  // ищем совпадения введенных данных и значений в массиве
-			{
-				if (value == data[n])   // если начение совпадает с введеными данными
-				{
+
 				for (let key in morse)
 				{
-					if (morse[key] == data[n]);
+					if (morse[key] == data[n])
 					{
-					result = result + key;  // выводим через пробел ключи этих значений
+					result = result + " " + key;  // выводим через пробел ключи этих значений
 					}
 				}				
-				
-				}
-			}
+
 
 			divOut.innerHTML = result;
 		}
