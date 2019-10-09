@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>
+<p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
+<label> ИЗ <input id="data1"> </input> </label>
+<label> В <input id="data2"> </input> </label>
+<div id="out"> </div> <br/>
+<button onclick="trans()"> Перелить </button>	
+<table id="itteration" border="2">
+<tr><td width="200">8</td><td width="200">0</td><td width="200">0</td></tr>
+</table>
+	
+	<script>
+	
+	function addRow()
+	{
+	let tbl = document.getElementById ("itteration");                   // таблица, с которой работаем
+	let rws = tbl.rows;                                            // коллекция существующих строк таблицы
+	let lst = rws [rws.length - 1];                                // последняя (самая нижняя) существующая строка таблицы
+	let cls = rws.cells.length;                                    // количество ячеек в последней существующей строке
+ 
+	let ro = tbl.insertRow (-1);                                   // добавляем снизу ОБРАЗ ещё одной строки
+	for (let j = 0; j < cls; j++)                                  // создаём цикл из cls шагов (по количеству ячеек)
+	{
+	let ce = ro.insertCell (-1);                                // на каждом шаге в образ строки добавляем ОБРАЗ новой ячейки
+	ce.innerHTML = 'хрен его знает, <b>чего</b> тут вписывать'; // и добавляем в этот образ новой ячейки HTML-код, превращая образ в РЕАЛЬНУЮ ячейку
+	}
+// по завершению цикла, когда ВСЕ ячейки получат содержимое, ОБРАЗ добавленной строки превратится в РЕАЛЬНУЮ строку
+	}
+	
+	
+	function trans()
+	{
+		let inData1 = document.getElementById("data1");
+		let str1  = inData1.value;
+		let data1 = Number(str1); 
+		let inData2 = document.getElementById("data2");
+		let str2  = inData2.value;
+		let data2 = Number(str2);
+		let divOut = document.getElementById ("out");
+		let inEight = 8;
+		let inFive = "";
+		let inThree ="";
+		let result = "";
+		
+		if (data1 == 8)
+		{
+			if (data2 == 5)
+			{
+				if ( (inEight + inFive) < 5 )
+				{
+				inFive = inEight + inFive;
+				inEight = inEight - inFive ;
+				}
+			}
+			if (data2 ==3)
+			{
+				if ( (inEight + inThree) < 3 )
+				{
+				
+				}
+			}
+		}
+		else if (data1 ==5)
+			{
+				if (data2 == 8)
+				{
+					
+				}
+				if (data2 == 3)
+				{
+				
+				}
+			}
+			
+		else if (data1 == 3)
+			{
+				if (data2 == 8)
+				{
+				
+				}
+				if (data2 == 5)
+				{
+				
+				}			
+			}
+		result = inEight + " " + inFive + " " + inThree;
+		divOut.innerHTML = result;
+	}
+	
+	
+	</script>
+</body>
+</html>
