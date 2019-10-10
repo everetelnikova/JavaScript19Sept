@@ -31,65 +31,56 @@
 // по завершению цикла, когда ВСЕ ячейки получат содержимое, ОБРАЗ добавленной строки превратится в РЕАЛЬНУЮ строку
 	}
 	
+		var current = {8: 8,						// объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
+					   5: 0,
+					   3: 0};
+		var result = "8-ми лит.   5-и лит.   3-х лит." + "<br/>";
 	
 	function trans()
 	{
 		let inData1 = document.getElementById("data1");
 		let str1  = inData1.value;
-		let data1 = Number(str1); 
+		let From = Number(str1); 						// емкость, из которой выливаем
 		let inData2 = document.getElementById("data2");
 		let str2  = inData2.value;
-		let data2 = Number(str2);
+		let To = Number(str2);							// емкость, в которую льем
 		let divOut = document.getElementById ("out");
-		let inEight = 8;
-		let inFive = "";
-		let inThree ="";
-		let result = "";
 		
-		if (data1 == 8)
+
+		
+		let value = current[To];						// получаем текущее значение, из емкости куда льем          
+		let FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
+		
+		if (FreeSpace >=0)  							// заходим в цикл только если есть свободное место куда лить
 		{
-			if (data2 == 5)
+			if (FreeSpace < current[From])        		// если свободного места меньше, чем кол-во жидкости в емкости из которой переливаем
 			{
-				if ( (inEight + inFive) < 5 )
-				{
-				inFive = inEight + inFive;
-				inEight = inEight - inFive ;
-				}
-			}
-			if (data2 ==3)
-			{
-				if ( (inEight + inThree) < 3 )
-				{
-				
-				}
+			 current[From] = current[From] - FreeSpace;  // получаем остаток в емскости из которой переливали
+			 current[To] = To;							 // текущее значение в емкости, куда заливали стало максимальным			
 			}
 		}
-		else if (data1 ==5)
+														/// снова находим текущии значения, чтобы не пошел в цикл 
+		 value = current[To];							// получаем текущее значение, из емкости куда льем          
+		 FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
+		 
+		if (FreeSpace >=0)  							// заходим в цикл только если есть свободное место куда лить
+		{
+			if (FreeSpace >= current[From]) 			 // если свободного места больше, чем в емкости из которой льем
 			{
-				if (data2 == 8)
-				{
-					
-				}
-				if (data2 == 3)
-				{
-				
-				}
+			 current[To] = current[From] + current[To];
+			 current[From] = 0;
 			}
-			
-		else if (data1 == 3)
-			{
-				if (data2 == 8)
-				{
-				
-				}
-				if (data2 == 5)
-				{
-				
-				}			
-			}
-		result = inEight + " " + inFive + " " + inThree;
+		
+		}
+		result = result + current[8] + " "+ " "+ " " + current[5] + " " + " "+ " "+  current[3] + "<br/>" ;
+		if (current[8] == 4 || current[5]==4 || current[3]==4)
+		{
+		result = result + "Успех! Наконец-то!";
+		}
 		divOut.innerHTML = result;
-	}
+	}	
+
+	
 	
 	
 	</script>
