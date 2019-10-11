@@ -5,36 +5,29 @@
  </head>
 <body>
 <p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
-<label> ИЗ <input id="data1"> </input> </label>
-<label> В <input id="data2"> </input> </label>
+<label> ИЗ <select id="data1" onchange="work()"> <option> 8 </option> <option> 5</option> <option>3 </option> </select> </label>
+<label> В <select id="data2"><option> 8</option> <option>5 </option> <option>3 </option> </select> </label>
 <div id="out"> </div> <br/>
 <button onclick="trans()"> Перелить </button>	
-<table id="itteration" border="2">
-<tr><td width="200">8</td><td width="200">0</td><td width="200">0</td></tr>
-</table>
-	
+
 	<script>
 	
-	function addRow()
-	{
-	let tbl = document.getElementById ("itteration");                   // таблица, с которой работаем
-	let rws = tbl.rows;                                            // коллекция существующих строк таблицы
-	let lst = rws [rws.length - 1];                                // последняя (самая нижняя) существующая строка таблицы
-	let cls = rws.cells.length;                                    // количество ячеек в последней существующей строке
- 
-	let ro = tbl.insertRow (-1);                                   // добавляем снизу ОБРАЗ ещё одной строки
-	for (let j = 0; j < cls; j++)                                  // создаём цикл из cls шагов (по количеству ячеек)
-	{
-	let ce = ro.insertCell (-1);                                // на каждом шаге в образ строки добавляем ОБРАЗ новой ячейки
-	ce.innerHTML = 'хрен его знает, <b>чего</b> тут вписывать'; // и добавляем в этот образ новой ячейки HTML-код, превращая образ в РЕАЛЬНУЮ ячейку
-	}
-// по завершению цикла, когда ВСЕ ячейки получат содержимое, ОБРАЗ добавленной строки превратится в РЕАЛЬНУЮ строку
+	function work()
+	{		
+		let inData1 = document.getElementById("data1");
+		let str1  = inData1.value;	
+		var K = Object.keys(current);
+		let K2 = K.filter(val => val != str1);
+		let	sel2 = document.getElementById("data2");
+		sel = "<option>" + K2[0] + "</option>" + "<option>" + K2[1] + "</option>";
+		sel2.innerHTML = sel;
+
 	}
 	
-		var current = {8: 8,						// объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
+		var current = {8: 8, // объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
 					   5: 0,
 					   3: 0};
-		var result = "8-ми лит.   5-и лит.   3-х лит." + "<br/>";
+		var result = "<table  border=2px>"+ "<tr>" + "<td>"+ "8-ми литр" +"</td>"  + "<td>"+ "5-и литр"+ "</td>"+ "<td>"+ "3-х литр" +"</td>" + "</tr>";
 	
 	function trans()
 	{
@@ -46,7 +39,6 @@
 		let To = Number(str2);							// емкость, в которую льем
 		let divOut = document.getElementById ("out");
 		
-
 		
 		let value = current[To];						// получаем текущее значение, из емкости куда льем          
 		let FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
@@ -72,17 +64,37 @@
 			}
 		
 		}
-		result = result + current[8] + " "+ " "+ " " + current[5] + " " + " "+ " "+  current[3] + "<br/>" ;
+		result = result + "<tr>" + "<td>"+current[8] +"</td>"  + "<td>"+current[5]+ "</td>"+ "<td>"+current[3] +"</td>" + "</tr>";
 		if (current[8] == 4 || current[5]==4 || current[3]==4)
 		{
 		result = result + "Успех! Наконец-то!";
 		}
 		divOut.innerHTML = result;
+		
+		var K = Object.keys(current);
+		let K3 = K.filter(key => current[key] > 0);          
+		let	sel1 = document.getElementById("data1");
+		if (K3.length ==1)
+		{
+		result1 = "<option>" + K3[0] + "</option>";
+		}
+		if (K3.length ==2)
+		{
+		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>";
+		}
+		if (K3.length ==3)
+		{
+		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>"+ "<option>" + K3[2] + "</option>";
+		}
+		
+		
+		sel1.innerHTML = result1;
+		
+		
+		
 	}	
 
-	
-	
-	
 	</script>
+
 </body>
 </html>
