@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>
+<p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
+<label> ИЗ <select id="data1" onchange="work()"> <option> One </option> <option> Two </option> <option> Three </option> </select> </label>
+<label> В <select id="data2"><option> current.One </option> <option>current.Two  </option> <option>current.Three </option> </select> </label>
+<div id="out"> </div> <br/>
+<button onclick="trans()"> Перелить </button>	
+
+	<script>
+	
+	function work()
+	{		
+		let inData1 = document.getElementById("data1");
+		let str1  = inData1.value;	
+		var K = Object.keys(current);
+		let K2 = K.filter(val => val != str1);
+		let	sel2 = document.getElementById("data2");
+		sel = "<option>" + K2[0] + "</option>" + "<option>" + K2[1] + "</option>";
+		sel2.innerHTML = sel;
+
+	}
+    window.onload = function Rand()
+	{
+		let One = Math.floor(Math.random() * 20 +1); 
+		let Two = Math.floor(Math.random() * 20+1); 
+		let Three = Math.floor(Math.random() * 20+1); 
+	}
+
+		var current = {One: 0, // объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
+					   Two: 0,
+					   Three: 0};
+		var result = "<table  border=2px>"+ "<tr>" + "<td>"+ "8-ми литр" +"</td>"  + "<td>"+ "5-и литр"+ "</td>"+ "<td>"+ "3-х литр" +"</td>" + "</tr>";
+	
+	function trans()
+	{
+		let inData1 = document.getElementById("data1");
+		let str1  = inData1.value;
+		let From = Number(str1); 						// емкость, из которой выливаем
+		let inData2 = document.getElementById("data2");
+		let str2  = inData2.value;
+		let To = Number(str2);							// емкость, в которую льем
+		let divOut = document.getElementById ("out");
+		
+		
+		let value = current[To];						// получаем текущее значение, из емкости куда льем          
+		let FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
+		
+		if (FreeSpace >=0)  							// заходим в цикл только если есть свободное место куда лить
+		{
+			if (FreeSpace < current[From])        		// если свободного места меньше, чем кол-во жидкости в емкости из которой переливаем
+			{
+			 current[From] = current[From] - FreeSpace;  // получаем остаток в емскости из которой переливали
+			 current[To] = To;							 // текущее значение в емкости, куда заливали стало максимальным			
+			}
+		}
+														/// снова находим текущии значения, чтобы не пошел в цикл 
+		 value = current[To];							// получаем текущее значение, из емкости куда льем          
+		 FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
+		 
+		if (FreeSpace >=0)  							// заходим в цикл только если есть свободное место куда лить
+		{
+			if (FreeSpace >= current[From]) 			 // если свободного места больше, чем в емкости из которой льем
+			{
+			 current[To] = current[From] + current[To];
+			 current[From] = 0;
+			}
+		
+		}
+		result = result + "<tr>" + "<td>"+current[8] +"</td>"  + "<td>"+current[5]+ "</td>"+ "<td>"+current[3] +"</td>" + "</tr>";
+		if (current[8] == 4 || current[5]==4 || current[3]==4)
+		{
+		result = result + "Успех! Наконец-то!";
+		}
+		divOut.innerHTML = result;
+		
+		//var K = Object.keys(current);
+		//let K3 = K.filter(key => current[key] > 0);          
+		//let	sel1 = document.getElementById("data1");
+		//if (K3.length ==1)
+		//{
+		//result1 = "<option>" + K3[0] + "</option>";
+		//}
+		//if (K3.length ==2)
+		//{
+		//result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>";
+		//}
+		//if (K3.length ==3)
+		//{
+		//result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>"+ "<option>" + K3[2] + "</option>";
+		//}
+		
+		
+		//sel1.innerHTML = result1;
+		
+		
+		
+	}	
+
+	</script>
+
+</body>
+</html>
