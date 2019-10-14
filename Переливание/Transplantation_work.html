@@ -3,29 +3,23 @@
  <head>
  <meta charset="utf-8">
  </head>
-<body onload="work()">
+<body>
 <p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
 <label> ИЗ <select id="data1" onchange="work()"> <option> 8 </option> <option> 5</option> <option>3 </option> </select> </label>
-<label> В <select id="data2"> <option> 8</option> <option>5 </option> <option>3 </option> </select> </label>
+<label> В <select id="data2"><option> 8</option> <option>5 </option> <option>3 </option> </select> </label>
 <div id="out"> </div> <br/>
 <button onclick="trans()"> Перелить </button>	
 
 	<script>
 	
-   function work()                                     // ф-ия нельзя переливать в ту же самую емкость, которую выбрали  window.onload = 
+	function work()
 	{		
 		let inData1 = document.getElementById("data1");
 		let str1  = inData1.value;	
-		let K = Object.keys(current);						// массив из ключей
-		let V = K.filter( key => key != current[key])      //массив где ключ не совпадает со значением(т.е.отсутствует полная емкость)
-		let K2 = V.filter(val => val != str1);				// фильтруем чтобы в массиве не было ключа-емскости, который уже выбрали в select1
-		let sel = "";
+		var K = Object.keys(current);
+		let K2 = K.filter(val => val != str1);
 		let	sel2 = document.getElementById("data2");
-		for (let i = 0; i < K2.length; i++ )							// select компактнее через for
-		{
-		 sel = sel + "<option>" + K2[i] + "</option>";		
-		};
-	
+		sel = "<option>" + K2[0] + "</option>" + "<option>" + K2[1] + "</option>";
 		sel2.innerHTML = sel;
 
 	}
@@ -76,22 +70,29 @@
 		result = result + "Успех! Наконец-то!";
 		}
 		divOut.innerHTML = result;
-
-		//let V = Object.values(current);								// не работает
-		//let IDK =  current.reduce((rez,item,index) =>  rez + item > 0, 0);
-
-		let K = Object.keys(current); 								  // ф-ия нельзя лить из пустой емкости
+		
+		var K = Object.keys(current);
 		let K3 = K.filter(key => current[key] > 0);          
 		let	sel1 = document.getElementById("data1");
-		let result1 = "";
-		for (let i = 0; i < K3.length; i++ )							// select компактнее через for
+		if (K3.length ==1)
 		{
-		 result1 = result1 + "<option>" + K3[i] + "</option>";		
-		};
-
-		sel1.innerHTML = result1;		
-	}	
+		result1 = "<option>" + K3[0] + "</option>";
+		}
+		if (K3.length ==2)
+		{
+		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>";
+		}
+		if (K3.length ==3)
+		{
+		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>"+ "<option>" + K3[2] + "</option>";
+		}
 		
+		
+		sel1.innerHTML = result1;
+		
+		
+		
+	}	
 
 	</script>
 
