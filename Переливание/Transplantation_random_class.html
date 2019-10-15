@@ -17,10 +17,89 @@
 	{
 		
 		let result = "<table  border=2px>"+ "<tr>" + "<td>"+ "8-ми литр" +"</td>"  + "<td>"+ "5-и литр"+ "</td>"+ "<td>"+ "3-х литр" +"</td>" + "</tr>";
+		
+		let One = Math.floor(Math.random() * 20 +1); 
+		let Two = Math.floor(Math.random() * 20+1); 
+		while  (One == Two)
+		{
+		Two = Math.floor(Math.random() * 20+1); 
+		};
+		let Three = Math.floor(Math.random() * 20+1); 
+		while  (Three == Two || Three == One)
+		{
+		Three = Math.floor(Math.random() * 20+1); 
+		};
+		let Target = Math.floor(Math.random() * 20 +1); 
+		while  ((Target == Three ||  Target  == Two || Target  == One) && Target == 20  && Target <=0)
+		{
+		Three = Math.floor(Math.random() * 20+1); 
+		};
+		let current = {}; // объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
+		current[One] = 0;		                             	    
+		current[Two] =0;			    
+		current[Three] =0;
+		if (One > Two)
+		{
+		 if ( One> Three)
+		  { current[One] = One; }
+		 else {current[Three] = Three;}
+		}
+		else 
+		{
+		 if (Two > Three)
+		 {current[Two] = Two;}
+		 else {current[Three] = Three;}
+		}
+		let msg= "";
+		let currentKey = Object.keys(current);
+		let From = [];
+		let To = [];
+		for (i= 0;i < currentKey.length; i++)
+		{
+			if (current[currentKey[i]] > 0)
+			{
+			msg = msg +"перелить из" + currentKey[i];
+			From.push(currentKey[i]);
+			}
+			else 
+			{
+			msg = msg + "в " + currentKey[i] +"или";
+			To.push(currentKey[i]);
+			}
+		}
+		console.log(msg);
+		let globArrState =[];
+		let FreeSpace ="";
+		for (i= 0; i < From.length; i++)
+		{
+			for (n = 0; n < To.length; n++)
+			{
+			current[From[i]] = current[From[i]] - To[n];
+			FreeSpace = To[n] - current[To[n]];
+			if (current[To[n]] ==0 && current[From[i]]> To[n])
+			{
+			current[To[n]] = To[n]
+			}			
+			else if (current[To[n]] >0 &&  FreeSpace < current[From[i]]) 
+			{
+			 current[To[n]]= To[n];
+			}
+			else if (current[To[n]] >0 &&  FreeSpace > current[From[i]])
+			{			
+			current[To[n]] = current[To[n]] +current[From[i]];   // добавть сколько останется в емкости From	
+			}
+			globArrState.push(current);
+			}
+		
+		}
+		
+		
 
-		let current = {8: 8, // объект с текущими значениями кол-ва жидкости(value) в каждой емскости(ключ)
-					   5: 0,
-					   3: 0};
+
+
+
+
+	    
 		let slct = document.getElementById("data1");
 		slct.onchange =  function work()
 		{	
@@ -42,6 +121,10 @@
 		let str2  = inData2.value;
 		let To = Number(str2);							// емкость, в которую льем
 		let divOut = document.getElementById ("out");
+		
+		
+		
+		
 		
 		
 		let value = current[To];						// получаем текущее значение, из емкости куда льем          

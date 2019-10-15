@@ -78,7 +78,7 @@
 		divOut.innerHTML = result;
 
 		//let V = Object.values(current);								// не работает
-		//let IDK =  current.reduce((rez,item,index) =>  rez + item > 0, 0);
+		//let IDK =  current.reduce((result1,item,index) =>  result1 + item, 0);
 
 		let K = Object.keys(current); 								  // ф-ия нельзя лить из пустой емкости
 		let K3 = K.filter(key => current[key] > 0);          
@@ -86,10 +86,13 @@
 		let result1 = "";
 		for (let i = 0; i < K3.length; i++ )							// select компактнее через for
 		{
-		 result1 = result1 + "<option>" + K3[i] + "</option>";		
+			let item = K3[i];
+		
+			result1 = result1 + "<option>" + item + "</option>";		
 		};
 
-		sel1.innerHTML = result1;		
+		sel1.innerHTML = result1;	
+		work();
 	}	
 		
 
