@@ -4,7 +4,7 @@
  <meta charset="utf-8">
  </head>
 <body>
-<p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
+<div id="inn">  </div> <br/>
 <label> ИЗ <select id="data1" > <option> 8 </option> <option> 5</option> <option>3 </option> </select> </label>
 <label> В <select id="data2"><option> 8</option> <option>5 </option> <option>3 </option> </select> </label>
 <div id="out"> </div> <br/>
@@ -15,9 +15,10 @@
 
 	window.onload = function init()
 	{
-		
-		let result = "<table  border=2px>"+ "<tr>" + "<td>"+ "8-ми литр" +"</td>"  + "<td>"+ "5-и литр"+ "</td>"+ "<td>"+ "3-х литр" +"</td>" + "</tr>";
-		
+
+		let result = "<table  border=2px>"+ "<tr>" + "<td>"+  8 +"</td>"  + "<td>"+ 5+ "</td>"+ "<td>"+ 3 +"</td>" + "</tr>";
+		let divInn = document.getElementById ("inn");		
+
 		let One = Math.floor(Math.random() * 20 +1); 
 		let Two = Math.floor(Math.random() * 20+1); 
 		while  (One == Two)
@@ -30,7 +31,7 @@
 		Three = Math.floor(Math.random() * 20+1); 
 		};
 		let Target = Math.floor(Math.random() * 20 +1); 
-		while  ((Target == Three ||  Target  == Two || Target  == One) && Target == 20  && Target <=0)
+		while  ((Target == Three ||  Target  == Two || Target  == One) && Target == 20  && Target <=0) // условие цель меньше большего!!!
 		{
 		Three = Math.floor(Math.random() * 20+1); 
 		};
@@ -52,55 +53,59 @@
 		}
 		let msg= "";
 		let currentKey = Object.keys(current);
+		let msg1= "";
+		msg1 = "Даны емкости  " + currentKey[0] +" " + currentKey[1] + " и "+ currentKey[2]+ "литров. Переливая жидкость между емкостями добиться в одной из них "+Target+ " литров жидкости."; 
+		divInn.innerHTML = msg1;
 		let From = [];
 		let To = [];
-		for (i= 0;i < currentKey.length; i++)
+		function initFrom_To()
 		{
+			for (i= 0;i < currentKey.length; i++)
+			{
 			if (current[currentKey[i]] > 0)
 			{
-			msg = msg +"перелить из" + currentKey[i];
+			msg = msg +"перелить из" + currentKey[i];				// определяет массив значений ОТКУДА
 			From.push(currentKey[i]);
 			}
 			else 
 			{
 			msg = msg + "в " + currentKey[i] +"или";
-			To.push(currentKey[i]);
+			To.push(currentKey[i]);									// определяет массив значений КУДА
 			}
-		}
+			}
+		};
+		initFrom_To();
 		console.log(msg);
 		let globArrState =[];
 		let FreeSpace ="";
-		for (i= 0; i < From.length; i++)
+		for (i= 0; i < From.length; i++)                            // заходит в цикл, пока может лить из ОТКУДА, а дожен 1 раз
 		{
 			for (n = 0; n < To.length; n++)
 			{
-			current[From[i]] = current[From[i]] - To[n];
-			FreeSpace = To[n] - current[To[n]];
-			if (current[To[n]] ==0 && current[From[i]]> To[n])
+			current[From[i]] = current[From[i]] - To[n];			// остаток в емкости ОТКУДА
+			current[To[n]] = To[n];									// при первом переливании
+			FreeSpace = To[n] - current[To[n]];						// кол-во свободного места в емскости КУДА
+			if (current[To[n]] ==0 && current[From[i]]> To[n])		// если в емскости КУДА пусто и в емскости ОТКУДА больше жидкости чем объем КУДА
 			{
-			current[To[n]] = To[n]
+			current[To[n]] = To[n];									// емкость КУДА стала полной
 			}			
-			else if (current[To[n]] >0 &&  FreeSpace < current[From[i]]) 
+			else if (current[To[n]] >0 &&  FreeSpace < current[From[i]])  // если емкость КУДА не пуста и свободного места меньше чем ОТКУДА
 			{
-			 current[To[n]]= To[n];
+			 current[To[n]]= To[n];										  // емкость КУДА стала полной
 			}
-			else if (current[To[n]] >0 &&  FreeSpace > current[From[i]])
+			else if (current[To[n]] >0 &&  FreeSpace > current[From[i]])  // если емкость КУДА не пуста и свободного места больше чем ОТКУДА
 			{			
-			current[To[n]] = current[To[n]] +current[From[i]];   // добавть сколько останется в емкости From
-			current[From[i]] = current[From[i]] -current[To[n]]; 
+			current[To[n]] = current[To[n]] +current[From[i]];   		  // емкость КУДА = сколько было + всё из емкости ОТКУДА
+			current[From[i]] = 0; 										  // емкость ОТКУДА стала пустой	
 			}
-			globArrState.push(current);
+			globArrState.push(current);									  // после 1 переливания текущее значение внесли в массив Глоб.Сост. 
 			}
 		
 		}
+		initFrom_To();													  // Обновить значения массивов ОТКУДА КУДА
 		
-		
 
 
-
-
-
-	    
 		let slct = document.getElementById("data1");
 		slct.onchange =  function work()
 		{	
@@ -122,12 +127,7 @@
 		let str2  = inData2.value;
 		let To = Number(str2);							// емкость, в которую льем
 		let divOut = document.getElementById ("out");
-		
-		
-		
-		
-		
-		
+	
 		let value = current[To];						// получаем текущее значение, из емкости куда льем          
 		let FreeSpace = To - value;						// получаем значение, сколько свободного места в емкости в которую льем
 		
@@ -159,10 +159,11 @@
 		}
 		divOut.innerHTML = result;
 		}
+		
 	};
 	//init();
 	
-	function work2()
+ 	function work2()
 		{
 		var K = Object.keys(current);
 		let K3 = K.filter(key => current[key] > 0);          
@@ -176,14 +177,12 @@
 		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>";
 		}
 		if (K3.length ==3)
-		{
+	{
 		result1 = "<option>" + K3[0] + "</option>"+ "<option>" + K3[1] + "</option>"+ "<option>" + K3[2] + "</option>";
 		}
 
 		sel1.innerHTML = result1;		
-		}	
-		
-		
+		};	
 
 	</script>
 

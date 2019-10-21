@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data">Данные </input><br/>
+<input id="x"> X </input><br/>
+<input id="y"> Y </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		let inData = document.getElementById("data");
+		let str  = inData.value;
+		let data = str.split (' ').map(Number);
+		let inX = document.getElementById("x");
+		let strX  = inX.value;
+		let X = Number(strX);		// преобразует данные-строки в данные числа
+		let inY = document.getElementById("y");
+		let strY = inY.value;
+		let Y = Number(strY);
+		let divOut = document.getElementById ("out");
+		let result = [];
+		result = data.map(function(item) {return item == X ? Y:item;});
+		divOut.innerHTML = result;
+		}
+	</script>
+</body>
+</html>
