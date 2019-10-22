@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="x"> </input>
+
+<div id="test"> </div> <br/>
+<div id="test1"> </div>
+<button onclick="work()"> Press me</button>	
+<button onclick="work1()"> malevich</button>
+<button onclick="work2()"> asinc</button>	
+<button onclick="work3()"> json</button>
+<button onclick="magic()"> magic</button>		
+		<script>
+		var intest = document.getElementById("test");
+		function work(){
+		var inX = document.getElementById("x");
+		var X = parseFloat(inX.value);
+		var myRequest = new XMLHttpRequest();
+		myRequest.open("GET","Task1.html",false);  // false - синхронный запрос
+		myRequest.send(null);
+		intest.innerHTML = myRequest.responseText; }
+		
+		function work1(){
+		var intest1 = document.getElementById("test1");
+		var myRequest = new XMLHttpRequest();
+		myRequest.open("GET","wait.php",false);  // false - синхронный запрос
+		myRequest.send(null);
+		intest1.innerHTML = myRequest.responseText; 
+		}
+		
+		function work2(){
+		var intest1 = document.getElementById("test1");
+		var myRequest = new XMLHttpRequest();
+			function handle()
+			{
+			intest.innerHTML = myRequest.responseText;
+			}
+		myRequest.onreadystatechange = handle;
+		myRequest.open("GET","wait.php",true);  // true - aсинхронный запрос
+		myRequest.send(null);
+		intest1.innerHTML = myRequest.responseText; 
+		}
+		
+		function work3(){
+		var intest1 = document.getElementById("test1");
+		var myRequest = new XMLHttpRequest();
+			function handle()
+			{
+			if (myRequest.readyState == 4){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+			let data = myRequest.responseText;
+			let jsdata = JSON.parse(data);           // преобразует строки содержащую JSON в js объект
+			let sum = jsdata["arr"].reduce( function(sum,val) {return sum = sum + val;},0);
+			intest1.innerHTML = sum; }
+			
+			}
+		myRequest.onreadystatechange = handle;
+		myRequest.open("GET","data.txt",true);  // true - aсинхронный запрос
+		myRequest.send(null);		
+		}
+		function magic()
+		{
+		var intest1 = document.getElementById("test1");
+		var myRequest = new XMLHttpRequest();
+			function handle()
+			{
+			if (myRequest.readyState == 4){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+			let data = myRequest.responseText;
+			let jsdata = JSON.parse(data);           // преобразует строки содержащую JSON в js объект
+			intest1.innerHTML = sum; }
+			
+			}
+		myRequest.onreadystatechange = handle;
+		myRequest.open("GET","boat.php?present=145&option=wolf",true);  // true - aсинхронный запрос
+		myRequest.send(null);		
+		}
+
+		
+		</script>
+</body>
+</html>
