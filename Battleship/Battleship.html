@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="crdnt">coordinates </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function field()
+		{
+		let divOut = document.getElementById ("out");
+		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
+		let numbers = [0,1,2,3,4,5,6,7,8,9];
+		let result = "";
+		for( let i=0; i< numbers.length; i++)
+		{
+		 result = result + numbers[i]+"|"+"<br/>";						// обрамить тегом <pre></pre>
+		};
+			divOut.innerHTML = "&nbsp"+"&nbsp"+ letters +"<br/>"+ result;
+		}		
+		field();
+		
+		
+		function work()
+		{
+		let inData = document.getElementById("crdnt");
+		let str  = inData.value;
+		let data = str.split (',');
+			for (let i = 0; i< data.length; i++)
+			{
+			if (i%2 ==0 )
+			{
+			let numbers = data.filter( function (item) {return item = data[i];})      // массив с числами
+			}
+			else { let letters = data.filter( function (item) {return item = data[i];})}
+			}
+		let numbers = data.filter( function(item) {return item >= 0 && item <10;})     // для чисел, у меня строки
+		let divOut = document.getElementById ("out");
+		
+		if (str.trim() === "") 
+		{
+		divOut.innerHTML = "Нет данных";
+		}
+			
+		}
+	</script>
+</body>
+</html>
