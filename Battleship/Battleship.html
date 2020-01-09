@@ -5,20 +5,22 @@
  </head>
 <body>	
 <input id="crdnt">coordinates </input>
-<div id="out"> </div> <br/>
+<div id="out" style ="white-space:pre; font-family:monospace" > </div> <br/>
 <button onclick="work()"> Press me</button>	
 		<script>
+		let numbers = [0,1,2,3,4,5,6,7,8,9];
+		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
 		function field()
 		{
 		let divOut = document.getElementById ("out");
-		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
-		let numbers = [0,1,2,3,4,5,6,7,8,9];
+
+
 		let result = "";
 		for( let i=0; i< numbers.length; i++)
 		{
-		 result = result + numbers[i]+"|"+"<br/>";						// обрамить тегом <pre></pre>
+		 result = result + numbers[i]+"                   "+"|"+"<br/>";						// обрамить тегом <pre></pre>
 		};
-			divOut.innerHTML = "&nbsp"+"&nbsp"+ letters +"<br/>"+ result;
+			divOut.innerHTML = "&nbsp"+letters +"<br/>"+ result+ "-------------------";
 		}		
 		field();
 		
@@ -27,23 +29,45 @@
 		{
 		let inData = document.getElementById("crdnt");
 		let str  = inData.value;
-		let data = str.split (',');
-			for (let i = 0; i< data.length; i++)
-			{
-			if (i%2 ==0 )
-			{
-			let numbers = data.filter( function (item) {return item = data[i];})      // массив с числами
-			}
-			else { let letters = data.filter( function (item) {return item = data[i];})}
-			}
-		let numbers = data.filter( function(item) {return item >= 0 && item <10;})     // для чисел, у меня строки
-		let divOut = document.getElementById ("out");
+		let data = str.split (',');	
+		if (data.length %2 ==0 )
+	  	{
+			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
+
+			let data_letters = data.filter( function (item,index) { return index %2==0;})
+
+			let mistake = data_numbers.find(function(item, index) { 
+				let r = numbers.find(function(n) {return n == item;});
+				return r === undefined;  
+				
+				
+			});
+			console.log(mistake);
+		}
+		else 
+		{
+		result = "Не правильный формат";
+		}
+        
+
+
+
+
+         // из введенных координат получить массив с числами, 
+		/// КОрабли формируются путем перебора всех значений в полученных массивах координат, цикл в цикле, сначала проверяем буквенною координату, при совпадении, проверяем числовую, при совпадении ставится #, пр не совпадении ставится пробел.
+		//let numbers = data.filter( function(item) {return item >= 0 && item <10;})     // для чисел, у меня строки
+		
 		
 		if (str.trim() === "") 
 		{
-		divOut.innerHTML = "Нет данных";
+		result = "Нет данных"
 		}
-			
+		divOut.innerHTML = result;
+
+//			{
+//			let numbers = data.filter( function (item) {return item = data[i];})   
+//			}
+//			else { let letters = data.filter( function (item) {return item = data[i];})}		
 		}
 	</script>
 </body>
