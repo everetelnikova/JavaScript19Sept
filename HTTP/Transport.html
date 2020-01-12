@@ -12,15 +12,22 @@
 
 <button id="btn"> magic</button>		
 		<script>
-		let state = "145"; 												// начальное значение, менять если нажали на кнопку в последующие после 1 разы
-		function trans()
+		(function init(arg)
 		{
+		let btn = document.getElementById("btn");
+		btn.addEventListener("click", trans, false);
+		btn.onclick = trans;
+		let state = "145"; 												// начальное значение, менять если нажали на кнопку в последующие после 1 разы
 		let out = document.getElementById("out");
 		let out2 = document.getElementById("out2");
 		let slct = document.getElementById("slct");
-		let select = slct.value; 
-		let myRequest = new XMLHttpRequest();
 		let result ="<table  border=2px>"+ "<tr>" + "<td width=150>"+ "Слева" +"</td>"  +  "<td width=150>"+"Справа" +"</td>" + "</tr>";
+		let r = "";
+		function trans()
+		{
+		let select = slct.value;
+		let myRequest = new XMLHttpRequest();
+		
 			function handle()
 			{
 			if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
@@ -28,6 +35,7 @@
 				{
 				let data = myRequest.responseText;
 				let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
+				console.log(jsdata);
 				if(typeof jsdata.status != "undefined")
 				
 				{
@@ -38,20 +46,17 @@
 				state = jsdata.id;
 				}
 				else {state = "145";}
-			result = result +"<table  border=2px>"+ "<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+			r = result +"<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
 				}
 				else {out.innerHTML = "mistake";}
-			out2.innerHTML = result;
+			out2.innerHTML = r;
 			}
 			}
 		myRequest.onreadystatechange = handle;
 		myRequest.open("GET","boat.php?present="+state+"&option="+select,true);  // true - aсинхронный запрос
 		myRequest.send(null);		
 		}
-		let btn = document.getElementById("btn");
-		btn.addEventListener("click", trans, false);
-		//btn.onclick = trans;
-
+		})(1);
 		
 		</script>
 </body>

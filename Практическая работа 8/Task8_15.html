@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data"> </input>
+<div id="out"> </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		function work()
+		{
+		let inData = document.getElementById("data");
+		let insrt  = inData.value;
+		let arr_symbol  = ["a","b","c","d","e","f","g","h"];
+		let divOut = document.getElementById ("out");
+		let result = "";
+		
+		if (insrt.trim() === "")    
+		{divOut.innerHTML = "";}								// ничего не выводить при отст-ии информации в input
+		
+		let idx = arr_symbol.findIndex(function(item,index)		// индекс элемента в массиве данных, который совпадает с введеным символом
+		{return item == insrt;});								// не нужно, тест
+		let res_arr_symbol = arr_symbol.map(function(item,index)// в исходный массив добвляется "+" к введенному элементу =>новый массив
+		{return	item == insrt ? item + "+"+"</br>": item+"</br>";});			// ААААААААААААААА, съел!(не профессиональный коммент)
+
+		result = res_arr_symbol;								// выводится результирующий массив построчно		
+		divOut.innerHTML = result ;		
+		}
+	</script>
+</body>
+</html>
