@@ -10,11 +10,21 @@
 		<script>
 		let numbers = [0,1,2,3,4,5,6,7,8,9];
 		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
+		let fld = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		]
+		let divOut = document.getElementById ("out");
 		function field()
 		{
-		let divOut = document.getElementById ("out");
-
-
 		let result = "";
 		for( let i=0; i< numbers.length; i++)
 		{
@@ -29,46 +39,87 @@
 		{
 		let inData = document.getElementById("crdnt");
 		let str  = inData.value;
-		let data = str.split (',');	
+		let data = str.split (',');
+		let result = "";
+		let lett = ""; 
+		let numm = "";         
+		if (str.trim() === "") 
+		{
+		result = "Нет данных";
+		divOut.innerHTML = result;
+		return;
+		}
+
+		
 		if (data.length %2 ==0 )
 	  	{
 			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
 
 			let data_letters = data.filter( function (item,index) { return index %2==0;})
 
-			let mistake = data_numbers.find(function(item, index) { 
+			let mistake_n = data_numbers.find(function(item, index) {       // ошибочное значение из координат
 				let r = numbers.find(function(n) {return n == item;});
-				return r === undefined;  
+				return r === undefined;});
 				
+			if (mistake_n != undefined) 
+			{
+			result = "Некорректная координата " + mistake_n ;
+			divOut.innerHTML = result;
+			return;
+			}
+
+			let mistake_l = data_letters.find(function(item, index) {       // ошибочное значение из координат
+				let rr = letters.find(function(n) {return n == item;});
+				return rr === undefined;});
 				
-			});
-			console.log(mistake);
+			if (mistake_l != undefined) 
+			{
+			result = "Некорректная координата " + mistake_l ;
+			divOut.innerHTML = result;
+			return;
+			}
+				
+			let ship_l  = data_letters.filter(function(item, index) {   // масссив коррдинат буквы
+				let r = letters.filter(function(n) {return n == item;});
+				return r != undefined;}); 
+				
+			let ship_n  = data_numbers.filter(function(item, index) {   // масссив коррдинат цифры
+				let r = numbers.filter(function(n) {return n == item;});
+				return r != undefined;}); 
+			
+			for  ( let i= 0; i < ship_l.length; i++)
+				{
+				let x = ship_l[i];
+				let index_x = letters.indexOf(x);
+				let y = ship_n[i];
+				fld[index_x][y]= "#"; 			
+				}
+
+		for (let z = 0; z < 10; z++)
+		{
+		result =result + numbers[z];	
+		
+			for (let zz = 0; zz < 10; zz++)
+			{
+			result = result+fld[zz][z];			
+			}
+		result = result + "|"+ "</br>";
+		}
+		for (let symbol = 0; symbol < 10;symbol++ )
+		{
+		 lett = lett + letters[symbol];
+		}
+		
+		
+		divOut.innerHTML = " "+ lett + numm+ "</br>"+ result + " ----------" ;	
+		
 		}
 		else 
 		{
 		result = "Не правильный формат";
 		}
-        
 
-
-
-
-         // из введенных координат получить массив с числами, 
-		/// КОрабли формируются путем перебора всех значений в полученных массивах координат, цикл в цикле, сначала проверяем буквенною координату, при совпадении, проверяем числовую, при совпадении ставится #, пр не совпадении ставится пробел.
-		//let numbers = data.filter( function(item) {return item >= 0 && item <10;})     // для чисел, у меня строки
-		
-		
-		if (str.trim() === "") 
-		{
-		result = "Нет данных"
-		}
-		divOut.innerHTML = result;
-
-//			{
-//			let numbers = data.filter( function (item) {return item = data[i];})   
-//			}
-//			else { let letters = data.filter( function (item) {return item = data[i];})}		
-		}
+	}
 	</script>
 </body>
 </html>
