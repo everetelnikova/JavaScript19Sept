@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="crdnt">coordinates </input>
+<div id="out" style ="white-space:pre; font-family:monospace" > </div> <br/>
+<button onclick="work()"> Press me</button>	
+		<script>
+		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
+		let numbers = [0,1,2,3,4,5,6,7,8,9];
+		let arr_num0 = ["0"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num1 = ["1"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num2 = ["2"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num3 = ["3"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num4 = ["4"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num5 = ["5"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num6 = ["6"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num7 = ["7"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num8 = ["8"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let arr_num9 = ["9"," "," "," "," "," "," "," "," "," "," "+ "|"];
+		let result = "";
+		
+		let divOut = document.getElementById ("out");
+		function field()
+		{
+		let divOut = document.getElementById ("out");
+		divOut.innerHTML = "&nbsp"+letters +"<br/>"+ arr_num0 +"<br/>"+ arr_num1 +"<br/>" + arr_num2 +"<br/>"+ arr_num3 +"<br/>"+ arr_num4 +"<br/>"+ arr_num5 +"<br/>"+ arr_num6 +"<br/>"+ arr_num7 +"<br/>"+ arr_num8 +"<br/>"+ arr_num9 +"<br/>" +"-------------------";
+		}		
+		field();
+		
+		
+		function work()
+		{
+		let inData = document.getElementById("crdnt");
+		let str  = inData.value;
+		let data = str.split (',');	
+		if (data.length %2 ==0 )
+	  	{
+			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
+
+			let data_letters = data.filter( function (item,index) { return index %2==0;})	// массив с буквами
+
+			let mistake_n = data_numbers.find(function(item, index)  // в переменную передается ошибочная цифра
+			{         
+				let x = numbers.find(function(n) {return n == item;});
+				return x === undefined; 			
+			});
+			
+			let mistake_l = data_letters.find(function(item, index)  
+			{         
+				let y = letters.find(function(n) {return n == item;}); // в переменную передается ошибочная буква
+				return y === undefined; 			
+			});
+			if (mistake_l != undefined || mistake_n != undefined)	
+				{
+					if (mistake_l != undefined)
+					{result = "Ошибочная координата "+ mistake_l;}
+					if (mistake_n != undefined)
+					{ result = "Ошибочная координата "+ mistake_n;}
+				}
+		
+			let ship_l = [0,2,4];//data_letters.filter(function(item, index)  // массив из верных букв-координат
+				//{         
+				//let y = letters.filter(function(n) {return n == item;}); 
+				//return y != undefined; 		// исправить на индекс, а не значение массива letters	
+				//});
+			let ship_n = data_numbers.filter(function(item, index)  // массив из верных чисел координат
+				{         
+				let x = numbers.filter(function(n) {return n == item;}); 
+				return x != undefined; 			
+				});	
+				console.log(ship_l);
+			
+			for( i= 0; i< ship_l.length; i++)			// идея: для каждого i-ого элемента массива ship_l, взять i-ый элемент в ship_n,найти с первым элментом какого массива он совпадает, и в этот массив на индекс ship_l[i] поставить # 			
+			{
+			let current_l = ship_l[i];
+			let current_n = ship_n[i];
+				if (current_n == arr_num0[0])
+				{
+				arr_num0[current_l]= "#";				
+				}
+				if (current_n == arr_num1[0])
+				{
+				arr_num1[current_l]= "#";				
+				}	
+				if (current_n == arr_num2[0])
+				{
+				arr_num2[current_l]= "#";				
+				}
+				if (current_n == arr_num3[0])
+				{
+				arr_num3[current_l]= "#";				
+				}
+				if (current_n == arr_num4[0])
+				{
+				arr_num4[current_l]= "#";				
+				}
+				if (current_n == arr_num5[0])
+				{
+				arr_num5[current_l]= "#";				
+				}
+				if (current_n == arr_num6[0])
+				{
+				arr_num6[current_l]= "#";				
+				}
+				if (current_n == arr_num7[0])
+				{
+				arr_num7[current_l]= "#";				
+				}
+				if (current_n == arr_num8[0])
+				{
+				arr_num8[current_l]= "#";				
+				}
+				if (current_n == arr_num9[0])
+				{
+				arr_num9[current_l]= "#";				
+				}
+			}
+			result = "&nbsp"+letters +"<br/>"+ arr_num0 +"<br/>"+ arr_num1 +"<br/>" + arr_num2 +"<br/>"+ arr_num3 +"<br/>"+ arr_num4 +"<br/>"+ arr_num5 +"<br/>"+ arr_num6 +"<br/>"+ arr_num7 +"<br/>"+ arr_num8 +"<br/>"+ arr_num9 +"<br/>" +"-------------------";
+				
+			}
+			else 
+			{
+			result = "Не правильный формат";
+			}
+		/// КОрабли формируются путем перебора всех значений в полученных массивах координат, цикл в цикле, сначала проверяем буквенною координату, при совпадении, проверяем числовую, при совпадении ставится #, пр не совпадении ставится пробел.
+			
+			if (str.trim() === "") 
+			{
+			result = "Нет данных"
+			}
+		divOut.innerHTML = result;		
+		}
+	</script>
+</body>
+</html>
