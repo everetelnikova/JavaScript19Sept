@@ -1,0 +1,32 @@
+SELECT Product.maker,Laptop.speed
+FROM Laptop JOIN Product
+ON Product.model = Laptop.model and Laptop.hd >= 10
+
+//Ваш запрос вернул правильные данные на основной базе, но не прошел тест на проверочной базе.
+* Неверное число записей (больше на 2)
+На эту задачу есть FAQ
+*********************
+
+7(2)Простое объединение
+SELECT DISTINCT Product.model, PC.price
+FROM Product JOIN PC
+ON Product.model = PC.model 
+WHERE Product.maker LIKE 'B%'
+UNION
+SELECT Product.model, Laptop.price
+FROM Product JOIN Laptop
+ON Product.model = Laptop.model
+WHERE Product.maker LIKE 'B%'
+UNION
+SELECT Product.model, Printer.price
+FROM Product JOIN Printer
+ON Product.model = Printer.model
+WHERE Product.maker LIKE 'B%'
+*********************
+8(2)
+SELECT DISTINCT Maker 
+FROM Product
+INTERSECT
+SELECT Maker 
+FROM Product
+WHERE type IN ('PC','Printer')
