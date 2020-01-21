@@ -15,7 +15,7 @@
 		(function init(arg)
 		{
 		let btn = document.getElementById("btn");
-		btn.addEventListener("click", trans, false);
+	//	btn.addEventListener("click", trans, false);
 		btn.onclick = trans;
 		let state = "145"; 												// начальное значение, менять если нажали на кнопку в последующие после 1 разы
 		let out = document.getElementById("out");
@@ -45,7 +45,7 @@
 				{
 				state = jsdata.id;
 				}
-				else {state = "145";}
+				else {state = "900";}
 			r = result +"<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
 				}
 				else {out.innerHTML = "mistake";}
