@@ -35,8 +35,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		res.end('{"id":"159","left":["cabbage","wolf","goat"],"right":["peasant"],"status":"massacre"}');
 		}
 	}
-
-	if (obj.present == 334)
+	else if (obj.present == 334)
 	{
 		if (obj.option == "peasant")
 		{
@@ -48,7 +47,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 850) 
+	else if (obj.present == 850) 
 	{ 	
 		if (obj.option == "cabbage")
 		{
@@ -66,7 +65,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}	
 
-	if (obj.present == 432) 
+	else if (obj.present == 432) 
 	{ 	if (obj.option == "goat")
 		{
 		res.end('{"id":"966","left":["wolf","peasant","goat"],"right":["cabbage"]}');
@@ -83,7 +82,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 328) 
+	else if (obj.present == 328) 
 	{ 	if (obj.option == "goat")
 		{
 		res.end('{"id":"923","left":["cabbage","peasant","goat"],"right":["wolf"]}');
@@ -100,7 +99,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 923) 
+	else if (obj.present == 923) 
 	{ 	if (obj.option == "goat")
 		{
 		res.end('{"id":"328","left":["cabbage"],"right":["wolf","peasant","goat"]}');
@@ -117,7 +116,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 115) 
+	else if (obj.present == 115) 
 	{ 	
 		if (obj.option == "cabbage")
 		{
@@ -135,7 +134,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 966) 
+	else if (obj.present == 966) 
 	{ 	if (obj.option == "goat")
 		{
 		res.end('{"id":"432","left":["wolf"],"right":["cabbage","peasant","goat"]}');
@@ -152,7 +151,7 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		}
 	}
 
-	if (obj.present == 211) 
+	else if (obj.present == 211) 
 	{ 	if (obj.option == "goat")
 		{
 		res.end('{"id":"417","left":[],"right":["cabbage","wolf","peasant","goat"],"status":"task complete"}');
@@ -163,8 +162,8 @@ res.setHeader('Content-type','application/json');  //заголовок запр
 		res.end('{"id":"115","left":["goat"],"right":["cabbage","wolf","peasant"]}');
 		}
 	}
-
-res.end('It works!');
+	else {res.statusCode =400;
+		  res.end ('Mistake'); }
 }						 //тект, то, что возвращаем по запросу и завершаем запрос	
 else {res.statusCode =200;	// после любого запроса возвращает статус - все хорошо; если данных нет, подгружаем страницу
 res.setHeader('Content-type','text/html');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
