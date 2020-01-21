@@ -30,3 +30,9 @@ INTERSECT
 SELECT Maker 
 FROM Product
 WHERE type IN ('PC','Printer')
+**********************
+13(1)
+SELECT AVG(speed)
+FROM Product JOIN PC
+ON Product.model = PC.model
+WHERE Product.maker = 'A'
