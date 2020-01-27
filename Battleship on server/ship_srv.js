@@ -30,10 +30,10 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 			console.log('New user '+ cookie);
 			key_from_user = cookie;
 			}
-		//////////////////////////////////////////////////////
-		let strng = obj.coord;    // coord-параметр запроса на стороне клиента, куда запис-тся коордты всех корабл
-		let data = strng.split (',');//  массив с координатами
-		users[key_from_user] = data;
+//////////////////////////////////////////////////////
+		let strng = obj.coord;    		// coord-параметр запроса на стороне клиента, куда запис-тся коордты всех корабл
+		let data = strng.split (',');	//  массив с координатами
+		users[key_from_user] = data; 	//  записываем в объект users  по ключу куки массив с координатами пользователя
 		if (data.length %2 ==0 )
 	  	{
 			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
@@ -91,16 +91,94 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 		 lett = lett + letters[symbol];
 		}
 		
-		if (false)
+		if (false)  // проверка ошибки пользователя
 		{
 		res.statusCode =400;
 		res.end();
 		}
-		/////////////////////////////////////////////	
-		создать поле со стороны сервера используя рандом
+/////////////////////////////////////////////Массив кораблей сервера////////////////////////////////
+			let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
+		let letters = ["а","б","в","г","д","е","ж","з","и","к"];// массив возможных букв
+		let x_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса букв
+		let y_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса цифр
+		let ship_server_letter = letters[x_ship_index];			// получаем буквенную координату корабля
+		let ship_server_number = numbers[y_ship_index];			// получаем цифровую координату корабля
+		let ship_fld_server = [];								// пустой массив поля кораблей
+		function server_ship_fld_empty()								// фун-ия генерации кораблей на поле сервера	
+		{
+		if (ship_fld_server == "")								// если массив поля сервера пустой - записать туда координаты
+		{
+		 ship_fld_server.push(ship_server_letter,ship_server_number);
+		}
+		}
+		server_ship_fld_empty();
+		
+		function server_ship_fld()
+		{
+			for (let i = 0; i <=200; i++)						// проверка по всему полю возможных координат для 10 кораблей
+			{
+			let x_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса букв
+			let y_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса цифр
+			let ship_server_letter = letters[x_ship_index];			// получаем буквенную координату корабля
+			let ship_server_number = numbers[y_ship_index];			// получаем цифровую координату корабля
+			
+				if (ship_fld_server[i] == ship_server_letter)	// если координата-буква есть в массиве поля сервера
+				{
+					for (let z = 2; z <=20; z++)						// проверка по всему полю возможных координат для 10 кораблей  0  и первый индекс заняты 
+					{
+						if (ship_fld_server[z] == letters[x_ship_index-1] || letters[x_ship_index+1])	//  в массиве есть близлежащая координата-буква 
+						{
+						  if (ship_fld_server[z+1] !=  (numbers[y_ship_index] || numbers[y_ship_index-1] ||	numbers[y_ship_index+1]))	// следующая коорднита(цифровая) не находится в ближайшей области 		
+						  {
+							 ship_fld_server.push(ship_server_letter,ship_server_number); 
+						  }
+						}
+					}
+								
+				}	
+				else 	//WRONG!						// если координата-буквы нет в массиве поля сервера, ошибка, потому что идет поочереди, а нужно только по координатм буквам		
+				{	
+				for (let n = 0,m = 1; n <=20; n+=2,m+=2)						// проверка по всему полю возможных координат для 10 кораблей
+					{
+						if (ship_fld_server[n] == letters[x_ship_index-1] || letters[x_ship_index+1])	//  в массиве есть близлежащая координата-буква 
+						{
+							if (ship_fld_server[n] != 'undefined' )
+							{
+									if (ship_fld_server[m] !=  (numbers[y_ship_index] || numbers[y_ship_index-1] ||	numbers[y_ship_index+1]))	// следующая коорднита(цифровая) не находится в ближайшей области 	
+									{
+										if (ship_fld_server[m] != 'undefined')
+										{
+										ship_fld_server.push(ship_server_letter,ship_server_number); 
+										}
+									}
+							}	
+						}
+						//else if (ship_fld_server[n] == letters[x_ship_index+1])	//  в массиве есть близлежащая координата-буква 
+						//{
+						//  if (ship_fld_server[m] !=  (numbers[y_ship_index] || numbers[y_ship_index-1] ||	numbers[y_ship_index+1]))	// следующая коорднита(цифровая) не находится в ближайшей области 		
+						//  {
+						//	 ship_fld_server.push(ship_server_letter,ship_server_number); 
+						//  }
+						//}
+				    }
+				}
+			}
+		console.log(ship_fld_server);	
+		}
+			
+		
+		server_ship_fld();
+		console.log(ship_fld_server);
+		
+		res.statusCode =200;
+		res.end('OK, GAME STARTED');
+		}
+		server_ship_fld();
+
         и вернуть res.statusCode =200;		                          
 		/////////////////////////////////////////////////////	
 		}
+	}
 ///////////////часть когда стреляет сервер, переписывается массив координат пользователя///
 users[key_from_user]
 let check_data = [];
@@ -109,6 +187,15 @@ for (let i,j; j < users[key_from_user].length; i+=3, j+2)
 check_data[i] = users[key_from_user][j]; 
 check_data[i+1] = users[key_from_user][j+1];
 check_data[i+2] = "false";	
+}
+//////////////////часть когда стреляет пользователь, переписывается массив координат пользователя///
+ship_fld_server
+let check_data_s = [];
+for (let i,j; j < ship_fld_server.length; i+=3, j+2)
+{
+check_data_s[i] = ship_fld_server[j]; 
+check_data_s[i+1] = ship_fld_server[j+1];
+check_data_s[i+2] = "false";	
 }
 
  
@@ -136,13 +223,39 @@ check_data[i+2] = "false";
 				 }
 			 }
 		 }
+		} 
 		 else 
+		{
+		 //  первое формирование ответных координат -выстрелов от сервера, рандом и все  такое
+		let numbers = [0,1,2,3,4,5,6,7,8,9];
+		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
+		let x_coord_index = Math.floor(Math.random() * 10);	
+		let y_coord_index = Math.floor(Math.random() * 10);		
+		let x_coord = letters[x_coord_index];	 
+		let y_coord = letters[y_coord_index];
+//  проверять нет ли таких же координат в массиве выстрелов		- не сделано
+
+		for (let i = 0; i< users[key_from_user].length; i++;) //проверяем попали ли в корабли сервера
+		{
+		 if (servs[key_from_user][index +1] == ship_num)
 		 {
-			 //  первое формирование ответных координат -выстрелов от сервера, рандом и все  такое
+			 servs[key_from_user][index +2] = "true";				// при попадании переписываем 3 координату 
+			 for (let i = 0; i<  check_data_serv.length; i+ 2)		// цикл проверки по всем ли кораблям попали
+			 {
+				 if ( check_data_serv[i] == 'false')
+				 {
+					 res.statusCode =200;
+					 res.end('Попал!');
+				 }
+			 }
+		 }
+		} 
+			 
+		///////////////////////////////////////////////////////////////////////////////////////	 
 			 // как только промах- возврат пользователю всех выстрелов
 			 	res.statusCode =200;
 				res.end('Промах!');
-		 }
+		 
 		}
 
 	
@@ -150,9 +263,7 @@ check_data[i+2] = "false";
 	else 
 	{res.statusCode =200;	// после любого запроса возвращает статус - все хорошо; если данных нет, подгружаем страницу
 	res.setHeader('Content-type','text/html');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
-	//открыть
 	let file = fs.readFileSync("Battleship.html");     //страница, которую возвращает сервер по запросу
-	//отослать
 	res.end(file);
 	}
 }
