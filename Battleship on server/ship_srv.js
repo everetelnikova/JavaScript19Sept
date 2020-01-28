@@ -1,6 +1,7 @@
 const http = require('http'); // подключение библиотеки для http
 const url = require('url'); 
 const fs = require('fs');
+const start = require('./start);
 const  host = '127.0.0.1';        // ip PC
 const  port = '80';				 // port
 let users = {};
@@ -30,74 +31,19 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 			console.log('New user '+ cookie);
 			key_from_user = cookie;
 			}
-//////////////////////////////////////////////////////
-		let strng = obj.coord;    		// coord-параметр запроса на стороне клиента, куда запис-тся коордты всех корабл
-		let data = strng.split (',');	//  массив с координатами
-		users[key_from_user] = data; 	//  записываем в объект users  по ключу куки массив с координатами пользователя
-		if (data.length %2 ==0 )
-	  	{
-			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
-
-			let data_letters = data.filter( function (item,index) { return index %2==0;})
-
-			let mistake_n = data_numbers.find(function(item, index) {       // ошибочное значение из координат
-				let r = numbers.find(function(n) {return n == item;});
-				return r === undefined;});
-				
-			if (mistake_n != undefined) 
-			{
-			result = "Некорректная координата " + mistake_n ;
-			return;
-			}
-
-			let mistake_l = data_letters.find(function(item, index) {       // ошибочное значение из координат
-				let rr = letters.find(function(n) {return n == item;});
-				return rr === undefined;});
-				
-			if (mistake_l != undefined) 
-			{
-			result = "Некорректная координата " + mistake_l ;
-			return;
-			}
-				
-			let ship_l  = data_letters.filter(function(item, index) {   // масссив коррдинат буквы
-				let r = letters.filter(function(n) {return n == item;});
-				return r != undefined;}); 
-				
-			let ship_n  = data_numbers.filter(function(item, index) {   // масссив коррдинат цифры
-				let r = numbers.filter(function(n) {return n == item;});
-				return r != undefined;}); 
-			
-			for  ( let i= 0; i < ship_l.length; i++)
-				{
-				let x = ship_l[i];
-				let index_x = letters.indexOf(x);
-				let y = ship_n[i];
-				fld[index_x][y]= "#"; 			
-				}
-
-		for (let z = 0; z < 10; z++)
-		{
-		result =result + numbers[z];	
-		
-			for (let zz = 0; zz < 10; zz++)
-			{
-			result = result+fld[zz][z];			
-			}
-		result = result + "|"+ "</br>";
-		}
-		for (let symbol = 0; symbol < 10;symbol++ )
-		{
-		 lett = lett + letters[symbol];
-		}
-		
-		if (false)  // проверка ошибки пользователя
+		let rslt = start.validate() //функция, вызывает файл, где выполняется логика проверки корадлей от пользователя
+		if (rslt === undefined)  // проверка ошибки пользователя
 		{
 		res.statusCode =400;
-		res.end();
+		res.end('Ошибка пользователя');
 		}
+		else 
+		{	
+		res.statusCode =200;
+		res.end('Координаты приняты');
+		}		
 /////////////////////////////////////////////Массив кораблей сервера////////////////////////////////
-			let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
+		let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
 		let letters = ["а","б","в","г","д","е","ж","з","и","к"];// массив возможных букв
 		let x_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса букв
 		let y_ship_index = Math.floor(Math.random() * 10);		// рандомный номер индекса цифр
