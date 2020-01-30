@@ -12,7 +12,7 @@ it("works1", function()
 it("Все кооординаты правильные", function()
 {
 let data = ['а',0];
-	expect(start.validate(data,letters,numbers)).toBe('j');
+	expect(start.validate(data,letters,numbers)).toBe(undefined);
 });	
 
 it("Буква должна быть не правильная", function()
@@ -32,6 +32,11 @@ it("works4", function()
 {
 let data = [5];
 	expect(start.validate(data,letters,numbers)).toBe("Не правильный формат");
+});
+
+it("Проверка массива сервера", function()
+{
+	expect(start.generateFld(letters,numbers)).toBe(true);
 });
 	
 });

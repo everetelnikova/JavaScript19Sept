@@ -1,0 +1,14 @@
+{
+  "name": "battleship-on-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ship_srv.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}
