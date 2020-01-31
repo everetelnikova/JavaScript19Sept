@@ -42,8 +42,11 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 		res.statusCode =200;
 		res.end('Координаты приняты');
 		}		
+		function nextRnd(){
+			return Math.floor(Math.random()*10);
+		}
 /////////////////////////////////////////////Массив кораблей сервера////////////////////////////////
-		let reslt = start.generateFld() //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
+		let reslt = start.generateFld(numbers, letters, nextRnd) //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
 		if (reslt == true)  // проверка ошибки пользователя
 		{
 		res.statusCode =400;
