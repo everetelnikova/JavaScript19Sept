@@ -1,19 +1,20 @@
 module.exports ={
-strike_user:function(letters,numbers,arr_strike){
-// проверка правильности координат-выстрела от пользователя	
+strike_user: function(letters,numbers,arr_strike)
+{
+// РїСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё РєРѕРѕСЂРґРёРЅР°С‚-РІС‹СЃС‚СЂРµР»Р° РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ	
 let result;
 	if (arr_strike.length %2 ==0 )
 	  	{
-			let arr_strike_numbers = arr_strike.filter( function (item,index) { return index %2!=0;}) // массив с числами
+			let arr_strike_numbers = arr_strike.filter( function (item,index) { return index %2!=0;}) // РјР°СЃСЃРёРІ СЃ С‡РёСЃР»Р°РјРё
 			let arr_strike_letters = arr_strike.filter( function (item,index) { return index %2==0;})
-			// массив чисел  от пользователя, которое не входит в координаты 0..9
-			// если все координат ы входят в условие от 0..9, вернуть пустой массив
+			// РјР°СЃСЃРёРІ С‡РёСЃРµР»  РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РєРѕС‚РѕСЂРѕРµ РЅРµ РІС…РѕРґРёС‚ РІ РєРѕРѕСЂРґРёРЅР°С‚С‹ 0..9
+			// РµСЃР»Рё РІСЃРµ РєРѕРѕСЂРґРёРЅР°С‚ С‹ РІС…РѕРґСЏС‚ РІ СѓСЃР»РѕРІРёРµ РѕС‚ 0..9, РІРµСЂРЅСѓС‚СЊ РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ
 			let mistake_n = arr_strike_numbers.filter(function(item, index) {
 				if (item < 0 || item >9){return true;}
 				else {return false;}	
 				});
 			if (mistake_n.length > 0) 
-			{result = "Некорректная координата " + mistake_n ;
+			{result = "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ РєРѕРѕСЂРґРёРЅР°С‚Р° " + mistake_n ;
 			return result;}		
 
 			let mistake_l = arr_strike_letters.filter(function(item) 
@@ -26,24 +27,23 @@ let result;
 			}); 				
 			if (mistake_l.length > 0) 
 			{
-			result = "Некорректная координата " + mistake_l ;
+			result = "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ РєРѕРѕСЂРґРёРЅР°С‚Р° " + mistake_l ;
 			return result;
 			}
 		}
-		else 
-		{
-		result = "Не правильный формат";
-		}
+	else 
+	{result = "РќРµ РїСЂР°РІРёР»СЊРЅС‹Р№ С„РѕСЂРјР°С‚";}
 	return result;
 },	
-// проверка подапания в корабль сервера
-// в функцию передаем массив поля сервера, коодинату буквы-выстрела, координату цифры-выстрела
+// РїСЂРѕРІРµСЂРєР° РїРѕРґР°РїР°РЅРёСЏ РІ РєРѕСЂР°Р±Р»СЊ СЃРµСЂРІРµСЂР°
+// РІ С„СѓРЅРєС†РёСЋ РїРµСЂРµРґР°РµРј РјР°СЃСЃРёРІ РїРѕР»СЏ СЃРµСЂРІРµСЂР°, РєРѕРѕРґРёРЅР°С‚Сѓ Р±СѓРєРІС‹-РІС‹СЃС‚СЂРµР»Р°, РєРѕРѕСЂРґРёРЅР°С‚Сѓ С†РёС„СЂС‹-РІС‹СЃС‚СЂРµР»Р°
 check_strike_user: function(array_server, ship_lttr, ship_num)
 {
-	let hit;  // переменная-флаг 
-	let index = array_server.indexOf(ship_lttr); //ищем индекс буквы-выстрела в массиве сервера(если она есть)	
-	let check_data_s = [];  // перезаписываем массив сервера с метками об отсутствии попадания после каждой пары координат 
-	for (let i,j; j < array_server.length; i+=3, j+2) 
+	let hit;  // РїРµСЂРµРјРµРЅРЅР°СЏ-С„Р»Р°Рі 
+	let index = array_server.indexOf(ship_lttr); //РёС‰РµРј РёРЅРґРµРєСЃ Р±СѓРєРІС‹-РІС‹СЃС‚СЂРµР»Р° РІ РјР°СЃСЃРёРІРµ СЃРµСЂРІРµСЂР°(РµСЃР»Рё РѕРЅР° РµСЃС‚СЊ)	
+	let check_data_s = [];  // РїРµСЂРµР·Р°РїРёСЃС‹РІР°РµРј РјР°СЃСЃРёРІ СЃРµСЂРІРµСЂР° СЃ РјРµС‚РєР°РјРё РѕР± РѕС‚СЃСѓС‚СЃС‚РІРёРё РїРѕРїР°РґР°РЅРёСЏ РїРѕСЃР»Рµ РєР°Р¶РґРѕР№ РїР°СЂС‹ РєРѕРѕСЂРґРёРЅР°С‚ 
+	let summ_hits= 0; // РєРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°С‡РЅС‹С… РІС‹СЃС‚СЂРµР»РѕРІ
+	for (let i=0,j=0; j < array_server.length; i+=3, j+=2) 
 	{
 	check_data_s[i] = array_server[j]; 
 	check_data_s[i+1] = array_server[j+1];
@@ -51,53 +51,50 @@ check_strike_user: function(array_server, ship_lttr, ship_num)
 	}
 	
 
-	for (let i = 0; i< check_data_s.length; i++;) //проверяем попали ли в корабли сервера
+	for (let i = 0; i< check_data_s.length; i++) //РїСЂРѕРІРµСЂСЏРµРј РїРѕРїР°Р»Рё Р»Рё РІ РєРѕСЂР°Р±Р»Рё СЃРµСЂРІРµСЂР°
 		{
-			if (check_data_s[index +1] == ship_num)				// попадание в координату цифру
+			if (check_data_s[index +1] == ship_num)				// РїРѕРїР°РґР°РЅРёРµ РІ РєРѕРѕСЂРґРёРЅР°С‚Сѓ С†РёС„СЂСѓ
 			{
-			 check_data_s[index +2] = "true";				// при попадании переписываем 3 координату в true
-			 hit = 'Попал!';
-			 for (let i = 0; i<  check_data_s.length; i+ 2)		// цикл проверки по всем ли кораблям попали
-			 {
-				 if (check_data_s[i] == 'true')
-				 {hit = 'Победа пользователя';}
-			 }
+			 check_data_s[index +2] = "true";				// РїСЂРё РїРѕРїР°РґР°РЅРёРё РїРµСЂРµРїРёСЃС‹РІР°РµРј 3 РєРѕРѕСЂРґРёРЅР°С‚Сѓ РІ true
+			 hit = 'РџРѕРїР°Р»!';
+
 			}
 			else  
-			{hit = 'Промах!';} 
+			{hit = 'РџСЂРѕРјР°С…!';} 
 		}
+	for (let y = 0; y < check_data_s.length; y+=2)		// С†РёРєР» РїСЂРѕРІРµСЂРєРё РїРѕ РІСЃРµРј Р»Рё РєРѕСЂР°Р±Р»СЏРј РїРѕРїР°Р»Рё  РЅРµ СЂР°Р±Рѕ
+			 {
+				 if (check_data_s[y] == 'true')
+				{ summ_hits++;}
+			 }
+		if (summ_hits== 10)
+		{hit = 'РџРѕР±РµРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ!';}
+		else if (summ_hits<10 && summ_hits>=1){hit ='РџРѕРїР°Р»!';}
 return hit;
 },	
 
-// формируется массив координат выстрела от сервера
+// С„РѕСЂРјРёСЂСѓРµС‚СЃСЏ РјР°СЃСЃРёРІ РєРѕРѕСЂРґРёРЅР°С‚ РІС‹СЃС‚СЂРµР»Р° РѕС‚ СЃРµСЂРІРµСЂР°
 generate_strike_server:function(letters,numbers,next)
 	{
-	let strike_from_server = [];								// пустой массив поля кораблей
-	let letter_ship_index = next();		// рандомный номер индекса букв
-	let numbers_ship_index = next();		// рандомный номер индекса цифр
+	let strike_from_server = [];								// РїСѓСЃС‚РѕР№ РјР°СЃСЃРёРІ РїРѕР»СЏ РєРѕСЂР°Р±Р»РµР№
+	let letter_ship_index = next();		// СЂР°РЅРґРѕРјРЅС‹Р№ РЅРѕРјРµСЂ РёРЅРґРµРєСЃР° Р±СѓРєРІ
+	let numbers_ship_index = next();		// СЂР°РЅРґРѕРјРЅС‹Р№ РЅРѕРјРµСЂ РёРЅРґРµРєСЃР° С†РёС„СЂ
 
+	let ship_server_letter = letters[letter_ship_index];			// РїРѕР»СѓС‡Р°РµРј Р±СѓРєРІРµРЅРЅСѓСЋ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РєРѕСЂР°Р±Р»СЏ
+	let ship_server_number = numbers[numbers_ship_index];	// РїРѕР»СѓС‡Р°РµРј С†РёС„СЂРѕРІСѓСЋ РєРѕРѕСЂРґРёРЅР°С‚Сѓ РєРѕСЂР°Р±Р»СЏ
+	strike_from_server.push(ship_server_letter,ship_server_number);
 
-	while (strike_from_server.length <= 2)
-	{
-	let ship_server_letter = letters[letter_ship_index];			// получаем буквенную координату корабля
-	let ship_server_number = numbers[numbers_ship_index];	// получаем цифровую координату корабля
-	 if (this.check_adjacent(strike_from_server, letter_ship_index,numbers_ship_index) == false) ///// функцию чек заменить, она проверяет близкие координаты
-	 {strike_from_server.push(ship_server_letter,ship_server_number);
-	  letter_ship_index = next();
-	  numbers_ship_index = next();}
-	else {letter_ship_index = next();
-	  numbers_ship_index = next()}
-	}
-	return strike_from_server;  // вернуть переменные с координатами ship_lttr_s, ship_num_s
+	return strike_from_server;  // РІРµСЂРЅСѓС‚СЊ РїРµСЂРµРјРµРЅРЅС‹Рµ СЃ РєРѕРѕСЂРґРёРЅР°С‚Р°РјРё ship_lttr_s, ship_num_s
 	},
-// проверка попал ли сервер в корабль пользователя
+// РїСЂРѕРІРµСЂРєР° РїРѕРїР°Р» Р»Рё СЃРµСЂРІРµСЂ РІ РєРѕСЂР°Р±Р»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 check_strike_server: function(array_user, ship_lttr_s, ship_num_s)
 {
-	let hit;  // переменная-флаг 
-	let index = array_user.indexOf(ship_lttr); //ищем индекс буквы-выстрела в массиве юзера(если она есть)	
-	let check_data_u = [];  // перезаписываем массив юзера с метками об отсутствии попадания после каждой пары координат 
-	for (let i,j; j < array_user.length; i+=3, j+2) 
+	let hit;  // РїРµСЂРµРјРµРЅРЅР°СЏ-С„Р»Р°Рі 
+	let index = array_user.indexOf(ship_lttr); //РёС‰РµРј РёРЅРґРµРєСЃ Р±СѓРєРІС‹-РІС‹СЃС‚СЂРµР»Р° РІ РјР°СЃСЃРёРІРµ СЋР·РµСЂР°(РµСЃР»Рё РѕРЅР° РµСЃС‚СЊ)	
+	let check_data_u = [];  // РїРµСЂРµР·Р°РїРёСЃС‹РІР°РµРј РјР°СЃСЃРёРІ СЋР·РµСЂР° СЃ РјРµС‚РєР°РјРё РѕР± РѕС‚СЃСѓС‚СЃС‚РІРёРё РїРѕРїР°РґР°РЅРёСЏ РїРѕСЃР»Рµ РєР°Р¶РґРѕР№ РїР°СЂС‹ РєРѕРѕСЂРґРёРЅР°С‚ 
+	let summ_hits = 0;
+	for (let i=0,j=0; j < array_user.length; i+=3, j+=2) 
 	{
 	check_data_u[i] = array_user[j]; 
 	check_data_u[i+1] = array_user[j+1];
@@ -105,21 +102,28 @@ check_strike_server: function(array_user, ship_lttr_s, ship_num_s)
 	}
 	
 
-	for (let i = 0; i< check_data_u.length; i++;) //проверяем попали ли в корабли сервера
+	for (let i = 0; i< check_data_u.length; i++) //РїСЂРѕРІРµСЂСЏРµРј РїРѕРїР°Р»Рё Р»Рё РІ РєРѕСЂР°Р±Р»Рё СЃРµСЂРІРµСЂР°
 		{
-			if (check_data_u[index +1] == ship_num)				// попадание в координату цифру
+			if (check_data_u[index +1] == ship_num)				// РїРѕРїР°РґР°РЅРёРµ РІ РєРѕРѕСЂРґРёРЅР°С‚Сѓ С†РёС„СЂСѓ
 			{
-			 check_data_u[index +2] = "true";				// при попадании переписываем 3 координату в true
-			 hit = 'Попал!';
-			 for (let i = 0; i<  check_data_u.length; i+ 2)		// цикл проверки по всем ли кораблям попали
+			 check_data_u[index +2] = "true";				// РїСЂРё РїРѕРїР°РґР°РЅРёРё РїРµСЂРµРїРёСЃС‹РІР°РµРј 3 РєРѕРѕСЂРґРёРЅР°С‚Сѓ РІ true
+			 hit = 'РџРѕРїР°Р»!';
+			 for (let y = 0; y<  check_data_u.length; y+=2)		// С†РёРєР» РїСЂРѕРІРµСЂРєРё РїРѕ РІСЃРµРј Р»Рё РєРѕСЂР°Р±Р»СЏРј РїРѕРїР°Р»Рё
 			 {
-				 if (check_data_u[i] == 'true')
-				 {hit = 'Победа сервера';}
+				 if (check_data_u[y] == 'true')
+				 {hit = 'РџРѕР±РµРґР° СЃРµСЂРІРµСЂР°';}
 			 }
 			}
 			else  
-			{hit = 'Промах!';} 
+			{hit = 'РџСЂРѕРјР°С…!';} 
 		}
+	for (let y = 0; y < check_data_s.length; y+=2)		// С†РёРєР» РїСЂРѕРІРµСЂРєРё РїРѕ РІСЃРµРј Р»Рё РєРѕСЂР°Р±Р»СЏРј РїРѕРїР°Р»Рё  РЅРµ СЂР°Р±Рѕ
+		{ 	if (check_data_s[y] == 'true')
+			{ summ_hits++;}
+		}
+		if (summ_hits== 10)
+		{hit = 'РџРѕР±РµРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ!';}
+		else if (summ_hits<10 && summ_hits>=1){hit ='РџРѕРїР°Р»!';}
 return hit;
 },
  jasmine: function(){return true;}
