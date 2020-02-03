@@ -36,10 +36,8 @@ module.exports ={
 		}
 	return result;
 	},
-	generateFld: function(letters,numbers,next)
+	generateFld: function(letters,numbers,next)   // генерация поля массива сервера
 	{
-	//let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
-	//let letters = ["а","б","в","г","д","е","ж","з","и","к"];// массив возможных букв
 	let ship_fld_server = [];								// пустой массив поля кораблей
 	let letter_ship_index = next();		// рандомный номер индекса букв
 	let numbers_ship_index = next();		// рандомный номер индекса цифр
@@ -61,7 +59,7 @@ module.exports ={
 	
     //возвращает true, если найден корабль рядом с указанной координатой буквой или на той же координате
     //иначе - false
-  	 //let ship_fld_server_test = ['в',8,'в',3,'в',5,'к',1,'и',9,'з',5,'б',1,'д',4,'е',2,'а',7];
+	// array  - массив координат поля сервера
    check_adjacent: function (array, letter_idx, number_idx)
     {
 	let mistake_in_arr;
@@ -75,8 +73,6 @@ module.exports ={
 			{
 				if (array[j] == (number_idx +1) || array[j] == (number_idx)|| array[j] == (number_idx -1)) // проверить что буква, следующая за буквой-координатой, НЕ имеет координаты-цифры рядом 
 				{mistake_in_arr = 1;
-				console.log(array[i]);
-				console.log(array[i+1]);
 				return true;}			//  как только найдена ошибка функция прерывается
 			}
 			else 
@@ -87,18 +83,6 @@ module.exports ={
 		{return true;}
 		else
 		{return false;} 
-    
-	
-	
-	///if (check_adjacent(ship_fld_server_test, 2, 8))
-  //  {return false;}
-	//else {return true;}
-   
-    //  if (check_adjacent(ship_fld_server_test, 2, 8)){
-    //  document.getElementById("out").innerHTML = "найдено";
-   //   } else {
-    //  document.getElementById("out").innerHTML = "не найдено";    // значит,для такой координаты нет близлежащих кораблей 
-   //   }
     
 	},
  jasmine: function(){return true;}
