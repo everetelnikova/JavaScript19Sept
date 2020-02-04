@@ -41,35 +41,36 @@ check_strike_user: function(array_server, ship_lttr, ship_num)
 {
 	let hit;  // переменная-флаг 
 	let index = array_server.indexOf(ship_lttr); //ищем индекс буквы-выстрела в массиве сервера(если она есть)	
-	let check_data_s = [];  // перезаписываем массив сервера с метками об отсутствии попадания после каждой пары координат 
-	let summ_hits= 0; // количество удачных выстрелов
-	for (let i=0,j=0; j < array_server.length; i+=3, j+=2) 
-	{
-	check_data_s[i] = array_server[j]; 
-	check_data_s[i+1] = array_server[j+1];
-	check_data_s[i+2] = "false";	
-	}
-	
+ // перезаписываем массив сервера с метками об отсутствии попадания после каждой пары координат 
 
-	for (let i = 0; i< check_data_s.length; i++) //проверяем попали ли в корабли сервера
+
+
+	for (let i = 0; i< array_server.length; i++) //проверяем попали ли в корабли сервера
 		{
-			if (check_data_s[index +1] == ship_num)				// попадание в координату цифру
+			if (array_server[index +1] == ship_num)				// попадание в координату цифру
 			{
-			 check_data_s[index +2] = "true";				// при попадании переписываем 3 координату в true
+			 array_server[index +2] = "true";				// при попадании переписываем 3 координату в true
 			 hit = 'Попал!';
 
 			}
 			else  
 			{hit = 'Промах!';} 
 		}
-	for (let y = 0; y < check_data_s.length; y+=2)		// цикл проверки по всем ли кораблям попали  не рабо
+return hit;		
+},		
+	
+check_victory: function(any_array)	
+{
+	let hit;
+	let summ_hits= 0; // количество удачных выстрелов
+	for (let y = 2; y < any_array.length; y+=3)		// цикл проверки по всем ли кораблям попали  не рабо
 			 {
-				 if (check_data_s[y] == 'true')
+				 if (any_array[y] == 'true')
 				{ summ_hits++;}
 			 }
 		if (summ_hits== 10)
 		{hit = 'Победа пользователя!';}
-		else if (summ_hits<10 && summ_hits>=1){hit ='Попал!';}
+		else {hit = 'Игра продолжается';}
 return hit;
 },	
 
@@ -91,40 +92,33 @@ generate_strike_server:function(letters,numbers,next)
 check_strike_server: function(array_user, ship_lttr_s, ship_num_s)
 {
 	let hit;  // переменная-флаг 
-	let index = array_user.indexOf(ship_lttr); //ищем индекс буквы-выстрела в массиве юзера(если она есть)	
-	let check_data_u = [];  // перезаписываем массив юзера с метками об отсутствии попадания после каждой пары координат 
-	let summ_hits = 0;
-	for (let i=0,j=0; j < array_user.length; i+=3, j+=2) 
-	{
-	check_data_u[i] = array_user[j]; 
-	check_data_u[i+1] = array_user[j+1];
-	check_data_u[i+2] = "false";	
-	}
-	
+	let index = array_user.indexOf(ship_lttr_s); //ищем индекс буквы-выстрела в массиве юзера(если она есть)	
 
-	for (let i = 0; i< check_data_u.length; i++) //проверяем попали ли в корабли сервера
+	for (let i = 0; i< array_user.length; i++) //проверяем попали ли в корабли сервера
 		{
-			if (check_data_u[index +1] == ship_num)				// попадание в координату цифру
+			if (array_user[index +1] == ship_num_s)				// попадание в координату цифру
 			{
-			 check_data_u[index +2] = "true";				// при попадании переписываем 3 координату в true
+			 array_user[index +2] = "true";				// при попадании переписываем 3 координату в true
 			 hit = 'Попал!';
-			 for (let y = 0; y<  check_data_u.length; y+=2)		// цикл проверки по всем ли кораблям попали
-			 {
-				 if (check_data_u[y] == 'true')
-				 {hit = 'Победа сервера';}
-			 }
 			}
 			else  
 			{hit = 'Промах!';} 
 		}
-	for (let y = 0; y < check_data_s.length; y+=2)		// цикл проверки по всем ли кораблям попали  не рабо
-		{ 	if (check_data_s[y] == 'true')
-			{ summ_hits++;}
-		}
-		if (summ_hits== 10)
-		{hit = 'Победа пользователя!';}
-		else if (summ_hits<10 && summ_hits>=1){hit ='Попал!';}
+	
 return hit;
 },
+// Формирует нового пользователя в объекте users и возвращает значение массива кораблей тоже возвращаетмассивесли пользователь уже есть
+cookie_user: function(users,key_from_user,res){
+		if (users[key_from_user] === undefined )		// выполняется при новом пользователе					
+		{
+		let passnum = Math.floor(Math.random()*1000000); 
+		let cookie = 'id='+passnum;	
+		res.setHeader('Set-Cookie',cookie); 
+		users[cookie] = {};
+		console.log('New user '+ cookie);
+		key_from_user = cookie;
+		}
+		return users[key_from_user]; 
+		},
  jasmine: function(){return true;}
 }

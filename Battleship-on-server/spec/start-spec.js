@@ -45,7 +45,17 @@ it("Формирование массива сервера", function()
 	function next(){
 		return rnd[i++];
 	}
-	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0, 'в', 0, 'д', 0, 'ж', 0, 'и', 0, 'а', 2, 'в', 2, 'д', 2, 'ж', 2, 'и', 2, 'а', 4 ]);
+	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0, 'false',
+	'в', 0,'false',
+	'д', 0,'false',
+	'ж', 0,'false',
+	'и', 0,'false',
+	'а', 2,'false',
+	'в', 2,'false',
+	'д', 2,'false',
+	'ж', 2,'false',
+	'и', 2,'false',
+	'а', 4,'false']);
 });
 
 
@@ -56,7 +66,17 @@ it("Формирование массива сервера c ошибкой в �
 	function next(){
 		return rnd[i++];
 	}
-	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0,'д', 0, 'ж', 0, 'и', 0, 'а', 2, 'в', 2, 'д', 2, 'ж', 2, 'и', 2, 'а', 4, 'в', 4]);
+	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0, 'false',
+	'д', 0, 'false',
+	'ж', 0,  'false',
+	'и', 0, 'false',
+	'а', 2, 'false',
+	'в', 2, 'false',
+	'д', 2, 'false',
+	'ж', 2, 'false',
+	'и', 2, 'false',
+	'а', 4,  'false',
+	'в', 4, 'false']);
 });
 
 it("Проверка массива сервера с ошибкой: координата буква одинакова, координат цифра рядом", function()

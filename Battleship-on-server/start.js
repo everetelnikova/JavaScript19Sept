@@ -41,7 +41,7 @@ module.exports ={
 	let ship_fld_server = [];								// пустой массив поля кораблей
 	let letter_ship_index = next();		// рандомный номер индекса букв
 	let numbers_ship_index = next();		// рандомный номер индекса цифр
-
+	let check_data_s = []; 
 
 	while (ship_fld_server.length <= 20)
 	{
@@ -54,7 +54,13 @@ module.exports ={
 	else {letter_ship_index = next();
 	  numbers_ship_index = next()}
 	}
-	return ship_fld_server;
+	for (let i=0,j=0; j < ship_fld_server.length; i+=3, j+=2) 
+	{
+	check_data_s[i] = ship_fld_server[j]; 
+	check_data_s[i+1] = ship_fld_server[j+1];
+	check_data_s[i+2] = "false";	
+	}
+	return check_data_s;
 	},
 	
     //возвращает true, если найден корабль рядом с указанной координатой буквой или на той же координате

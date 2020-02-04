@@ -1,7 +1,8 @@
 const http = require('http'); // подключение библиотеки для http
 const url = require('url'); 
 const fs = require('fs');
-const start = require('./start);
+const start = require('./start');
+const check = require('./check');
 const  host = '127.0.0.1';        // ip PC
 const  port = '80';				 // port
 let users = {};
@@ -11,27 +12,26 @@ function respond(req,res)		// запускается при получении любого запроса
 const parsed = url.parse(req.url,true);
 const obj = parsed.query;		//  запрос
 const str = parsed.path;		// адрес ресурса(путь к нему) 
+console.log(str);
+let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
+let letters = ["а","б","в","г","д","е","ж","з","и","к"];// массив возможных букв
 	if (str == "/favicon.ico")
 	{
 	res.statusCode =400;
 	res.end();
 	}
-	else if (str == "/start")
-	{		
+	else if (str.includes("/start"))
+	{	
 		res.statusCode =200;			// после любого запроса возвращает статус - все хорошо
 		res.setHeader('Content-type','application/json');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
 		let key_from_user = req.headers.cookie;  // переменная для  получения куки у пользователя который уже работает
-		let state;
-			if (users[key_from_user] === undefined )		// выполняется при новом пользователе					
-			{
-			let passnum = Math.floor(Math.random()*1000000); 
-			let cookie = 'id='+passnum;	
-			res.setHeader('Set-Cookie',cookie); 
-			users[cookie] = {};
-			console.log('New user '+ cookie);
-			key_from_user = cookie;
-			}
-		let rslt = start.validate() //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
+		// Объект со всеми данными одного пользователя
+		user_object = check.cookie_user(users,key_from_user,res);
+		let string_of_pain =obj.key;
+		let array_of_shame = string_of_pain.split(',');
+		
+		
+		let rslt = start.validate(array_of_shame,letters,numbers) //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
 		if (rslt === undefined)  // проверка ошибки пользователя
 		{
 		res.statusCode =400;
@@ -40,26 +40,30 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 		else 
 		{	
 		res.statusCode =200;
+	
+		//переписываю массив пользователя , каждый третий элемент флаг о целости корабля	
+		for (let i=0,j=0; j < array_of_shame.length; i+=3, j+=2) 
+		{
+		check_data_u[i] = array_of_shame[j]; 
+		check_data_u[i+1] = array_of_shame[j+1];
+		check_data_u[i+2] = "false";	
+		}
+		user_object.arr_user = check_data_u;  //корабли пользователя
 		res.end('Координаты приняты');
 		}
-///////////////////////////////////////////////////////////////////////////////////////		
+
 		function nextRnd(){
-			return Math.floor(Math.random()*10);
-		}
+		return Math.floor(Math.random()*10);}
 /////////////////////////////////////////////Массив кораблей сервера//////////////////
-		let reslt = start.generateFld(numbers, letters, nextRnd) //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
-		if (reslt == true)  // проверка ошибки пользователя
-		{
-		res.statusCode =400;
-		res.end('Ошибка пользователя');    // ожидать ошибки от сервера?
-		}
-		else 
-		{		
+		let reslt = start.generateFld(numbers, letters, nextRnd) 
+		user_object.arr_server = check_data_s;  //корабли сервера для конкретного пользователя
 		res.statusCode =200;
 		res.end('OK, GAME STARTED');
-		}
-
+		
+		console.log(user_object);
 	}
+
+	
 ////////////////////////////////////////////////////////////////////////////////////////
 
 	 
@@ -94,18 +98,21 @@ const str = parsed.path;		// адрес ресурса(путь к нему)
 		res.statusCode =200;
 		res.end('Выстрел принят');
 		}
-	
-		let rslt_hit_strike_user = check.generate_strike_server(letters,numbers,next)//функция, вызывает файл, где выполняется логика проверки кораблей от сервера
-		if (rslt_hit_strike_user === undefined)  // проверка ошибки сервера
-		{
-		res.statusCode =400;
-		res.end('Ошибка');
-		}
-		else 
-		{	
-		res.statusCode =200;
-		res.end('Выстрел принят');
-		}
+	// //функция, вызывает файл, где выполняется логика проверки кораблей от сервера
+	// //	let rslt_hit_strike_user = check.generate_strike_server(letters,numbers,next)
+	// //	let all_strikes_user = [];
+	// //	if (rslt_hit_strike_user === undefined)  // проверка ошибки сервера
+		// {
+		// res.statusCode =400;
+		// res.end('Ошибка');
+		// }
+		// else 
+		// {
+		// all_strikes_user=all_strikes_user.push(rslt_hit_strike_user[0],rslt_hit_strike_user[1])	;
+		// console.log(all_strikes_user);
+		// res.statusCode =200;
+		// res.end('Выстрел принят');
+		// }
 
 
 	
