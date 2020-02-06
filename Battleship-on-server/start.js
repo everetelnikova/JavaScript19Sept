@@ -36,7 +36,7 @@ module.exports ={
 		}
 	return result;
 	},
-	generateFld: function(letters,numbers,next)   // генерация поля массива сервера
+	generateFld: function(numbers,letters,next)   // генерация поля массива сервера
 	{
 	let ship_fld_server = [];								// пустой массив поля кораблей
 	let letter_ship_index = next();		// рандомный номер индекса букв
@@ -46,6 +46,7 @@ module.exports ={
 	while (ship_fld_server.length <= 20)
 	{
 	let ship_server_letter = letters[letter_ship_index];			// получаем буквенную координату корабля
+
 	let ship_server_number = numbers[numbers_ship_index];	// получаем цифровую координату корабля
 	 if (this.check_adjacent(ship_fld_server, letter_ship_index,numbers_ship_index) == false)
 	 {ship_fld_server.push(ship_server_letter,ship_server_number);
@@ -58,7 +59,7 @@ module.exports ={
 	{
 	check_data_s[i] = ship_fld_server[j]; 
 	check_data_s[i+1] = ship_fld_server[j+1];
-	check_data_s[i+2] = "false";	
+	check_data_s[i+2] = "false";
 	}
 	return check_data_s;
 	},
@@ -68,6 +69,9 @@ module.exports ={
 	// array  - массив координат поля сервера
    check_adjacent: function (array, letter_idx, number_idx)
     {
+	let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
+	//let letters = ["a","b","c","d","e","f","g","h","j","k"];// массив возможных букв в,8,в,9,в,5,к,1,и,9,з,5,б,1,д,4,е,2,а,7
+	let letters = ["а","б","в","г","д","е","ж","з","и","к"];
 	let mistake_in_arr;
 	let previous_letter = letters[letter_idx-1];
 	let next_letter = letters[letter_idx+1];

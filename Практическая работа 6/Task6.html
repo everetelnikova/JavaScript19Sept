@@ -10,15 +10,20 @@
 <button onclick="work()"> Press me</button>	
 		<script>
 		function work(){
-		var inX = document.getElementById("x");
-		var intest = document.getElementById("test");
-		var X = parseFloat(inX.value);
+		let inX = document.getElementById("x");
+		let intest = document.getElementById("test");
+		let X = parseFloat(inX.value);
 		result = "  ";
-		for (var n = 0; n < 10; n++)
-			{
-			X = X+3;
-			result = result + X + " ";
-			}
+		if (X == 1)
+		{
+		result = '+------+'+"<br/>"+"|    |"+"<br/>"+"|    |"+"<br/>"+'+------+';
+		}
+		
+	    if (X == 5)
+		{
+		result = '{ "x":15, "y": 28.7 }';
+		}
+		
 		intest.innerHTML = result; 
 			}
 		</script>

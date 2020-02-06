@@ -4,11 +4,16 @@
  <meta charset="utf-8">
  </head>
 <body>	
-<input id="crdnt">coordinates </input>
+<input id="crdnt">координаты </input>
+
 <div id="out" style ="white-space:pre; font-family:monospace" > </div> <br/>
-<button onclick="work()"> Press me</button>	
+<div id="out1" style ="white-space:pre; font-family:monospace" > </div> <br/>
+<div id="out2" style ="white-space:pre; font-family:monospace" > </div> <br/>
+<button id="begin" onclick="beginning()"> начать</button>	
+<button id="shoot" onclick="shooting()"> стрелять</button>	
 		<script>
 		let numbers = [0,1,2,3,4,5,6,7,8,9];
+		//let letters = ["a","b","c","d","e","f","g","h","j","k"];
 		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
 		let fld = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
 		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
@@ -35,91 +40,113 @@
 		field();
 		
 		
-		function work()
-		{
+	function beginning()
+	{
 		let inData = document.getElementById("crdnt");
 		let str  = inData.value;
 		let data = str.split (',');
 		let result = "";
 		let lett = ""; 
-		let numm = "";         
-		if (str.trim() === "") 
-		{
-		result = "Нет данных";
-		divOut.innerHTML = result;
-		return;
-		}
+		let numm = "";  
+		let myRequest = new XMLHttpRequest();	
+
+
+		let out1 = document.getElementById("out1");
+		let out2 = document.getElementById("out2");
 
 		
-		if (data.length %2 ==0 )
-	  	{
-			let data_numbers = data.filter( function (item,index) { return index %2!=0;})      // массив с числами
-
-			let data_letters = data.filter( function (item,index) { return index %2==0;})
-
-			let mistake_n = data_numbers.find(function(item, index) {       // ошибочное значение из координат
-				let r = numbers.find(function(n) {return n == item;});
-				return r === undefined;});
-				
-			if (mistake_n != undefined) 
+			if (str.trim() === "") 
 			{
-			result = "Некорректная координата " + mistake_n ;
+			result = "Нет данных";
 			divOut.innerHTML = result;
-			return;
-			}
-
-			let mistake_l = data_letters.find(function(item, index) {       // ошибочное значение из координат
-				let rr = letters.find(function(n) {return n == item;});
-				return rr === undefined;});
-				
-			if (mistake_l != undefined) 
-			{
-			result = "Некорректная координата " + mistake_l ;
-			divOut.innerHTML = result;
-			return;
-			}
-				
-			let ship_l  = data_letters.filter(function(item, index) {   // масссив коррдинат буквы
-				let r = letters.filter(function(n) {return n == item;});
-				return r != undefined;}); 
-				
-			let ship_n  = data_numbers.filter(function(item, index) {   // масссив коррдинат цифры
-				let r = numbers.filter(function(n) {return n == item;});
-				return r != undefined;}); 
 			
-			for  ( let i= 0; i < ship_l.length; i++)
-				{
-				let x = ship_l[i];
-				let index_x = letters.indexOf(x);
-				let y = ship_n[i];
-				fld[index_x][y]= "#"; 			
-				}
-
-		for (let z = 0; z < 10; z++)
-		{
-		result =result + numbers[z];	
-		
-			for (let zz = 0; zz < 10; zz++)
-			{
-			result = result+fld[zz][z];			
 			}
-		result = result + "|"+ "</br>";
-		}
-		for (let symbol = 0; symbol < 10;symbol++ )
+		
+		function handle1()
 		{
-		 lett = lett + letters[symbol];
+			if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+				if (myRequest.status == 200) 
+				{
+				let data = myRequest.responseText;
+				let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
+				if(typeof jsdata.status != "undefined")
+				
+				{
+				out1.innerHTML = jsdata.status;
+				}
+				if (jsdata.id != "")
+				{
+				state = jsdata.id;
+				}
+				else {state = "145";}
+			result = result +"<table  border=2px>"+ "<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+				}
+				else {out1.innerHTML = "mistake";}
+			out2.innerHTML = result;
+			}
 		}
-		
-		
-		divOut.innerHTML = " "+ lett + numm+ "</br>"+ result + " ----------" ;	
-		
-		}
-		else 
-		{
-		result = "Не правильный формат";
-		}
-
+		myRequest.onreadystatechange = handle1;
+		myRequest.open("GET","start?present="+data,true);  // true - aсинхронный запрос
+		myRequest.send(null);		
 	}
+	
+	
+	function shooting()
+	{
+		let inData = document.getElementById("crdnt");
+		let str  = inData.value;
+		let data = str.split (',');
+		let result = "";
+		let lett = ""; 
+		let numm = "";  
+		let myRequest = new XMLHttpRequest();
+		
+		
+		let out1 = document.getElementById("out1");
+		let out2 = document.getElementById("out2");
+		
+			if (str.trim() === "") 
+			{
+			result = "Нет данных";
+			divOut.innerHTML = result;
+			
+			}
+		
+		function handle2()
+		{
+			if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+				if (myRequest.status == 200) 
+				{
+				let data = myRequest.responseText;
+				let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
+				if(typeof jsdata.status != "undefined")
+				
+				{
+				out1.innerHTML = jsdata.status;
+				}
+				if (jsdata.id != "")
+				{
+				state = jsdata.id;
+				}
+				else {state = "145";}
+			result = result +"<table  border=2px>"+ "<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+				}
+				else {out1.innerHTML = "mistake";}
+			out2.innerHTML = result;
+			}
+		}
+		myRequest.onreadystatechange = handle2;
+		myRequest.open("GET","start?present="+data,true);  // true - aсинхронный запрос
+		myRequest.send(null);		
+	}
+		let btn1 = document.getElementById("begin");
+		btn1.addEventListener("click", beginning, false);
+		
+		let btn2 = document.getElementById("shoot");
+		btn2.addEventListener("click", shooting, false);
+		//crdnt.onclick = work;
+
+	
 	</script>
 </body>
 </html>
