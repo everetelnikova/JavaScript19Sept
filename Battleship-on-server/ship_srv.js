@@ -1,4 +1,4 @@
-const http = require('http'); // подключение библиотеки для http
+const http = require('http'); // РїРѕРґРєР»СЋС‡РµРЅРёРµ Р±РёР±Р»РёРѕС‚РµРєРё РґР»СЏ http
 const url = require('url'); 
 const fs = require('fs');
 const start = require('./start');
@@ -7,16 +7,16 @@ const  host = '127.0.0.1';        // ip PC
 const  port = '80';				 // port
 let users = {};
 
-function respond(req,res)		// запускается при получении любого запроса	 
+function respond(req,res)		// Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ РїСЂРё РїРѕР»СѓС‡РµРЅРёРё Р»СЋР±РѕРіРѕ Р·Р°РїСЂРѕСЃР°	 
 {
 const parsed = url.parse(req.url,true);
-const obj = parsed.query;		//  запрос
-const str = parsed.path;		// адрес ресурса(путь к нему) 
+const obj = parsed.query;		//  Р·Р°РїСЂРѕСЃ
+const str = parsed.path;		// Р°РґСЂРµСЃ СЂРµСЃСѓСЂСЃР°(РїСѓС‚СЊ Рє РЅРµРјСѓ) 
 console.log(str);
 console.log(obj);
-let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
-//let letters = ["а","б","в","г","д","е","ж","з","и","к"];// массив возможных букв
-//let letters = ["a","b","c","d","e","f","g","h","j","k"];// массив возможных букв
+let numbers = [0,1,2,3,4,5,6,7,8,9];					//РјР°СЃСЃРёРІ РІРѕР·РјР¶РЅС‹С… С‡РёСЃРµР»
+//let letters = ["Р°","Р±","РІ","Рі","Рґ","Рµ","Р¶","Р·","Рё","Рє"];// РјР°СЃСЃРёРІ РІРѕР·РјРѕР¶РЅС‹С… Р±СѓРєРІ
+//let letters = ["a","b","c","d","e","f","g","h","j","k"];// РјР°СЃСЃРёРІ РІРѕР·РјРѕР¶РЅС‹С… Р±СѓРєРІ
 	if (str == "/favicon.ico")
 	{
 	res.statusCode =400;
@@ -24,49 +24,43 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
 	}
 	else if (str.includes("/start"))
 	{	
-		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
+		let letters = ["Р°","Р±","РІ","Рі","Рґ","Рµ","Р¶","Р·","Рё","Рє"];
 		//let letters = ["a","b","c","d","e","f","g","h","j","k"];
-		res.statusCode =200;			// после любого запроса возвращает статус - все хорошо
-		res.setHeader('Content-type','application/json');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
-		let key_from_user = req.headers.cookie;  // переменная для  получения куки у пользователя который уже работает
-		// Объект со всеми данными одного пользователя
+		res.statusCode =200;			// РїРѕСЃР»Рµ Р»СЋР±РѕРіРѕ Р·Р°РїСЂРѕСЃР° РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚Р°С‚СѓСЃ - РІСЃРµ С…РѕСЂРѕС€Рѕ
+		res.setHeader('Content-type','application/json');  //Р·Р°РіРѕР»РѕРІРѕРє Р·Р°РїСЂРѕСЃР° , РєРѕРЅС‚РµРЅС‚ - РІРѕР·РІСЂР°С‰Р°РµРј РєР°СЂС‚РёРЅРєСѓ, JSon Рё С‚.Рґ.
+		let key_from_user = req.headers.cookie;  // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ  РїРѕР»СѓС‡РµРЅРёСЏ РєСѓРєРё Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєРѕС‚РѕСЂС‹Р№ СѓР¶Рµ СЂР°Р±РѕС‚Р°РµС‚
+		// РћР±СЉРµРєС‚ СЃРѕ РІСЃРµРјРё РґР°РЅРЅС‹РјРё РѕРґРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		user_object = check.cookie_user(users,key_from_user,res);
 		let array_of_shame =obj.present.split(',');
-		console.log(array_of_shame);
 		let check_data_u= [];
 		//let array_of_shame = string_of_pain.split(',');
 		
 		
-		let rslt = start.validate(array_of_shame,letters,numbers) //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
-		console.log(rslt);
-		if (rslt === undefined)  // проверка ошибки пользователя
+		let rslt = start.validate(array_of_shame,letters,numbers) //С„СѓРЅРєС†РёСЏ, РІС‹Р·С‹РІР°РµС‚ С„Р°Р№Р», РіРґРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р»РѕРіРёРєР° РїСЂРѕРІРµСЂРєРё РєРѕСЂР°Р±Р»РµР№ РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		if (rslt === undefined)  // РїСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		{
-		res.statusCode =400;
-		res.end('Ошибка пользователя');
-		}
-		else 
-		{	
-		res.statusCode =200;
-	
-		//переписываю массив пользователя , каждый третий элемент флаг о целости корабля	
+		res.statusCode =200;	
+		//РїРµСЂРµРїРёСЃС‹РІР°СЋ РјР°СЃСЃРёРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ , РєР°Р¶РґС‹Р№ С‚СЂРµС‚РёР№ СЌР»РµРјРµРЅС‚ С„Р»Р°Рі Рѕ С†РµР»РѕСЃС‚Рё РєРѕСЂР°Р±Р»СЏ	
 		for (let i=0,j=0; j < array_of_shame.length; i+=3, j+=2) 
 		{
 		check_data_u[i] = array_of_shame[j]; 
 		check_data_u[i+1] = array_of_shame[j+1];
 		check_data_u[i+2] = "false";
-		console.log(array_of_shame[j]);
-		console.log(array_of_shame[j+1]);
-		console.log(check_data_u);
 		}
-		user_object.arr_user = check_data_u;  //корабли пользователя
-		res.end('Координаты приняты');
+		user_object.arr_user = check_data_u;  //РєРѕСЂР°Р±Р»Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		res.end('РљРѕРѕСЂРґРёРЅР°С‚С‹ РїСЂРёРЅСЏС‚С‹');	
+		}
+		else 
+		{	
+		res.statusCode =400;
+		res.end('РћС€РёР±РєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ');
 		}
 
 		function nextRnd(){
 		return Math.floor(Math.random()*10);}
-/////////////////////////////////////////////Массив кораблей сервера//////////////////
+/////////////////////////////////////////////РњР°СЃСЃРёРІ РєРѕСЂР°Р±Р»РµР№ СЃРµСЂРІРµСЂР°//////////////////
 		let reslt = start.generateFld(numbers, letters, nextRnd) //reslt =check_data_s
-		user_object.arr_server = reslt;  //корабли сервера для конкретного пользователя
+		user_object.arr_server = reslt;  //РєРѕСЂР°Р±Р»Рё СЃРµСЂРІРµСЂР° РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		res.statusCode =200;
 		res.end('OK, GAME STARTED');		
 		console.log(user_object);
@@ -74,48 +68,58 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чисел
 
 
 	 
-	else if (str == "/check")
+	else if (str.includes("/check"))
 	{
-	res.statusCode =200;			// после любого запроса возвращает статус - все хорошо
-	res.setHeader('Content-type','application/json');  //заголовок запроса , контент - возвращаем картинку, JSon 
-	let ship_lttr = obj.x;    // coords-параметр 1 ого корабля - буква
-	let ship_num = obj.y;    // coords-параметр 1 ого корабля - число
-	
-	let rslt_of_strike_user = check.strike_user(letters,numbers,arr_strike) //функция, вызывает файл, где выполняется логика проверки выстрела от пользователя
-		if (rslt_of_strike_user === undefined)  // проверка ошибки пользователя
+	res.statusCode =200;			// РїРѕСЃР»Рµ Р»СЋР±РѕРіРѕ Р·Р°РїСЂРѕСЃР° РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚Р°С‚СѓСЃ - РІСЃРµ С…РѕСЂРѕС€Рѕ
+	res.setHeader('Content-type','application/json');  //Р·Р°РіРѕР»РѕРІРѕРє Р·Р°РїСЂРѕСЃР° , РєРѕРЅС‚РµРЅС‚ - РІРѕР·РІСЂР°С‰Р°РµРј РєР°СЂС‚РёРЅРєСѓ, JSon 
+	let arr_strike = obj.present.split(',');
+	let key_from_user = req.headers.cookie; 
+	let user = users[key_from_user];
+	console.log(user);
+	let array_server = user.arr_server;
+	let letters = ["Р°","Р±","РІ","Рі","Рґ","Рµ","Р¶","Р·","Рё","Рє"];
+	let ship_lttr = arr_strike[0];
+	let ship_num = arr_strike[1];
+	let rslt_of_strike_user = check.strike_user(letters,numbers,arr_strike) //С„СѓРЅРєС†РёСЏ, РІС‹Р·С‹РІР°РµС‚ С„Р°Р№Р», РіРґРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р»РѕРіРёРєР° РїСЂРѕРІРµСЂРєРё РІС‹СЃС‚СЂРµР»Р° РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		if (rslt_of_strike_user === undefined)  // РїСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 		{
-		res.statusCode =400;
-		res.end('Ошибка пользователя');
+			let rslt_hit_strike_user = check.check_strike_user(array_server, ship_lttr, ship_num) //С„СѓРЅРєС†РёСЏ, РІС‹Р·С‹РІР°РµС‚ С„Р°Р№Р», РіРґРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р»РѕРіРёРєР° РїСЂРѕРІРµСЂРєРё РєРѕСЂР°Р±Р»РµР№ РѕС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+			if (rslt_hit_strike_user === undefined)  // РїСЂРѕРІРµСЂРєР° РѕС€РёР±РєРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+			{
+			res.statusCode =400;
+			res.end('РћС€РёР±РєР°');
+			}
+			else 
+			{res.statusCode =200;
+			//res.end(rslt_hit_strike_user);
+				if (rslt_hit_strike_user == 'РџРѕРїР°Р»!')
+				{let victory_user = check.check_victory(array_server)
+					if (victory_user == 'РџРѕР±РµРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ!')
+					{res.end('РџРѕР±РµРґР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ!');}
+					else 
+					{res.end('РРіСЂР° РїСЂРѕРґРѕР»Р¶Р°РµС‚СЃСЏ');}
+				}
+				//else if (rslt_hit_strike_user == 'РџСЂРѕРјР°С…!')
+				
+			}		
 		}
 		else 
 		{	
-		res.statusCode =200;
-		res.end('Координаты приняты');
-		}
-	
-	
-		let rslt_hit_strike_user = check.check_strike_user(array_server, ship_lttr, ship_num) //функция, вызывает файл, где выполняется логика проверки кораблей от пользователя
-		if (rslt_hit_strike_user === undefined)  // проверка ошибки пользователя
-		{
 		res.statusCode =400;
-		res.end('Ошибка');
-		}
-		else 
-		{	
-		res.statusCode =200;
-		res.end('Выстрел принят');
-		}
+		res.end('РћС€РёР±РєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ');}
+
+		
 
 	}
 	else 
-	{res.statusCode =200;	// после любого запроса возвращает статус - все хорошо; если данных нет, подгружаем страницу
-	res.setHeader('Content-type','text/html');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
-	let file = fs.readFileSync("Battleship.html");     //страница, которую возвращает сервер по запросу
+	{res.statusCode =200;	// РїРѕСЃР»Рµ Р»СЋР±РѕРіРѕ Р·Р°РїСЂРѕСЃР° РІРѕР·РІСЂР°С‰Р°РµС‚ СЃС‚Р°С‚СѓСЃ - РІСЃРµ С…РѕСЂРѕС€Рѕ; РµСЃР»Рё РґР°РЅРЅС‹С… РЅРµС‚, РїРѕРґРіСЂСѓР¶Р°РµРј СЃС‚СЂР°РЅРёС†Сѓ
+	res.setHeader('Content-type','text/html');  //Р·Р°РіРѕР»РѕРІРѕРє Р·Р°РїСЂРѕСЃР° , РєРѕРЅС‚РµРЅС‚ - РІРѕР·РІСЂР°С‰Р°РµРј РєР°СЂС‚РёРЅРєСѓ, JSon Рё С‚.Рґ.
+	let file = fs.readFileSync("Battleship.html");     //СЃС‚СЂР°РЅРёС†Р°, РєРѕС‚РѕСЂСѓСЋ РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРµСЂРІРµСЂ РїРѕ Р·Р°РїСЂРѕСЃСѓ
 	res.end(file);
 	}
 }
 const server = http.createServer(respond);
 function onstart(){console.log(`start ${host}:${port}`);}
-server.listen(port,host,onstart);   //гототвы принимать запросы
+server.listen(port,host,onstart);   //РіРѕС‚РѕС‚РІС‹ РїСЂРёРЅРёРјР°С‚СЊ Р·Р°РїСЂРѕСЃС‹
 
 

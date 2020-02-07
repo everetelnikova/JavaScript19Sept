@@ -64,26 +64,18 @@
 		
 		function handle1()
 		{
-			if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+				if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
 				if (myRequest.status == 200) 
 				{
 				let data = myRequest.responseText;
-				let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
-				if(typeof jsdata.status != "undefined")
-				
-				{
-				out1.innerHTML = jsdata.status;
-				}
-				if (jsdata.id != "")
-				{
-				state = jsdata.id;
-				}
-				else {state = "145";}
-			result = result +"<table  border=2px>"+ "<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+				//let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
+				if(data != "undefined")
+				{out1.innerHTML = data;}
 				}
 				else {out1.innerHTML = "mistake";}
 			out2.innerHTML = result;
 			}
+
 		}
 		myRequest.onreadystatechange = handle1;
 		myRequest.open("GET","start?present="+data,true);  // true - aсинхронный запрос
@@ -118,32 +110,23 @@
 				if (myRequest.status == 200) 
 				{
 				let data = myRequest.responseText;
-				let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
-				if(typeof jsdata.status != "undefined")
-				
-				{
-				out1.innerHTML = jsdata.status;
-				}
-				if (jsdata.id != "")
-				{
-				state = jsdata.id;
-				}
-				else {state = "145";}
-			result = result +"<table  border=2px>"+ "<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+				//let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
+				if(data != "undefined")
+				{out1.innerHTML = data;}
 				}
 				else {out1.innerHTML = "mistake";}
 			out2.innerHTML = result;
 			}
 		}
 		myRequest.onreadystatechange = handle2;
-		myRequest.open("GET","start?present="+data,true);  // true - aсинхронный запрос
+		myRequest.open("GET","check?present="+data,true);  // true - aсинхронный запрос
 		myRequest.send(null);		
 	}
-		let btn1 = document.getElementById("begin");
-		btn1.addEventListener("click", beginning, false);
+		//let btn1 = document.getElementById("begin");
+		//btn1.addEventListener("click", beginning, false);
 		
-		let btn2 = document.getElementById("shoot");
-		btn2.addEventListener("click", shooting, false);
+		//let btn2 = document.getElementById("shoot");
+		//btn2.addEventListener("click", shooting, false);
 		//crdnt.onclick = work;
 
 	

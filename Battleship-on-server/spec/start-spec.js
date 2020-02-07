@@ -45,7 +45,7 @@ it("Формирование массива сервера", function()
 	function next(){
 		return rnd[i++];
 	}
-	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0, 'false',
+	expect(start.generateFld(numbers,letters, next)).toEqual([ 'а', 0, 'false',
 	'в', 0,'false',
 	'д', 0,'false',
 	'ж', 0,'false',
@@ -66,7 +66,7 @@ it("Формирование массива сервера c ошибкой в �
 	function next(){
 		return rnd[i++];
 	}
-	expect(start.generateFld(letters,numbers, next)).toEqual([ 'а', 0, 'false',
+	expect(start.generateFld(numbers,letters, next)).toEqual([ 'а', 0, 'false',
 	'д', 0, 'false',
 	'ж', 0,  'false',
 	'и', 0, 'false',
@@ -107,9 +107,11 @@ describe("Проверка  массива сервера", function()
 it("Массив правильный", function()
 {
 	let array = ['в',8,'в',3,'в',5,'к',1,'и',9,'з',5,'б',1,'д',4,'е',2,'а',7];
+	let x_string = "в,8,в,3,в,5,к,1,и,9,з,5,б,1,д,4,е,2,а,7";
+	let arr_x = x_string.split(',');
 	let letter_idx = 2;
 	let number_idx = 8;
-	expect(start.check_adjacent(array, letter_idx, number_idx)).toBe(true);
+	expect(start.check_adjacent(arr_x, letter_idx, number_idx)).toBe(true);
 });	
 });
 describe("уже неОдинокий рейнджер", function()

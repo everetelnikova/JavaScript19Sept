@@ -92,9 +92,26 @@ it(" НЕ Все корабли сервера уничтожены", function()
 	expect(check.check_victory(array_server)).toBe('Игра продолжается');
 });	
 
+//////////////////////////////////////////////
+it("Выстрел попал в корабль Г8", function()
+{
+	let array_server = [
+    'к',     8,       'true',  'е',
+    4,       'true',  'г',     5,
+    'true',  'з',     0,       'true',
+    'г',     8,       'false', 'б',
+    1,       'false', 'г',     3,
+    'false', 'з',     2,       'false',
+    'а',     9,       'false', 'ж',
+    8,       'false', 'б',     7,
+    'false'
+  ];
+	let ship_lttr = 'г';
+	let ship_num = 8;
+	expect(check.check_strike_user(array_server, ship_lttr, ship_num)).toBe('Попал!');
+});	
 
-
-
+//////////////////////////////////////////////
 });	
 
 describe("Проверка правильности координат выстрела сервера", function()

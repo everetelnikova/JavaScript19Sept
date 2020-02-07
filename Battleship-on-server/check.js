@@ -45,17 +45,19 @@ check_strike_user: function(array_server, ship_lttr, ship_num)
 
 
 
-	for (let i = 0; i< array_server.length; i++) //проверяем попали ли в корабли сервера
+	for (let i =index; i< array_server.length; i+=3) //проверяем попали ли в корабли сервера
+	{
+		if (array_server[i] == ship_lttr)
 		{
-			if (array_server[index +1] == ship_num)				// попадание в координату цифру
+			if (array_server[i+1] == ship_num)				// попадание в координату цифру
 			{
-			 array_server[index +2] = "true";				// при попадании переписываем 3 координату в true
+			 array_server[i+2] = "true";				// при попадании переписываем 3 координату в true
 			 hit = 'Попал!';
-
+			 return hit;	
 			}
-			else  
-			{hit = 'Промах!';} 
 		}
+	}
+	hit = 'Промах!'; 
 return hit;		
 },		
 	
@@ -64,10 +66,10 @@ check_victory: function(any_array)
 	let hit;
 	let summ_hits= 0; // количество удачных выстрелов
 	for (let y = 2; y < any_array.length; y+=3)		// цикл проверки по всем ли кораблям попали  не рабо
-			 {
-				 if (any_array[y] == 'true')
+		{
+				if (any_array[y] == 'true')
 				{ summ_hits++;}
-			 }
+		}
 		if (summ_hits== 10)
 		{hit = 'Победа пользователя!';}
 		else {hit = 'Игра продолжается';}
