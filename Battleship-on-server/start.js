@@ -46,7 +46,7 @@ module.exports ={
 	let numbers_ship_index = next();		// рандомный номер индекса цифр
 	let check_data_s = []; 
 
-	while (ship_fld_server.length <= 20)
+	while (ship_fld_server.length <= 18)
 	{
 	let ship_server_letter = letters[letter_ship_index];			// получаем буквенную координату корабля
 

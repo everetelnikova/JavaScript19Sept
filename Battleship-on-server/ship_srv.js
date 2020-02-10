@@ -77,9 +77,12 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чис�
 	let user = users[key_from_user];
 	console.log(user);
 	let array_server = user.arr_server;
+	let array_user = user.arr_user;
 	let letters = ["а","б","в","г","д","е","ж","з","и","к"];
 	let ship_lttr = arr_strike[0];
 	let ship_num = arr_strike[1];
+	function nextRnd(){ // функция для генерации рандомных координат выстрела сервера
+	return Math.floor(Math.random()*10);}
 	let rslt_of_strike_user = check.strike_user(letters,numbers,arr_strike) //функция, вызывает файл, где выполняется логика проверки выстрела от пользователя
 		if (rslt_of_strike_user === undefined)  // проверка ошибки пользователя
 		{
@@ -91,7 +94,6 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чис�
 			}
 			else 
 			{res.statusCode =200;
-			//res.end(rslt_hit_strike_user);
 				if (rslt_hit_strike_user == 'Попал!')
 				{let victory_user = check.check_victory(array_server)
 					if (victory_user == 'Победа пользователя!')
@@ -99,7 +101,17 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чис�
 					else 
 					{res.end('Игра продолжается');}
 				}
-				//else if (rslt_hit_strike_user == 'Промах!')
+				if (rslt_hit_strike_user == 'Промах!')
+				{
+				let strike_server = check.generate_strike_server(letters,numbers,nextRnd)	// вернет массив 2 координаты
+				let ship_lttr_s = strike_server[0];
+				let ship_num_s = strike_server[0];
+				let rslt_hit_strike_server = check.check_strike_server(array_user, ship_lttr_s, ship_num_s) // вернет Попал или Промах сервера
+				if (rslt_hit_strike_server == 'Промах!')
+				{res.end('Промах!,' + strike_server);}
+				if (rslt_hit_strike_server == 'Попал!')
+				{res.end('Попал!' + strike_server);}
+				}
 				
 			}		
 		}
