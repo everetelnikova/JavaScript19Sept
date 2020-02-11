@@ -12,26 +12,26 @@ it("works1", function()
 it("Все кооординаты правильные", function()
 {
 let data = ['а',0];
-	expect(start.validate(data,letters,numbers)).toBe(undefined);
+	start.validate(data,letters,numbers);
 });	
 
 it("Буква должна быть не правильная", function()
 {
 let data = ['я',0];
-let actual = start.validate(data,letters,numbers);
-	expect(actual).toBe("Некорректная координата я");
+	expect(function(){start.validate(data,letters,numbers)}).toThrow(new Error("Некорректная координата я"));
+	
 });
 
 it("Цифра должна быть не правильная", function()
 {
 let data = ['в',12];
-	expect(start.validate(data,letters,numbers)).toBe('Некорректная координата 12');
+	expect(function(){start.validate(data,letters,numbers)}).toThrow(new Error("Некорректная координата 12"));
 });
 
-it("works4", function()
+it("НЕправильный формат", function()
 {
 let data = [5];
-	expect(start.validate(data,letters,numbers)).toBe("Не правильный формат");
+	expect(function(){start.validate(data,letters,numbers)}).toThrow(new Error("неправильный формат"));
 });
 
 });

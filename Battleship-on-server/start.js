@@ -16,8 +16,8 @@ module.exports ={
 				else {return false;}	
 				});
 			if (mistake_n.length > 0) 
-			{result = "Некорректная координата " + mistake_n ;
-			return result;}		
+			{let err = new Error("Некорректная координата " + mistake_n ) // создание исключения
+			throw err;}			
 
 			let mistake_l = data_letters.filter(function(item) 
 			{ let r = letters.filter(function(n)
@@ -29,15 +29,13 @@ module.exports ={
 			}); 				
 			if (mistake_l.length > 0) 
 			{
-			result = "Некорректная координата " + mistake_l ;
-			return result;
+			{let err = new Error("Некорректная координата " + mistake_l) // создание исключения
+			throw err;}	
 			}
 		}
 		else 
-		{
-		result = "Не правильный формат";
-		}
-	return result;
+		{let err = new Error("неправильный формат") // создание исключения
+		throw err;}	
 	},
 	generateFld: function(numbers,letters,next)   // генерация поля массива сервера
 	{

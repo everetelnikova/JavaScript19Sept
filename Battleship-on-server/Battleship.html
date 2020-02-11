@@ -78,14 +78,15 @@
 		function handle1()
 		{
 				if (myRequest.readyState == 4 ){       //4-статус запроса - полностью завершен, есть все данные для работы с ними
+				let data = myRequest.responseText;
 				if (myRequest.status == 200) 
 				{
-				let data = myRequest.responseText;
-				//let jsdata = JSON.parse(data); // преобразует строки содержащую JSON в js объект
-				if(data != "undefined")
-				{out1.innerHTML = data;}
+					
+	
+					if(data != "undefined")
+					{out1.innerHTML = data;}
 				}
-				else {out1.innerHTML = "mistake";}
+				else {out1.innerHTML = data;}
 			out2.innerHTML = result;
 			}
 

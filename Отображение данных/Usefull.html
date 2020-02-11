@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="x" type="range" value="$CX" min=0 max=500 step=5 >X </input>
+<input id="y" type="range" value="$CY" min=0 max=500 step=5>Y </input>
+<input id="r" type="range" value="$R" min=0 max=500 step=5>R </input>
+<select id= "slct"><option> purple </option> <option> green </option> <option> blue </option> </select>
+<svg id ="s"> <circle id="crcl"  cx="$CX" cy="$CY" r="$R" fill="$FILL" /> </svg>
+<script>
+let s = document.getElementById("s");
+let template = s.innerHTML;
+let X = document.getElementById("x");
+let C = document.getElementById("crcl");
+let slct = document.getElementById("slct");
+slct.onchange = function(){
+	let sel = slct.value;
+    let out1 = template.replace("$FILL", sel)
+	let out2 = out1.replace("$CX", X.value)
+	let out3 = out2.replace("$CY", Y.value)
+	let out4 = out3.replace("$R", R.value)
+	s.innerHTML = out4;
+}
+X.onchange= function(){
+	let sel = slct.value;
+    let out1 = template.replace("$FILL", sel)
+	let out2 = out1.replace("$CX", X.value)
+	let out3 = out2.replace("$CY", Y.value)
+	let out4 = out3.replace("$R", R.value)
+	s.innerHTML = out4;
+	}
+	
+let Y = document.getElementById("y");
+Y.onchange= function(){
+	let sel = slct.value;
+    let out1 = template.replace("$FILL", sel)
+	let out2 = out1.replace("$CX", X.value)
+	let out3 = out2.replace("$CY", Y.value)
+	let out4 = out3.replace("$R", R.value)
+	s.innerHTML = out4;
+	}
+	
+let R = document.getElementById("r");
+R.onchange= function(){
+	let sel = slct.value;
+    let out1 = template.replace("$FILL", sel)
+	let out2 = out1.replace("$CX", X.value)
+	let out3 = out2.replace("$CY", Y.value)
+	let out4 = out3.replace("$R", R.value)
+	s.innerHTML = out4;
+	}
+</script>
+</body>
+</html>

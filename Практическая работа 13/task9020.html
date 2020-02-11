@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ </head>
+<body>	
+<input id="data">Данные </input>
+<div id="out" style ="white-space:pre; font-family:monospace" > </div>
+<button id="begin" onclick="beginning()"> начать </button>	
+<script>
+	function beginning(){
+		let inData = document.getElementById("data");
+		let X = parseFloat(inData.value);
+		divOut = document.getElementById ("out");	
+		 
+	function calculation(x)
+	{ 
+	let y;
+	let result;
+	y = 61-x;
+	result = 3* Math.sqrt(y);
+	if ((61-x) < 0){
+	let err = new Error("Подкоренное выражение должно быть неотрицательным") // создание исключения
+	throw err;
+	}
+	return result;
+	}
+ try {	
+	let z =  calculation(X);
+divOut.innerHTML = z;} 
+catch(e){
+divOut.innerHTML = e.message;
+}
+}
+</script>
+</body>
+</html>
