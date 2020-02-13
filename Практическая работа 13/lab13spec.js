@@ -42,3 +42,15 @@ it("С ошибкой ввода", function()
 
 
 });	
+
+
+describe("Домашняя работа", function()
+{
+
+it("Ошибка", function()
+{
+	expect(function(){Task5170(-10)}).toThrow(new Error("Простое число должно быть больше 1"));
+
+});
+
+});

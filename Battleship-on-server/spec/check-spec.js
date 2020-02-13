@@ -74,7 +74,7 @@ it("Все корабли сервера уничтожены", function()
 	'б', 4,'true',
 	'б', 6,'true',
 	'б', 8,'true'];
-	expect(check.check_victory(array_server)).toBe('Победа пользователя!');
+	expect(check.check_victory(array_server)).toBe('Победа!');
 });	
 
 it(" НЕ Все корабли сервера уничтожены", function()  
@@ -140,8 +140,8 @@ it("Выстрел попал в корабль", function()
 	'д', 2, 'false',
 	'ж', 2, 'false', 
 	'и', 2, 'false'];
-	let ship_lttr_s = 'а';
-	let ship_num_s = 8;
+	let ship_lttr_s = 'ж';
+	let ship_num_s = 2;
 	expect(check.check_strike_server(array_user, ship_lttr_s, ship_num_s)).toBe('Попал!');
 });	
 

@@ -70,8 +70,8 @@ check_victory: function(any_array)
 				if (any_array[y] == 'true')
 				{ summ_hits++;}
 		}
-		if (summ_hits== 10)
-		{hit = 'Победа пользователя!';}
+		if (summ_hits == 10)
+		{hit = 'Победа!';}
 		else {hit = 'Игра продолжается';}
 return hit;
 },	
@@ -96,17 +96,19 @@ check_strike_server: function(array_user, ship_lttr_s, ship_num_s)
 	let hit;  // переменная-флаг 
 	let index = array_user.indexOf(ship_lttr_s); //ищем индекс буквы-выстрела в массиве юзера(если она есть)	
 
-	for (let i = 0; i< array_user.length; i++) //проверяем попали ли в корабли сервера
+		for (let i =index; i< array_user.length; i+=3) //проверяем попали ли в корабли сервера
+	{
+		if (array_user[i] == ship_lttr_s)
 		{
-			if (array_user[index +1] == ship_num_s)				// попадание в координату цифру
+			if (array_user[i+1] == ship_num_s)				// попадание в координату цифру
 			{
-			 array_user[index +2] = "true";				// при попадании переписываем 3 координату в true
+			 array_user[i+2] = "true";				// при попадании переписываем 3 координату в true
 			 hit = 'Попал!';
+			 return hit;	
 			}
-			else  
-			{hit = 'Промах!';} 
 		}
-	
+	}
+	hit = 'Промах!'; 
 return hit;
 },
 // Формирует нового пользователя в объекте users и возвращает значение массива кораблей тоже возвращаетмассивесли пользователь уже есть
