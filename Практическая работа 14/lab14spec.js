@@ -57,6 +57,10 @@ it("Работает.Данные верные", function()
 		g:5,
 		hasIntersectionObjects: function(Br,Bg){
 		let result;
+		if ( (A.r > Br) || (A.g > Bg)){
+		let err = new Error("Некорректный интервал. Левая граница должна быть меньше правой.") // создание исключения
+		throw err;
+		}
 		if (Bg>=A.r && A.g<=Br){
 		result = "пересекаются";
 		}
@@ -64,10 +68,7 @@ it("Работает.Данные верные", function()
 		result = "не пересекаются";
 		}
 	
-		if ( (A.r > Br) || (A.g > Bg)){
-		let err = new Error("Некорректный интервал. Левая граница должна быть меньше правой.") // создание исключения
-		throw err;
-		}
+
 		return result;	
 		}
 	}
@@ -82,6 +83,10 @@ let A = {
 		g:103,
 		hasIntersectionObjects: function(Br,Bg){
 		let result;
+				if ( (A.r > Br) || (A.g > Bg)){
+		let err = new Error("Некорректный интервал. Левая граница должна быть меньше правой.") // создание исключения
+		throw err;
+		}
 		if (Bg>=A.r && A.g<=Br){
 		result = "пересекаются";
 		}
@@ -89,10 +94,7 @@ let A = {
 		result = "не пересекаются";
 		}
 	
-		if ( (A.r > Br) || (A.g > Bg)){
-		let err = new Error("Некорректный интервал. Левая граница должна быть меньше правой.") // создание исключения
-		throw err;
-		}
+
 		return result;	
 		}
 	}

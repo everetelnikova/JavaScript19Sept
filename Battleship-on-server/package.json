@@ -1,7 +1,6 @@
 {
   "name": "battleship-on-server",
   "version": "1.0.0",
-  "description": "",
   "main": "ship_srv.js",
   "scripts": {
     "test": "jasmine"
@@ -10,5 +9,11 @@
   "license": "ISC",
   "devDependencies": {
     "jasmine": "^3.5.0"
-  }
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2"
+  },
+  "keywords": [],
+  "description": ""
 }

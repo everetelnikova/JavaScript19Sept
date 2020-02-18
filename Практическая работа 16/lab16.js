@@ -19,11 +19,13 @@
 	
 	class Methods{
 		mixLiquids(LP1,LP2){
-		let vol = LP1.volume + LP2.volume;
-		let temp = (LP1.temperature* LP1.volume + LP2.temperature* LP2.volume)/vol;	
 		if ( (LP1.volume <0) || (LP2.volume <0)){
 		let err = new Error("Объем не должен быть отрицательным") // создание исключения
-		throw err;}		
+		throw err;}
+		
+		let vol = LP1.volume + LP2.volume;
+		let temp = (LP1.temperature* LP1.volume + LP2.temperature* LP2.volume)/vol;	
+	
 		return new LiquidPortion(vol,temp);	
 		}
 		

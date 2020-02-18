@@ -32,7 +32,7 @@ expect(cur.FindResult(a,b).x).toBeCloseTo(10,4);
 expect(cur.FindResult(a,b).y).toBeCloseTo(-86.6025,4);	
 expect(cur.FindResult(a,b).value).toBeCloseTo(100,4);	
 });
-
+                             
 it("Работает. Данные не верные, выбрасывает ошибку", function()
 {
 let a = new Force(5,7,11);
