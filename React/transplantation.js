@@ -31,6 +31,7 @@ var Hello = function (_React$Component) {
 }(React.Component);
 
 ReactDOM.render(React.createElement(Hello, { name: "World" }), document.getElementById('result'));
+
 function work() {
 	var inData1 = document.getElementById("data1");
 	var str1 = inData1.value;

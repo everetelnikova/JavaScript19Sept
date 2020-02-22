@@ -8,6 +8,11 @@ ReactDOM.render(
   <Hello name="World" />,
   document.getElementById('result')
 );
+
+
+
+
+
 	function work()
 	{		
 		let inData1 = document.getElementById("data1");

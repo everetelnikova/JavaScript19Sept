@@ -34,10 +34,10 @@ var Board = function (_React$Component) {
   _createClass(Board, [{
     key: 'handleClick',
     value: function handleClick(i) {
-      var squares = this.state.squares.slice();
       if (calculateWinner(squares) || squares[i]) {
         return;
       }
+      var squares = this.state.squares.slice();
       squares[i] = this.state.xIsNext ? 'X' : 'O';
       this.setState({ squares: squares,
         xIsNext: !this.state.xIsNext });
@@ -101,10 +101,18 @@ var Board = function (_React$Component) {
 var Game = function (_React$Component2) {
   _inherits(Game, _React$Component2);
 
-  function Game() {
+  function Game(props) {
     _classCallCheck(this, Game);
 
-    return _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).apply(this, arguments));
+    var _this3 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+
+    _this3.state = {
+      history: [{
+        squares: Array(9).fill(null)
+      }],
+      xIsNext: true
+    };
+    return _this3;
   }
 
   _createClass(Game, [{
