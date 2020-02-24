@@ -14,7 +14,7 @@ class Task4411 extends React.Component {
 	}	
   render() {
 	let z = <button onClick={this.handleClick}>
-	Активировать лазеры
+	Активировать Фазеры
 	</button>
 //Getdata - обработчик события
 

@@ -28,7 +28,6 @@ var InputButtonList = function (_React$Component) {
 	}, {
 		key: 'handleClick',
 		value: function handleClick() {
-
 			var inputArr = this.state.value.split(',');
 			var OptionArr = [];
 			for (var i = 0; i < inputArr.length; i++) {

@@ -11,7 +11,6 @@ class InputButtonList extends React.Component {
 	}
 
     handleClick(){
-
 	let inputArr = this.state.value.split(',');
 	let OptionArr = [];
 	 for (let i =0; i< inputArr.length;i++){
