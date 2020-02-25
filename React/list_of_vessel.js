@@ -14,7 +14,7 @@ var ListVessels = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (ListVessels.__proto__ || Object.getPrototypeOf(ListVessels)).call(this, props));
 
-		_this.state = { value: '8' };
+		_this.state = { from: '8', current: { 8: 8, 5: 0, 3: 0 }, to: '5' };
 		_this.handleChangeS1 = _this.handleChangeS1.bind(_this);
 		_this.handleChangeS2 = _this.handleChangeS2.bind(_this);
 		_this.handleClick = _this.handleClick.bind(_this);
@@ -24,18 +24,76 @@ var ListVessels = function (_React$Component) {
 	_createClass(ListVessels, [{
 		key: 'handleChangeS1',
 		value: function handleChangeS1(event) {
-			this.setState({ value: event.target.value });
+			var selectedIndex = event.target.options.selectedIndex;
+			this.setState({ from: event.target.options[selectedIndex].getAttribute('data-key') });
+			var x = event.target.options[selectedIndex].getAttribute('data-key');
+			if (x == 8) {
+				this.setState({ to: '5' });
+			} else {
+				this.setState({ to: '8' });
+			}
 		}
 	}, {
 		key: 'handleChangeS2',
 		value: function handleChangeS2(event) {
-			this.setState({ value: event.target.value });
+			var selectedIndex = event.target.options.selectedIndex;
+			this.setState({ to: event.target.options[selectedIndex].getAttribute('data-key') });
 		}
 	}, {
 		key: 'handleClick',
 		value: function handleClick() {
+			var msg = 'Из ' + this.state.from + 'перелить в ' + this.state.to;
+			console.log(msg);
+
+			var value = this.state.current[this.state.to];
+			var FreeSpace = this.state.to - value;
+			var current = this.state.current;
+			var From = this.state.from;
+			var To = this.state.to;
+
+			if (FreeSpace >= 0) {
+				if (FreeSpace < current[From]) {
+					current[From] = current[From] - FreeSpace;
+					current[To] = To;
+					this.setState({ current: current });
+				}
+			}
+
+			value = current[To];
+			FreeSpace = To - value;
+
+			if (FreeSpace >= 0) {
+				if (FreeSpace >= current[From]) {
+					current[To] = current[From] + current[To];
+					current[From] = 0;
+					this.setState({ current: current });
+				}
+			}
+
+			/////////////////////////////////////////////////////////	
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var current1 = [React.createElement(
+				'option',
+				{ key: 8, 'data-key': 8 },
+				'8/',
+				this.state.current[8]
+			), React.createElement(
+				'option',
+				{ key: 5, 'data-key': 5 },
+				'5/',
+				this.state.current[5]
+			), React.createElement(
+				'option',
+				{ key: 3, 'data-key': 3 },
+				'3/',
+				this.state.current[3]
+			)];
+
 			var curr2 = [8, 5, 3];
-			var firstValue = this.state.value;
+			var firstValue = this.state.from;
 			var list = [];
 			var current2 = [];
 			list = curr2.filter(function (val) {
@@ -44,30 +102,12 @@ var ListVessels = function (_React$Component) {
 			for (var i = 0; i < list.length; i++) {
 				current2.push(React.createElement(
 					'option',
-					null,
+					{ key: i, 'data-key': list[i] },
 					' ',
 					list[i],
 					' '
 				));
 			}
-			this.setState({ list2: { current2: current2 } });
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var current1 = [React.createElement(
-				'option',
-				null,
-				'8'
-			), React.createElement(
-				'option',
-				null,
-				'5'
-			), React.createElement(
-				'option',
-				null,
-				'3'
-			)];
 
 			var sel1 = React.createElement(
 				'select',
@@ -77,7 +117,7 @@ var ListVessels = function (_React$Component) {
 			var sel2 = React.createElement(
 				'select',
 				{ onChange: this.handleChangeS2 },
-				this.setState.list2
+				current2
 			);
 			var bttn = React.createElement(
 				'button',
