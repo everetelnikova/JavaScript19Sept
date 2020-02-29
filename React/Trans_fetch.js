@@ -14,7 +14,7 @@ var Transport = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Transport.__proto__ || Object.getPrototypeOf(Transport)).call(this, props));
 
-		_this.state = { stat: '145', choice: '' };
+		_this.state = { stat: '145', choice: '', status: '', error: '', left: '', right: '' };
 		_this.handleChange = _this.handleChange.bind(_this);
 		_this.handleClick = _this.handleClick.bind(_this);
 		_this.fetchData = _this.fetchData.bind(_this);
@@ -31,22 +31,51 @@ var Transport = function (_React$Component) {
 		value: function handleClick() {
 			this.fetchData();
 		}
+
+		// fetchData() {
+		// fetch('boat.php?present='+this.state.stat+"&option="+this.state.choice)
+		// .then(response => response.json())
+		// .then((data) => {console.log("На левом берегу "+ data.left+" На правом берегу "+ data.right)
+		// this.setState({stat: data.id});	
+		// })
+		// }
+
 	}, {
 		key: 'fetchData',
 		value: function fetchData() {
 			var _this2 = this;
 
-			fetch('boat.php?present=' + this.state.stat + "&option=" + this.state.choice).then(function (response) {
-				return response.json();
-			}).then(function (data) {
-				console.log("На левом берегу " + data.left + " На правом берегу " + data.right);
-				_this2.setState({ stat: data.id });
+			var fetchPromise = fetch('boat.php?present=' + this.state.stat + "&option=" + this.state.choice);
+
+			fetchPromise.then(function (response) {
+				if (response.ok) {
+					var jsonPromise = response.json();
+					jsonPromise.then(function (data) {
+						console.log("На левом берегу " + data.left + " На правом берегу " + data.right);
+						_this2.setState({ stat: data.id, status: data.status, left: data.left, right: data.right });
+					}, function (error) {
+						console.log(error);
+					});
+				} else {
+					var PromiseText = response.text();
+					PromiseText.then(function (text) {
+						return _this2.setState({ error: text });
+					});
+				}
+
+				//	(error)=>{console.log(error)}
+
 			});
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-
+			var msg = "";
+			if (this.state.status === undefined) {
+				msg = "На левом берегу " + this.state.left + " на правом берегу " + this.state.right;
+			} else {
+				msg = this.state.status;
+			}
 			var data = React.createElement('input', { onChange: this.handleChange });
 			var bttn = React.createElement(
 				'button',
@@ -57,7 +86,9 @@ var Transport = function (_React$Component) {
 				'div',
 				null,
 				data,
-				bttn
+				bttn,
+				msg,
+				this.state.error
 			);
 		}
 	}]);

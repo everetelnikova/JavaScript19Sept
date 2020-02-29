@@ -9,7 +9,6 @@ let users = {};
 function respond(req,res)		// запускается при получении любого запроса	 
 {
 const parsed = url.parse(req.url,true);
-
 const obj = parsed.query;
 const str = parsed.path;
 if (str == "/favicon.ico")
@@ -18,8 +17,13 @@ res.statusCode =400;
 res.end();
 }
 
-else 
-if (str != "/"){		
+else if(str == "/Trans_fetch.js"){
+res.statusCode =200;	
+res.setHeader('Content-type', 'text/javascript');  
+let file1 = fs.readFileSync("Trans_fetch.js"); 
+res.end(file1);}
+
+else if (str != "/"){		
 res.statusCode =200;			// после любого запроса возвращает статус - все хорошо
 res.setHeader('Content-type','application/json');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.
 let userfromKey = req.headers.cookie;  // переменная для  получения куки у пользователя который уже работает
@@ -43,6 +47,11 @@ console.log('Old user');
 }
 
 console.log(state);
+    const arr = ["goat","cabbage","wolf","peasant"];	
+	if(!arr.includes(obj.option)){
+		res.statusCode =400;
+		res.end ( "It's sooo wrong");
+		return;}
 	if (state == 145) 
 	{ 	if (obj.option == "goat")
 		{
@@ -67,6 +76,7 @@ console.log(state);
 		res.end('{"id":"159","left":["cabbage","wolf","goat"],"right":["peasant"],"status":"massacre"}');
 		state = 159;
 		}
+		
 	}
 	else if (state == 334)
 	{
@@ -226,16 +236,12 @@ console.log(state);
 else {
 res.statusCode =200;	
 res.setHeader('Content-type','text/html');  
-let file = fs.readFileSync("C:/Users/Женька/Desktop/JavaScript19Sept/React/Transport.html"); 
+let file = fs.readFileSync("Transport.html"); 
 res.end(file);
 console.log(str);	
 }	
 	
-if(str == "/Trans_fetch.js"){
-res.statusCode =200;	
-res.setHeader('Content-type', 'text/javascript');  
-let file1 = fs.readFileSync("C:/Users/Женька/Desktop/JavaScript19Sept/React/Trans_fetch.js"); 
-res.end(file1);}	
+	
 
 }
 const server = http.createServer(respond);
