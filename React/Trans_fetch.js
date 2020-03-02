@@ -62,9 +62,6 @@ var Transport = function (_React$Component) {
 						return _this2.setState({ error: text });
 					});
 				}
-
-				//	(error)=>{console.log(error)}
-
 			});
 		}
 	}, {

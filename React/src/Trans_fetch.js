@@ -40,10 +40,6 @@ fetchData() {
 	let PromiseText = response.text();
 	PromiseText.then((text) => this.setState({error: text}))			
 	}
-
-//	(error)=>{console.log(error)}
-	
-
 })
 }
 		 		
