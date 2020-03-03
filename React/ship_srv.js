@@ -4,7 +4,7 @@ const fs = require('fs');
 const start = require('./start');
 const check = require('./check');
 const  host = '127.0.0.1';        // ip PC
-const  port = '80';				 // port
+const  port = '8080';				 // port
 let users = {};
 
 function respond(req,res)		// запускается при получении любого запроса	 

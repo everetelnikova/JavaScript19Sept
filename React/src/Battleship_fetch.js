@@ -1,17 +1,23 @@
 class Battleship extends React.Component {
 	constructor(props){
 	super(props);  
-	this.state={coords:'', numbers:'',letters:'',fld: '', fld_s:'', msg:'', error:'', shoots:''}; 
+	this.state={coords:'', //значения ввденные в input
+	msg:'', 
+	error:'', 
+	shoots:[],
+	shoots_user:[]
+	}; 
 	this.handleChange = this.handleChange.bind(this);
 	this.handleClickBegin =this.handleClickBegin.bind(this);
 	this.handleClickShoot =this.handleClickShoot.bind(this);
 	this.fetchDataBegin = this.fetchDataBegin.bind(this);
 	this.fetchDataShoot = this.fetchDataShoot.bind(this);
+	this.numbers = [0,1,2,3,4,5,6,7,8,9];
+	this.letters = ["а","б","в","г","д","е","ж","з","и","к"];
   }
 
+
 handleChange(event){
-		let numbers = [0,1,2,3,4,5,6,7,8,9];
-		let letters = ["а","б","в","г","д","е","ж","з","и","к"];
 		let fld = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
 		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
 		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
@@ -37,7 +43,7 @@ handleChange(event){
 		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
 		]
 
-	this.setState({coords: event.target.value, numbers: numbers, letters: letters, fld: fld, fld_s: fld_s });
+	this.setState({coords: event.target.value,fld: fld, fld_s: fld_s });
 	}
 
 handleClickBegin(){	
@@ -73,8 +79,28 @@ fetchDataShoot() {
 	fetchPromise.then(
 	(response) => {if (response.ok){
 		let jsonPromise = response.text()		
-		jsonPromise.then((x_data) => {console.log(x_data);		
-		this.setState({shoots: x_data});	
+		jsonPromise.then((x_data) => {
+			let arrData = x_data.split(',');
+			if (arrData.length ==1){
+				this.setState({msg: x_data});
+				let data_shoot_copy = data_shoot.slice();
+				data_shoot_copy.push("попал");
+				let shoots_user_copy = this.state.shoots_user.slice();
+				shoots_user_copy.push(data_shoot_copy)
+				this.setState({shoots_user:shoots_user_copy});				
+			}
+			else{
+				let shoots_copy = this.state.shoots.slice();
+				shoots_copy.push(arrData);			
+				this.setState({shoots:shoots_copy});
+				let shoots_user_copy = data_shoot.slice();
+				shoots_user_copy.push(data_shoot);
+				shoots_user_copy.push("промах");
+				let shoots_user_copy = this.state.shoots_user.slice();
+				shoots_user_copy.push(data_shoot_copy)
+				this.setState({shoots_user:shoots_user_copy});				
+			}
+
 		},
 		(error)=>{console.log(error)}	
 		)	
@@ -90,15 +116,15 @@ render(){
 	
 	let dataStrng = this.state.coords;
 	let data = dataStrng.split(',');
-	let x_dataStrng = this.state.shoots;
-	let x_data = x_dataStrng.split(',');
+	let x_data = this.state.shoots;
 	let fld_s = this.state.fld_s;
 	let fld = this.state.fld;
-	let letters = this.state.letters;
-	let numbers = this.state.numbers;
-	let result = "";
+	let letters = this.letters;
+	let numbers = this.numbers;
+	let field_of_server ="";
+	
 	let result_s = "";
-	if (dataStrng != 0 && x_dataStrng != 0){
+	if (dataStrng != 0 && x_data.length >0){
 	let data_y;
 	let str_y;
 	let lett = ""; 
@@ -117,6 +143,8 @@ render(){
 				
 				
 		if (x_data == 'Игра продолжается' || x_data == 'Победа пользователя!'){
+			let rowOffld = "";
+			let result = [];
 			for  (let i= 0; i < ship_l.length; i++){
 			let x = ship_l[i];
 			let index_x = letters.indexOf(x);
@@ -125,20 +153,30 @@ render(){
 			}
 
 			for (let z = 0; z < 10; z++){
-			result =result + numbers[z];	
+			rowOffld = numbers[z];	
 		
 				for (let zz = 0; zz < 10; zz++){
-				result = result+fld[zz][z];			
+				rowOffld = rowOffld+fld[zz][z];			
 				}
-			result = result + "|"+ "</br>";
+			result.push(<div>
+						{rowOffld}
+					</div>);
 			}
 			for (let symbol = 0; symbol < 10;symbol++ ){
 			lett = lett + letters[symbol];
 			}
-		result =" ПОЛЕ СЕРВЕРА " + "</br>"+" "+ lett + numm+ "</br>"+ result + " ----------" ;	
+		field_of_server =<div>
+					<p>ПОЛЕ СЕРВЕРА</p>
+					<p>{lett}</p>
+					<p>{numm}</p>
+					<p>{result}</p>
+					<p>----------</p>
+				</div>
 		}
 		else 
-		{				
+		{
+			let rowOffld = "";
+			let result = [];
 			for  ( let i= 0; i < ship_l.length; i++){	
 				let x = ship_l[i];
 				let index_x = letters.indexOf(x);
@@ -147,16 +185,24 @@ render(){
 			}
 
 			for (let z = 0; z < 10; z++){
-			result =result + numbers[z];		
+			rowOffld = numbers[z];		
 				for (let zz = 0; zz < 10; zz++){
-				result = result+fld[zz][z];			
+				rowOffld = rowOffld+fld[zz][z];			
 				}
-			result = result + "|"+ "</br>";
+			result.push(<div>
+						{rowOffld}
+					</div>);
 			}
 			for (let symbol = 0; symbol < 10;symbol++ ){
 			lett = lett + letters[symbol];
 			}
-		result =" ПОЛЕ СЕРВЕРА " + "</br>"+" "+ lett + numm+ "</br>"+ result + " ----------" ;	
+		field_of_server=<div>
+					<p>ПОЛЕ СЕРВЕРА</p>
+					<p>{lett}</p>
+					<p>{numm}</p>
+					<p>{result}</p>
+					<p>----------</p>
+				</div>
 		
 
 		str_y  = x_data; 
@@ -210,7 +256,7 @@ render(){
 	let data_coords = <input onChange={this.handleChange}></input>
 	let bttnBegin = <button onClick={this.handleClickBegin}> Начать </button>
 	let bttnShoot = <button onClick={this.handleClickShoot}> Стрелять </button>
-	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{result_s}{result}</div>;		
+	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{result_s}{field_of_server}</div>;		
 	}
 }	
 

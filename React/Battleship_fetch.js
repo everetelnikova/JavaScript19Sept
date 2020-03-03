@@ -14,24 +14,29 @@ var Battleship = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Battleship.__proto__ || Object.getPrototypeOf(Battleship)).call(this, props));
 
-		_this.state = { coords: '', numbers: '', letters: '', fld: '', fld_s: '', msg: '', error: '', shoots: '' };
+		_this.state = { coords: '', //значения ввденные в input
+			msg: '',
+			error: '',
+			shoots: [],
+			shoots_user: []
+		};
 		_this.handleChange = _this.handleChange.bind(_this);
 		_this.handleClickBegin = _this.handleClickBegin.bind(_this);
 		_this.handleClickShoot = _this.handleClickShoot.bind(_this);
 		_this.fetchDataBegin = _this.fetchDataBegin.bind(_this);
 		_this.fetchDataShoot = _this.fetchDataShoot.bind(_this);
+		_this.numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+		_this.letters = ["а", "б", "в", "г", "д", "е", "ж", "з", "и", "к"];
 		return _this;
 	}
 
 	_createClass(Battleship, [{
 		key: 'handleChange',
 		value: function handleChange(event) {
-			var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-			var letters = ["а", "б", "в", "г", "д", "е", "ж", "з", "и", "к"];
 			var fld = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]];
 			var fld_s = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]];
 
-			this.setState({ coords: event.target.value, numbers: numbers, letters: letters, fld: fld, fld_s: fld_s });
+			this.setState({ coords: event.target.value, fld: fld, fld_s: fld_s });
 		}
 	}, {
 		key: 'handleClickBegin',
@@ -78,8 +83,23 @@ var Battleship = function (_React$Component) {
 				if (response.ok) {
 					var jsonPromise = response.text();
 					jsonPromise.then(function (x_data) {
-						console.log(x_data);
-						_this3.setState({ shoots: x_data });
+						var arrData = x_data.split(',');
+						if (arrData.length == 1) {
+							_this3.setState({ msg: x_data });
+							var data_shoot_copy = data_shoot.slice();
+							data_shoot_copy.push("попал");
+							var shoots_user_copy = _this3.state.shoots_user.slice();
+							shoots_user_copy.push(data_shoot_copy);
+							_this3.setState({ shoots_user: shoots_user_copy });
+						} else {
+							var shoots_copy = _this3.state.shoots.slice();
+							shoots_copy.push(arrData);
+							_this3.setState({ shoots: shoots_copy });
+							var _shoots_user_copy = data_shoot.slice();
+							_shoots_user_copy.push(data_shoot);
+							_shoots_user_copy.push("промах");
+							_this3.setState({ shoots_user: _shoots_user_copy });
+						}
 					}, function (error) {
 						console.log(error);
 					});
@@ -97,15 +117,15 @@ var Battleship = function (_React$Component) {
 
 			var dataStrng = this.state.coords;
 			var data = dataStrng.split(',');
-			var x_dataStrng = this.state.shoots;
-			var x_data = x_dataStrng.split(',');
+			var x_data = this.state.shoots;
 			var fld_s = this.state.fld_s;
 			var fld = this.state.fld;
-			var letters = this.state.letters;
-			var numbers = this.state.numbers;
-			var result = "";
+			var letters = this.letters;
+			var numbers = this.numbers;
+			var field_of_server = "";
+
 			var result_s = "";
-			if (dataStrng != 0 && x_dataStrng != 0) {
+			if (dataStrng != 0 && x_data.length > 0) {
 				var data_y = void 0;
 				var str_y = void 0;
 				var lett = "";
@@ -133,6 +153,8 @@ var Battleship = function (_React$Component) {
 				});
 
 				if (x_data == 'Игра продолжается' || x_data == 'Победа пользователя!') {
+					var rowOffld = "";
+					var result = [];
 					for (var i = 0; i < ship_l.length; i++) {
 						var x = ship_l[i];
 						var index_x = letters.indexOf(x);
@@ -141,18 +163,52 @@ var Battleship = function (_React$Component) {
 					}
 
 					for (var z = 0; z < 10; z++) {
-						result = result + numbers[z];
+						rowOffld = numbers[z];
 
 						for (var zz = 0; zz < 10; zz++) {
-							result = result + fld[zz][z];
+							rowOffld = rowOffld + fld[zz][z];
 						}
-						result = result + "|" + "</br>";
+						result.push(React.createElement(
+							'div',
+							null,
+							rowOffld
+						));
 					}
 					for (var symbol = 0; symbol < 10; symbol++) {
 						lett = lett + letters[symbol];
 					}
-					result = " ПОЛЕ СЕРВЕРА " + "</br>" + " " + lett + numm + "</br>" + result + " ----------";
+					field_of_server = React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'p',
+							null,
+							'\u041F\u041E\u041B\u0415 \u0421\u0415\u0420\u0412\u0415\u0420\u0410'
+						),
+						React.createElement(
+							'p',
+							null,
+							lett
+						),
+						React.createElement(
+							'p',
+							null,
+							numm
+						),
+						React.createElement(
+							'p',
+							null,
+							result
+						),
+						React.createElement(
+							'p',
+							null,
+							'----------'
+						)
+					);
 				} else {
+					var _rowOffld = "";
+					var _result = [];
 					for (var _i = 0; _i < ship_l.length; _i++) {
 						var _x = ship_l[_i];
 						var _index_x = letters.indexOf(_x);
@@ -161,16 +217,48 @@ var Battleship = function (_React$Component) {
 					}
 
 					for (var _z = 0; _z < 10; _z++) {
-						result = result + numbers[_z];
+						_rowOffld = numbers[_z];
 						for (var _zz = 0; _zz < 10; _zz++) {
-							result = result + fld[_zz][_z];
+							_rowOffld = _rowOffld + fld[_zz][_z];
 						}
-						result = result + "|" + "</br>";
+						_result.push(React.createElement(
+							'div',
+							null,
+							_rowOffld
+						));
 					}
 					for (var _symbol = 0; _symbol < 10; _symbol++) {
 						lett = lett + letters[_symbol];
 					}
-					result = " ПОЛЕ СЕРВЕРА " + "</br>" + " " + lett + numm + "</br>" + result + " ----------";
+					field_of_server = React.createElement(
+						'div',
+						null,
+						React.createElement(
+							'p',
+							null,
+							'\u041F\u041E\u041B\u0415 \u0421\u0415\u0420\u0412\u0415\u0420\u0410'
+						),
+						React.createElement(
+							'p',
+							null,
+							lett
+						),
+						React.createElement(
+							'p',
+							null,
+							numm
+						),
+						React.createElement(
+							'p',
+							null,
+							_result
+						),
+						React.createElement(
+							'p',
+							null,
+							'----------'
+						)
+					);
 
 					str_y = x_data;
 					if (str_y[0] == 'Промах!') {
@@ -234,7 +322,7 @@ var Battleship = function (_React$Component) {
 				this.state.error,
 				this.state.msg,
 				result_s,
-				result
+				field_of_server
 			);
 		}
 	}]);
