@@ -95,9 +95,10 @@ var Battleship = function (_React$Component) {
 							var shoots_copy = _this3.state.shoots.slice();
 							shoots_copy.push(arrData);
 							_this3.setState({ shoots: shoots_copy });
-							var _shoots_user_copy = data_shoot.slice();
-							_shoots_user_copy.push(data_shoot);
-							_shoots_user_copy.push("промах");
+							var _data_shoot_copy = data_shoot.slice();
+							_data_shoot_copy.push("промах");
+							var _shoots_user_copy = _this3.state.shoots_user.slice();
+							_shoots_user_copy.push(_data_shoot_copy);
 							_this3.setState({ shoots_user: _shoots_user_copy });
 						}
 					}, function (error) {
@@ -115,17 +116,17 @@ var Battleship = function (_React$Component) {
 		key: 'render',
 		value: function render() {
 
-			var dataStrng = this.state.coords;
-			var data = dataStrng.split(',');
+			var data = this.state.shoots_user;
+			//let data = dataStrng.split(',');
 			var x_data = this.state.shoots;
 			var fld_s = this.state.fld_s;
 			var fld = this.state.fld;
 			var letters = this.letters;
 			var numbers = this.numbers;
 			var field_of_server = "";
-
+			var field_of_user = "";
 			var result_s = "";
-			if (dataStrng != 0 && x_data.length > 0) {
+			if (data != 0 && x_data.length > 0) {
 				var data_y = void 0;
 				var str_y = void 0;
 				var lett = "";
@@ -262,24 +263,56 @@ var Battleship = function (_React$Component) {
 
 					str_y = x_data;
 					if (str_y[0] == 'Промах!') {
+						var _rowOffld_u = "";
 						var ship_l_s = str_y[1];
 						var ship_n_s = str_y[2];
 						var index_s = letters.indexOf(ship_l_s);
 						fld_s[index_s][ship_n_s] = "+";
 
 						for (var _z2 = 0; _z2 < 10; _z2++) {
-							result_s = result_s + numbers[_z2];
+							_rowOffld_u = numbers[_z2];
 
 							for (var _zz2 = 0; _zz2 < 10; _zz2++) {
-								result_s = result_s + fld_s[_zz2][_z2];
+								_rowOffld_u = _rowOffld_u + fld_s[_zz2][_z2];
 							}
-							result_s = result_s + "|" + "</br>";
+							result_s.push(React.createElement(
+								'div',
+								null,
+								_rowOffld_u
+							));
 						}
 						for (var _symbol2 = 0; _symbol2 < 10; _symbol2++) {
 							lett_s = lett_s + letters[_symbol2];
 						}
-						result_s = " ПОЛЕ ПОЛЬЗОВАТЕЛЯ " + "</br>" + " " + lett_s + numm_s + "</br>" + result_s + " ----------";
-						console.log(result_s);
+						field_of_user = React.createElement(
+							'div',
+							null,
+							React.createElement(
+								'p',
+								null,
+								'\u041F\u041E\u041B\u0415 \u041F\u041E\u041B\u042C\u0417\u041E\u0412\u0410\u0422\u0415\u041B\u042F'
+							),
+							React.createElement(
+								'p',
+								null,
+								lett_s
+							),
+							React.createElement(
+								'p',
+								null,
+								numm_s
+							),
+							React.createElement(
+								'p',
+								null,
+								result_s
+							),
+							React.createElement(
+								'p',
+								null,
+								'----------'
+							)
+						);
 					} else if (str_y[0] == 'Попал!') {
 						var _ship_l_s = str_y[1];
 						var _ship_n_s = str_y[2];
@@ -287,17 +320,49 @@ var Battleship = function (_React$Component) {
 						fld_s[_index_s][_ship_n_s] = "X";
 
 						for (var _z3 = 0; _z3 < 10; _z3++) {
-							result_s = result_s + numbers[_z3];
+							rowOffld_u = numbers[_z3];
 
 							for (var _zz3 = 0; _zz3 < 10; _zz3++) {
-								result_s = result_s + fld_s[_zz3][_z3];
+								rowOffld_u = rowOffld_u + fld_s[_zz3][_z3];
 							}
-							result_s = result_s + "|" + "</br>";
+							result_s.push(React.createElement(
+								'div',
+								null,
+								rowOffld_u
+							));
 						}
 						for (var _symbol3 = 0; _symbol3 < 10; _symbol3++) {
 							lett_s = lett_s + letters[_symbol3];
 						}
-						result_s = " ПОЛЕ ПОЛЬЗОВАТЕЛЯ " + "</br>" + " " + lett_s + numm_s + "</br>" + result_s + " ----------";
+						field_of_user = React.createElement(
+							'div',
+							null,
+							React.createElement(
+								'p',
+								null,
+								'\u041F\u041E\u041B\u0415 \u041F\u041E\u041B\u042C\u0417\u041E\u0412\u0410\u0422\u0415\u041B\u042F'
+							),
+							React.createElement(
+								'p',
+								null,
+								lett_s
+							),
+							React.createElement(
+								'p',
+								null,
+								numm_s
+							),
+							React.createElement(
+								'p',
+								null,
+								result_s
+							),
+							React.createElement(
+								'p',
+								null,
+								'----------'
+							)
+						);
 					}
 				}
 			}

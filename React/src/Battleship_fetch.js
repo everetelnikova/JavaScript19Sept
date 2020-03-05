@@ -93,9 +93,8 @@ fetchDataShoot() {
 				let shoots_copy = this.state.shoots.slice();
 				shoots_copy.push(arrData);			
 				this.setState({shoots:shoots_copy});
-				let shoots_user_copy = data_shoot.slice();
-				shoots_user_copy.push(data_shoot);
-				shoots_user_copy.push("промах");
+				let data_shoot_copy = data_shoot.slice();
+				data_shoot_copy.push("промах");
 				let shoots_user_copy = this.state.shoots_user.slice();
 				shoots_user_copy.push(data_shoot_copy)
 				this.setState({shoots_user:shoots_user_copy});				
@@ -114,17 +113,17 @@ fetchDataShoot() {
 	
 render(){
 	
-	let dataStrng = this.state.coords;
-	let data = dataStrng.split(',');
+	let data = this.state.shoots_user;
+	//let data = dataStrng.split(',');
 	let x_data = this.state.shoots;
 	let fld_s = this.state.fld_s;
 	let fld = this.state.fld;
 	let letters = this.letters;
 	let numbers = this.numbers;
 	let field_of_server ="";
-	
+	let field_of_user ="";
 	let result_s = "";
-	if (dataStrng != 0 && x_data.length >0){
+	if (data != 0 && x_data.length >0){
 	let data_y;
 	let str_y;
 	let lett = ""; 
@@ -207,6 +206,7 @@ render(){
 
 		str_y  = x_data; 
 		if (str_y[0] == 'Промах!'){
+			let rowOffld_u = "";
 			let ship_l_s  = str_y[1];
 			let ship_n_s  = str_y[2];
 			let index_s = letters.indexOf(ship_l_s);
@@ -214,20 +214,28 @@ render(){
 
 			for (let z = 0; z < 10; z++)
 			{
-			result_s =result_s + numbers[z];	
+			rowOffld_u = numbers[z];	
 		
 		    for (let zz = 0; zz < 10; zz++)
 			{
-			result_s = result_s+fld_s[zz][z];			
+			rowOffld_u = rowOffld_u+fld_s[zz][z];			
 			}
-			result_s = result_s + "|"+ "</br>";
+			result_s.push(<div>
+						{rowOffld_u}
+					</div>);
 			}
 			for (let symbol = 0; symbol < 10;symbol++ )
 			{
 			lett_s = lett_s + letters[symbol];
 			}
-			result_s =" ПОЛЕ ПОЛЬЗОВАТЕЛЯ " + "</br>"+" "+ lett_s + numm_s+ "</br>"+ result_s + " ----------" ;
-			console.log(result_s);}
+			field_of_user =<div>
+					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
+					<p>{lett_s}</p>
+					<p>{numm_s}</p>
+					<p>{result_s}</p>
+					<p>----------</p>
+				</div>
+			}
 			
 		else  if (str_y[0] == 'Попал!')  {
 			let ship_l_s  = str_y[1]; 
@@ -237,19 +245,27 @@ render(){
 
 			for (let z = 0; z < 10; z++)
 			{
-			result_s =result_s + numbers[z];	
+			rowOffld_u = numbers[z];	
 		
 		    for (let zz = 0; zz < 10; zz++)
 			{
-			result_s = result_s+fld_s[zz][z];			
+			rowOffld_u = rowOffld_u+fld_s[zz][z];			
 			}
-			result_s = result_s + "|"+ "</br>";
+			result_s.push(<div>
+						{rowOffld_u}
+					</div>);
 			}
 			for (let symbol = 0; symbol < 10;symbol++ )
 			{
 			lett_s = lett_s + letters[symbol];
 			}
-			result_s =" ПОЛЕ ПОЛЬЗОВАТЕЛЯ " + "</br>"+" "+ lett_s + numm_s+ "</br>"+ result_s + " ----------" ;}		
+			field_of_user =<div>
+					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
+					<p>{lett_s}</p>
+					<p>{numm_s}</p>
+					<p>{result_s}</p>
+					<p>----------</p>
+				</div>}		
 		}			
 	}
 	
