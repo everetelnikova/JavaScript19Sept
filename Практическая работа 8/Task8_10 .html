@@ -5,6 +5,7 @@
  </head>
 <body>	
 <input id="data"> </input>
+<input id="data2"> S</input>
 <div id="out"> </div> <br/>
 <button onclick="work()"> Press me</button>	
 		<script>
@@ -14,7 +15,8 @@
 		var str  = inData.value;
 		var data = str.split (' ');
 		var divOut = document.getElementById ("out");
-		
+		var inS = document.getElementById("data2");
+		var S = inS.value; 
 		if (str.trim() === "") 
 		{
 		divOut.innerHTML = "";
@@ -22,7 +24,7 @@
 			let x;
 			let z;
 			x = data.length;
-			x = x-1;
+			x = x-S;
 			z = data[x];
 			for (y = x; y >= 0; y--)
 			{ 

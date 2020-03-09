@@ -113,25 +113,25 @@ fetchDataShoot() {
 	
 render(){
 	
-	let data = this.state.shoots_user;
-	//let data = dataStrng.split(',');
-	let x_data = this.state.shoots;
+	let arr_data = this.state.shoots_user;
+	let arr_x_data = this.state.shoots;
+	let data = arr_data[arr_data.length - 1];
+	let x_data = arr_x_data[arr_x_data.length - 1];
 	let fld_s = this.state.fld_s;
 	let fld = this.state.fld;
 	let letters = this.letters;
 	let numbers = this.numbers;
 	let field_of_server ="";
 	let field_of_user ="";
-	let result_s = "";
-	if (data != 0 && x_data.length >0){
+	let result_s = [];
+	if (data != undefined && x_data != undefined){
 	let data_y;
 	let str_y;
-	let lett = ""; 
-	let numm = "";  
+	let lett = "";  
 	let lett_s = ""; 
-	let numm_s = "";
 	
-	let data_letters = data.filter( function (item,index) { return index %2==0;})
+	let data_letters_with_state = data.filter( function (item,index) { return index %2==0;});
+	let data_letters = data_letters_with_state.filter( function (item,index) { return index %2==0;});
 	let data_numbers = data.filter( function (item,index) { return index %2!=0;})  
 	let ship_l  = data_letters.filter(function(item, index) {   
 	let r = letters.filter(function(n) {return n == item;});
@@ -141,7 +141,7 @@ render(){
 	return r != undefined;}); 
 				
 				
-		if (x_data == 'Игра продолжается' || x_data == 'Победа пользователя!'){
+		if ((this.state.msg == 'Игра продолжается' || this.state.msg == 'Победа пользователя!') && data[2] == 'попал'){
 			let rowOffld = "";
 			let result = [];
 			for  (let i= 0; i < ship_l.length; i++){
@@ -167,7 +167,6 @@ render(){
 		field_of_server =<div>
 					<p>ПОЛЕ СЕРВЕРА</p>
 					<p>{lett}</p>
-					<p>{numm}</p>
 					<p>{result}</p>
 					<p>----------</p>
 				</div>
@@ -198,7 +197,6 @@ render(){
 		field_of_server=<div>
 					<p>ПОЛЕ СЕРВЕРА</p>
 					<p>{lett}</p>
-					<p>{numm}</p>
 					<p>{result}</p>
 					<p>----------</p>
 				</div>
@@ -231,13 +229,13 @@ render(){
 			field_of_user =<div>
 					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
 					<p>{lett_s}</p>
-					<p>{numm_s}</p>
 					<p>{result_s}</p>
 					<p>----------</p>
 				</div>
 			}
 			
 		else  if (str_y[0] == 'Попал!')  {
+			let rowOffld_u = "";
 			let ship_l_s  = str_y[1]; 
 			let ship_n_s  = str_y[2];
 			let index_s = letters.indexOf(ship_l_s);
@@ -262,7 +260,6 @@ render(){
 			field_of_user =<div>
 					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
 					<p>{lett_s}</p>
-					<p>{numm_s}</p>
 					<p>{result_s}</p>
 					<p>----------</p>
 				</div>}		
@@ -272,7 +269,7 @@ render(){
 	let data_coords = <input onChange={this.handleChange}></input>
 	let bttnBegin = <button onClick={this.handleClickBegin}> Начать </button>
 	let bttnShoot = <button onClick={this.handleClickShoot}> Стрелять </button>
-	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{result_s}{field_of_server}</div>;		
+	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{field_of_user}{field_of_server}</div>;		
 	}
 }	
 

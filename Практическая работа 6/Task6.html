@@ -4,28 +4,51 @@
  <meta charset="utf-8">
  </head>
 <body>	
-<input id="x"> </input>
-
+<input id="x1"> x1</input>
+<input id="y1"> y1</input>
+<input id="h1"> h1</input>
+<input id="w1"> w1</input></br>
+<input id="x2"> x2</input>
+<input id="y2"> y2</input>
+<input id="h2"> h2</input>
+<input id="w2"> w2</input>
 <div id="test"> </div>
-<button onclick="work()"> Press me</button>	
+<button onclick="work()"> Press me </button>	
 		<script>
 		function work(){
-		let inX = document.getElementById("x");
 		let intest = document.getElementById("test");
-		let X = parseFloat(inX.value);
+		let inX1 = document.getElementById("x1");		
+		let X1 = parseFloat(inX1.value);
+		let inY1 = document.getElementById("y1");		
+		let Y1 = parseFloat(inY1.value);
+		let inH1 = document.getElementById("h1");		
+		let H1 = parseFloat(inH1.value);		
+		let inW1 = document.getElementById("w1");		
+		let W1 = parseFloat(inW1.value);
+		let inX2 = document.getElementById("x2");		
+		let X2 = parseFloat(inX2.value);
+		let inY2 = document.getElementById("y2");		
+		let Y2 = parseFloat(inY2.value);
+		let inH2 = document.getElementById("h2");		
+		let H2 = parseFloat(inH2.value);		
+		let inW2 = document.getElementById("w2");		
+		let W2 = parseFloat(inW2.value);
 		result = "  ";
-		if (X == 1)
-		{
-		result = '+------+'+"<br/>"+"|    |"+"<br/>"+"|    |"+"<br/>"+'+------+';
+		if ((H1 <= 0 || H2 <=0)){
+		result = "Высота должна быть положительна";}
+		else{
+		if ((W1 <= 0 || W2 <=0)){
+		result = "Ширина должна быть положительна";}
+		else{
+					if ((X2+W2)>X1){
+						if ((Y1-H2)<Y1){
+						result = "x: " + X1 + " y: " + Y1 + " h: " + (H2-(Y2-Y1)) + " w: " + (W2-(X1-X2))
+						}
+					}	
+			}	
 		}
-		
-	    if (X == 5)
-		{
-		result = '{ "x":15, "y": 28.7 }';
-		}
-		
-		intest.innerHTML = result; 
-			}
+	intest.innerHTML = result;
+	}
 		</script>
 </body>
 </html>

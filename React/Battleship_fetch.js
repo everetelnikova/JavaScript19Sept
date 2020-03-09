@@ -116,25 +116,27 @@ var Battleship = function (_React$Component) {
 		key: 'render',
 		value: function render() {
 
-			var data = this.state.shoots_user;
-			//let data = dataStrng.split(',');
-			var x_data = this.state.shoots;
+			var arr_data = this.state.shoots_user;
+			var arr_x_data = this.state.shoots;
+			var data = arr_data[arr_data.length - 1];
+			var x_data = arr_x_data[arr_x_data.length - 1];
 			var fld_s = this.state.fld_s;
 			var fld = this.state.fld;
 			var letters = this.letters;
 			var numbers = this.numbers;
 			var field_of_server = "";
 			var field_of_user = "";
-			var result_s = "";
-			if (data != 0 && x_data.length > 0) {
+			var result_s = [];
+			if (data != undefined && x_data != undefined) {
 				var data_y = void 0;
 				var str_y = void 0;
 				var lett = "";
-				var numm = "";
 				var lett_s = "";
-				var numm_s = "";
 
-				var data_letters = data.filter(function (item, index) {
+				var data_letters_with_state = data.filter(function (item, index) {
+					return index % 2 == 0;
+				});
+				var data_letters = data_letters_with_state.filter(function (item, index) {
 					return index % 2 == 0;
 				});
 				var data_numbers = data.filter(function (item, index) {
@@ -153,7 +155,7 @@ var Battleship = function (_React$Component) {
 					return r != undefined;
 				});
 
-				if (x_data == 'Игра продолжается' || x_data == 'Победа пользователя!') {
+				if ((this.state.msg == 'Игра продолжается' || this.state.msg == 'Победа пользователя!') && data[2] == 'попал') {
 					var rowOffld = "";
 					var result = [];
 					for (var i = 0; i < ship_l.length; i++) {
@@ -190,11 +192,6 @@ var Battleship = function (_React$Component) {
 							'p',
 							null,
 							lett
-						),
-						React.createElement(
-							'p',
-							null,
-							numm
 						),
 						React.createElement(
 							'p',
@@ -247,11 +244,6 @@ var Battleship = function (_React$Component) {
 						React.createElement(
 							'p',
 							null,
-							numm
-						),
-						React.createElement(
-							'p',
-							null,
 							_result
 						),
 						React.createElement(
@@ -263,22 +255,22 @@ var Battleship = function (_React$Component) {
 
 					str_y = x_data;
 					if (str_y[0] == 'Промах!') {
-						var _rowOffld_u = "";
+						var rowOffld_u = "";
 						var ship_l_s = str_y[1];
 						var ship_n_s = str_y[2];
 						var index_s = letters.indexOf(ship_l_s);
 						fld_s[index_s][ship_n_s] = "+";
 
 						for (var _z2 = 0; _z2 < 10; _z2++) {
-							_rowOffld_u = numbers[_z2];
+							rowOffld_u = numbers[_z2];
 
 							for (var _zz2 = 0; _zz2 < 10; _zz2++) {
-								_rowOffld_u = _rowOffld_u + fld_s[_zz2][_z2];
+								rowOffld_u = rowOffld_u + fld_s[_zz2][_z2];
 							}
 							result_s.push(React.createElement(
 								'div',
 								null,
-								_rowOffld_u
+								rowOffld_u
 							));
 						}
 						for (var _symbol2 = 0; _symbol2 < 10; _symbol2++) {
@@ -300,11 +292,6 @@ var Battleship = function (_React$Component) {
 							React.createElement(
 								'p',
 								null,
-								numm_s
-							),
-							React.createElement(
-								'p',
-								null,
 								result_s
 							),
 							React.createElement(
@@ -314,21 +301,22 @@ var Battleship = function (_React$Component) {
 							)
 						);
 					} else if (str_y[0] == 'Попал!') {
+						var _rowOffld_u = "";
 						var _ship_l_s = str_y[1];
 						var _ship_n_s = str_y[2];
 						var _index_s = letters.indexOf(_ship_l_s);
 						fld_s[_index_s][_ship_n_s] = "X";
 
 						for (var _z3 = 0; _z3 < 10; _z3++) {
-							rowOffld_u = numbers[_z3];
+							_rowOffld_u = numbers[_z3];
 
 							for (var _zz3 = 0; _zz3 < 10; _zz3++) {
-								rowOffld_u = rowOffld_u + fld_s[_zz3][_z3];
+								_rowOffld_u = _rowOffld_u + fld_s[_zz3][_z3];
 							}
 							result_s.push(React.createElement(
 								'div',
 								null,
-								rowOffld_u
+								_rowOffld_u
 							));
 						}
 						for (var _symbol3 = 0; _symbol3 < 10; _symbol3++) {
@@ -346,11 +334,6 @@ var Battleship = function (_React$Component) {
 								'p',
 								null,
 								lett_s
-							),
-							React.createElement(
-								'p',
-								null,
-								numm_s
 							),
 							React.createElement(
 								'p',
@@ -386,7 +369,7 @@ var Battleship = function (_React$Component) {
 				bttnShoot,
 				this.state.error,
 				this.state.msg,
-				result_s,
+				field_of_user,
 				field_of_server
 			);
 		}
