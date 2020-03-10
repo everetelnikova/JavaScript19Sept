@@ -5,45 +5,42 @@ class Battleship extends React.Component {
 	msg:'', 
 	error:'', 
 	shoots:[],
-	shoots_user:[]
+	shoots_user:[],
+	fld: this.fld_init(),
+	fld_s: this.fld_init()
 	}; 
 	this.handleChange = this.handleChange.bind(this);
 	this.handleClickBegin =this.handleClickBegin.bind(this);
 	this.handleClickShoot =this.handleClickShoot.bind(this);
 	this.fetchDataBegin = this.fetchDataBegin.bind(this);
 	this.fetchDataShoot = this.fetchDataShoot.bind(this);
+	this.drawning_flds = this.drawning_flds.bind(this);
 	this.numbers = [0,1,2,3,4,5,6,7,8,9];
 	this.letters = ["а","б","в","г","д","е","ж","з","и","к"];
   }
-
+  
+  
+ fld_init() {
+	let fld = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
+		]
+  return fld;
+ } 
+  
 
 handleChange(event){
-		let fld = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		]
-		let fld_s = [[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		[" "," ", " ", " ", " ", " ", " ", " ", " ", " " ],
-		]
 
-	this.setState({coords: event.target.value,fld: fld, fld_s: fld_s });
+
+	this.setState({coords: event.target.value});
 	}
 
 handleClickBegin(){	
@@ -85,19 +82,20 @@ fetchDataShoot() {
 				this.setState({msg: x_data});
 				let data_shoot_copy = data_shoot.slice();
 				data_shoot_copy.push("попал");
-				let shoots_user_copy = this.state.shoots_user.slice();
-				shoots_user_copy.push(data_shoot_copy)
-				this.setState({shoots_user:shoots_user_copy});				
+				let copy_fld_s = this.state.fld_s.slice();
+				this.drawning_flds(data_shoot_copy, copy_fld_s)				
+				this.setState({fld_s:copy_fld_s});
 			}
-			else{
-				let shoots_copy = this.state.shoots.slice();
-				shoots_copy.push(arrData);			
-				this.setState({shoots:shoots_copy});
+			else{		
+				let copy_fld = this.state.fld.slice();
+				this.drawning_flds(arrData, copy_fld)				
+				this.setState({fld:copy_fld});				
+				
 				let data_shoot_copy = data_shoot.slice();
 				data_shoot_copy.push("промах");
-				let shoots_user_copy = this.state.shoots_user.slice();
-				shoots_user_copy.push(data_shoot_copy)
-				this.setState({shoots_user:shoots_user_copy});				
+				let copy_fld_s = this.state.fld_s.slice();
+				this.drawning_flds(data_shoot_copy, copy_fld_s)				
+				this.setState({fld_s:copy_fld_s});				
 			}
 
 		},
@@ -110,169 +108,96 @@ fetchDataShoot() {
 		}
 	})
 }
+
+drawning_flds(shoot, field){
 	
-render(){
-	
-	let arr_data = this.state.shoots_user;
-	let arr_x_data = this.state.shoots;
-	let data = arr_data[arr_data.length - 1];
-	let x_data = arr_x_data[arr_x_data.length - 1];
-	let fld_s = this.state.fld_s;
-	let fld = this.state.fld;
 	let letters = this.letters;
 	let numbers = this.numbers;
-	let field_of_server ="";
-	let field_of_user ="";
-	let result_s = [];
-	if (data != undefined && x_data != undefined){
 	let data_y;
 	let str_y;
 	let lett = "";  
 	let lett_s = ""; 
-	
-	let data_letters_with_state = data.filter( function (item,index) { return index %2==0;});
-	let data_letters = data_letters_with_state.filter( function (item,index) { return index %2==0;});
-	let data_numbers = data.filter( function (item,index) { return index %2!=0;})  
-	let ship_l  = data_letters.filter(function(item, index) {   
-	let r = letters.filter(function(n) {return n == item;});
-	return r != undefined;});				
-	let ship_n  = data_numbers.filter(function(item, index) {   
-	let r = numbers.filter(function(n) {return n == item;});
-	return r != undefined;}); 
+	let ship_l  = shoot[0];			
+	let ship_n  = shoot[1]; 
 				
 				
-		if ((this.state.msg == 'Игра продолжается' || this.state.msg == 'Победа пользователя!') && data[2] == 'попал'){
+		if (shoot[2] == 'попал'){
 			let rowOffld = "";
 			let result = [];
-			for  (let i= 0; i < ship_l.length; i++){
-			let x = ship_l[i];
+			let x = ship_l;
 			let index_x = letters.indexOf(x);
-			let y = ship_n[i];
-			fld[index_x][y]= "X"; 			
-			}
-
-			for (let z = 0; z < 10; z++){
-			rowOffld = numbers[z];	
-		
-				for (let zz = 0; zz < 10; zz++){
-				rowOffld = rowOffld+fld[zz][z];			
-				}
-			result.push(<div>
-						{rowOffld}
-					</div>);
-			}
-			for (let symbol = 0; symbol < 10;symbol++ ){
-			lett = lett + letters[symbol];
-			}
-		field_of_server =<div>
-					<p>ПОЛЕ СЕРВЕРА</p>
-					<p>{lett}</p>
-					<p>{result}</p>
-					<p>----------</p>
-				</div>
+			let y = ship_n;
+			field[index_x][y]= "X"; 			
+			
 		}
 		else 
 		{
 			let rowOffld = "";
 			let result = [];
-			for  ( let i= 0; i < ship_l.length; i++){	
-				let x = ship_l[i];
-				let index_x = letters.indexOf(x);
-				let y = ship_n[i];
-				fld[index_x][y]= "+"; 			
-			}
+			let x = ship_l;
+			let index_x = letters.indexOf(x);
+			let y = ship_n;
+			field[index_x][y]= "+"; 			
+					
+		}			
+	
+	
+}
 
-			for (let z = 0; z < 10; z++){
-			rowOffld = numbers[z];		
+	
+render(){
+	let rowOffld_u = "";
+	let rowOffld_s = "";
+	result_u = [];
+	result_s = [];
+	let lett_u= "";
+	let lett_s= "";
+	
+	for (let z = 0; z < 10; z++){
+			rowOffld_s = this.numbers[z];	
+		
 				for (let zz = 0; zz < 10; zz++){
-				rowOffld = rowOffld+fld[zz][z];			
+				rowOffld_s = rowOffld_s+this.state.fld_s[zz][z];			
 				}
-			result.push(<div>
-						{rowOffld}
+			result_s.push(<div>
+						{rowOffld_s}
 					</div>);
 			}
 			for (let symbol = 0; symbol < 10;symbol++ ){
-			lett = lett + letters[symbol];
+			lett_s = lett_s + this.letters[symbol];
 			}
-		field_of_server=<div>
+		field_of_server =<div>
 					<p>ПОЛЕ СЕРВЕРА</p>
-					<p>{lett}</p>
-					<p>{result}</p>
-					<p>----------</p>
-				</div>
-		
-
-		str_y  = x_data; 
-		if (str_y[0] == 'Промах!'){
-			let rowOffld_u = "";
-			let ship_l_s  = str_y[1];
-			let ship_n_s  = str_y[2];
-			let index_s = letters.indexOf(ship_l_s);
-			fld_s[index_s][ship_n_s]= "+"; 			
-
-			for (let z = 0; z < 10; z++)
-			{
-			rowOffld_u = numbers[z];	
-		
-		    for (let zz = 0; zz < 10; zz++)
-			{
-			rowOffld_u = rowOffld_u+fld_s[zz][z];			
-			}
-			result_s.push(<div>
-						{rowOffld_u}
-					</div>);
-			}
-			for (let symbol = 0; symbol < 10;symbol++ )
-			{
-			lett_s = lett_s + letters[symbol];
-			}
-			field_of_user =<div>
-					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
 					<p>{lett_s}</p>
 					<p>{result_s}</p>
 					<p>----------</p>
-				</div>
-			}
-			
-		else  if (str_y[0] == 'Попал!')  {
-			let rowOffld_u = "";
-			let ship_l_s  = str_y[1]; 
-			let ship_n_s  = str_y[2];
-			let index_s = letters.indexOf(ship_l_s);
-			fld_s[index_s][ship_n_s]= "X"; 			
-
-			for (let z = 0; z < 10; z++)
-			{
-			rowOffld_u = numbers[z];	
+				</div>	
+				
+	for (let z = 0; z < 10; z++){
+			rowOffld_u = this.numbers[z];	
 		
-		    for (let zz = 0; zz < 10; zz++)
-			{
-			rowOffld_u = rowOffld_u+fld_s[zz][z];			
-			}
-			result_s.push(<div>
+				for (let zz = 0; zz < 10; zz++){
+				rowOffld_u = rowOffld_u + this.state.fld[zz][z];			
+				}
+			result_u.push(<div>
 						{rowOffld_u}
 					</div>);
 			}
-			for (let symbol = 0; symbol < 10;symbol++ )
-			{
-			lett_s = lett_s + letters[symbol];
+			for (let symbol = 0; symbol < 10;symbol++ ){
+			lett_u = lett_u + this.letters[symbol];
 			}
-			field_of_user =<div>
-					<p>ПОЛЕ ПОЛЬЗОВАТЕЛЯ</p>
-					<p>{lett_s}</p>
-					<p>{result_s}</p>
+		field_of_user =<div>
+					<p>ПОЛЕ Пользователя</p>
+					<p>{lett_u}</p>
+					<p>{result_u}</p>
 					<p>----------</p>
-				</div>}		
-		}			
-	}
-	
+				</div>					
 	let data_coords = <input onChange={this.handleChange}></input>
 	let bttnBegin = <button onClick={this.handleClickBegin}> Начать </button>
 	let bttnShoot = <button onClick={this.handleClickShoot}> Стрелять </button>
-	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{field_of_user}{field_of_server}</div>;		
+	return <div>{data_coords}{bttnBegin}{bttnShoot}{this.state.error}{this.state.msg}{field_of_server}{field_of_user}</div>;		
 	}
 }	
-
 ReactDOM.render(
 <Battleship/>,
 document.getElementById('out')

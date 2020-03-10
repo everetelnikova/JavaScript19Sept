@@ -103,7 +103,7 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чис�
 					else 
 					{res.end('Игра продолжается');}
 				}
-				if (rslt_hit_strike_user == 'Промах!')
+				else if (rslt_hit_strike_user == 'Промах!')
 				{	
 					let strike_server = check.generate_strike_server(letters,numbers,nextRnd)	// вернет массив 2 координаты
 					let ship_lttr_s = strike_server[0];
@@ -129,16 +129,18 @@ let numbers = [0,1,2,3,4,5,6,7,8,9];					//массив возмжных чис�
 					}
 					let rslt_hit_strike_server = check.check_strike_server(array_user, ship_lttr_s, ship_num_s) // вернет Попал или Промах сервера
 					if (rslt_hit_strike_server == 'Промах!')
-					{res.end('Промах!,' + strike_server);}
+					{res.end(strike_server +',Промах!');}
 					if (rslt_hit_strike_server == 'Попал!')
 					{
 					let victory_server = check.check_victory(array_user)
 					if (victory_server == 'Победа!')
 					{res.end('Победа сервера!');}
 					else 
-					{res.end('Попал!,' + strike_server);}
+					{res.end(strike_server + ',Попал!');}
 					}
 				}
+				else {res.statusCode =500;
+					  res.end('Всё плохо ');}
 			}		
 		}
 		else 
