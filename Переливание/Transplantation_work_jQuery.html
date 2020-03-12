@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
  <head>
+ <script src= jquery-3.4.1.js> </script>
  <meta charset="utf-8">
  </head>
 <body>
 <p>Дана емкость с 8 литрами жидкости и еще две емкости по 3 и 5 литров. Переливая жидкость между емкостями добиться в одной из них 4 литров жидкости. </p>
-<label> ИЗ <select id="data1" onchange="work()"> <option> 8 </option> <option> 5</option> <option>3 </option> </select> </label>
+<label> ИЗ <select id="data1"> <option> 8 </option> <option> 5</option> <option>3 </option> </select> </label>
 <label> В <select id="data2"><option> 8</option> <option>5 </option> <option>3 </option> </select> </label>
 <div id="out"> </div> <br/>
 <div id="btn_cont"></div>
@@ -15,15 +16,18 @@
 
 	<script>
 	
-	function work()
+	let jQueryElement = $("#data1");
+	let standardElement = document.getElementById("data1");
+	jQueryElement.change(work);
+	function work(e)
 	{		
-		let inData1 = document.getElementById("data1");
+		let inData1 = e.target;
 		let str1  = inData1.value;	
 		var K = Object.keys(current);
 		let K2 = K.filter(val => val != str1);
-		let	sel2 = document.getElementById("data2");
+		let	sel2 = $("#data2");;
 		sel = "<option>" + K2[0] + "</option>" + "<option>" + K2[1] + "</option>";
-		sel2.innerHTML = sel;
+		sel2.html(sel);
 
 	}
 	
@@ -34,13 +38,13 @@
 	
 	function trans()
 	{
-		let inData1 = document.getElementById("data1");
-		let str1  = inData1.value;
+		let inData1 = $("#data1");;
+		let str1  = inData1.val();
 		let From = Number(str1); 						// емкость, из которой выливаем
-		let inData2 = document.getElementById("data2");
-		let str2  = inData2.value;
+		let inData2 = $("#data2");;
+		let str2  = inData2.val();
 		let To = Number(str2);							// емкость, в которую льем
-		let divOut = document.getElementById ("out");
+		let divOut = $("#out");
 		
 		
 		let value = current[To];						// получаем текущее значение, из емкости куда льем          
@@ -72,11 +76,11 @@
 		{
 		result = result + "Успех! Наконец-то!";
 		}
-		divOut.innerHTML = result;
+		divOut.html(result);
 		
 		var K = Object.keys(current);
 		let K3 = K.filter(key => current[key] > 0);          
-		let	sel1 = document.getElementById("data1");
+		let	sel1 = $("#data1");;
 		if (K3.length ==1)
 		{
 		result1 = "<option>" + K3[0] + "</option>";
@@ -91,7 +95,7 @@
 		}
 		
 		
-		sel1.innerHTML = result1;
+		sel1.html(result1);
 		
 		
 		

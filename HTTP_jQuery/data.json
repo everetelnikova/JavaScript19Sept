@@ -1,0 +1,6 @@
+{
+"key" : 3,
+"str" : "value",
+"arr" : [9,3,1],
+"obj" : {"color" : "red"}
+}

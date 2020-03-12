@@ -1,0 +1,14 @@
+$small: 20px;
+$large: 50px;
+ div{color:white} 
+ #bottom {
+ .out1{width:$small; height:$small; background-color:blue}
+ .out3{width:$small*2; height:$small*2; background-color:green}
+ .out4{width:$small*3; height:$small*3; background-color:purple}
+ }
+ 
+ #top {
+ .out1{width:$large; height:$large; background-color:red}
+ .out3{width:$large*2; height:$large*2; background-color:black}
+ .out4{width:$large*3; height:$large*3; background-color:red}
+ }

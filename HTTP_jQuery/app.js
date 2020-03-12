@@ -17,6 +17,14 @@ if (str == "/favicon.ico")
 res.statusCode =400;
 res.end();
 }
+
+else if (str == "/jquery-3.4.1.js"){
+res.statusCode =200;
+res.setHeader('Content-type','text/javascript'); 
+let file1 = fs.readFileSync("jquery-3.4.1.js");     //
+//отослать
+res.end(file1);}
+
 else if (str != "/"){		
 res.statusCode =200;			// после любого запроса возвращает статус - все хорошо
 res.setHeader('Content-type','application/json');  //заголовок запроса , контент - возвращаем картинку, JSon и т.д.

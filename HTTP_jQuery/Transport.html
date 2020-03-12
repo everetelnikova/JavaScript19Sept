@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ <script src= jquery-3.4.1.js> </script>
+ </head>
+<body>	
+<label>Что перевезти <input id="slct">  </input></label>
+
+<div id="out"> </div> <br/>
+<div id="out2"> </div>
+
+
+<button id="btn"> magic</button>		
+		<script>
+		(function init(arg)
+		{
+		let btn = document.getElementById("btn");
+	//	btn.addEventListener("click", trans, false);
+		btn.onclick = trans;
+		let state = "145"; 												// начальное значение, менять если нажали на кнопку в последующие после 1 разы
+		let out = $("#out");
+		let out2 = $("#out2");;
+		let slct = document.getElementById("slct");
+		let result ="<table  border=2px>"+ "<tr>" + "<td width=150>"+ "Слева" +"</td>"  +  "<td width=150>"+"Справа" +"</td>" + "</tr>";
+		let r = "";
+		function trans()
+		{
+		let select = slct.value;
+
+		$.ajax({
+		url: "boat.php?present="+state+"&option="+select
+		}).done(function(data) {
+				let jsdata = data 
+				console.log(jsdata);
+				if(typeof jsdata.status != "undefined")				
+				{
+				out.html(jsdata.status);
+				}
+				if (jsdata.id != "")
+				{
+				state = jsdata.id;
+				}
+				else {state = "900";}
+			r = result +"<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+
+			out2.html(r);
+			
+		})
+		.fail(function() {
+		out.html("mistake");
+		})
+	
+		}
+		})(1);
+		
+		</script>
+</body>
+</html>
