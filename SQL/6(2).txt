@@ -36,3 +36,46 @@ SELECT AVG(speed)
 FROM Product JOIN PC
 ON Product.model = PC.model
 WHERE Product.maker = 'A'
+***********
+19(1)
+SELECT maker, screen
+FROM Product, Laptop
+WHERE Product.model = Laptop.model
+*********************
+25(2)
+SELECT DISTINCT Maker
+FROM Product INNER JOIN PC ON Product.model= PC.model
+WHERE ((type='PC' OR type='Printer') AND 
+(speed = (SELECT MAX(speed)
+FROM PC
+WHERE ram =(SELECT MIN(ram) FROM PC )) )) не прошел по провероной базе
+*********************
+27(2)
+WITH mytable AS(
+SELECT maker,PC.model, Product.type
+FROM Product, PC
+WHERE PC.model = Product.model
+UNION 
+SELECT maker,Printer.model, Product.type
+FROM Product, Printer
+WHERE Printer.model = Product.model
+)
+SELECT DISTINCT Maker, AVG(hd) AS Avg_hd
+FROM mytable INNER JOIN PC ON PC.model= mytable.model
+WHERE mytable.type='Printer' OR  mytable.type='PC'
+GROUP BY Maker
+*************************
+28(1)
+SELECT DISTINCT COUNT(maker) AS Qty_maker
+FROM Product
+GROUP BY maker
+HAVING COUNT(model)= 1 не прошел по провероной базе
+***************************
+29(2)
+SELECT DISTINCT Income_o.point, Income_o.date,
+    IIF(inc IS NULL,N'NULL', CAST(inc AS CHAR(20)))inc,
+    IIF(out IS NULL,N'NULL', CAST(out AS CHAR(20)))out
+    FROM Income_o INNER JOIN Outcome_o
+    ON Income_o.point= Outcome_o.point
+    ORDER BY point
+

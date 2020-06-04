@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8">
+ <link rel="stylesheet" type="text/css" href="slider.css" /> 
+ </head>
+<body>
+<div class="container">
+ <div id="slide">1</div>
+	<div id="slide">2</div>
+	<div id="slide">3</div>
+	<div id="slide">4</div>
+	<div id="slide">5</div>
+	<div id="slide">6</div>
+	<div id="slide">7</div>
+	<div id="slide">8</div>
+	<div id="slide">9</div>
+	<div id="slide">10</div>
+	<a class="prev" onclick="plusSlide(-1)">&#10094</a>
+	<a class="next" onclick="plusSlide(1)">&#10095</a>
+</div>
+<br>
+<div style="text-align: center;">
+	<span class="dot" onclick="currSlide(1)"></span>
+	<span class="dot" onclick="currSlide(2)"></span>
+	<span class="dot" onclick="currSlide(3)"></span>
+	<span class="dot" onclick="currSlide(4)"></span>
+	<span class="dot" onclick="currSlide(5)"></span>
+	<span class="dot" onclick="currSlide(6)"></span>
+	<span class="dot" onclick="currSlide(7)"></span>
+	<span class="dot" onclick="currSlide(8)"></span>
+	<span class="dot" onclick="currSlide(9)"></span>
+	<span class="dot" onclick="currSlide(10)"></span>
+</div>
+<script>
+let slideInx = 1;
+show(slideInx);
+function plusSlide(n){
+show(slideInx+=n);}
+
+function currSlide(n){
+show(slideInx =n);}
+
+function show(n){
+let i;
+let sld= document.getElementsByClassName("slide");
+let dots = document.getElementsByClassName("dot");
+if (n>sld.length){slideInx=1}
+if(n<1){slideInx=sld.length}
+for(let i=0; i< sld.length; i++){
+sld[i].style.display="none";}
+for(let i=0; i< dots.length; i++){
+dots[i].className = dots[i].className.replace("active","")}
+sld[slideInx-1].style.display = "block";
+dots[slideInx-1].className= "active";
+}
+</script>
+</body>	
+</html>

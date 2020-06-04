@@ -21,7 +21,7 @@
 		let out = document.getElementById("out");
 		let out2 = document.getElementById("out2");
 		let slct = document.getElementById("slct");
-		let result ="<table  border=2px>"+ "<tr>" + "<td width=150>"+ "Слева" +"</td>"  +  "<td width=150>"+"Справа" +"</td>" + "</tr>";
+		let result ="<table  border=2px gkhgkh>"+ "<tr>" + "<td width=300px; align="center" >"+ "Слева" +"</td>"  +  "<td width=150>"+"Справа" +"</td>" + "</tr>";
 		let r = "";
 		function trans()
 		{
@@ -46,7 +46,7 @@
 				state = jsdata.id;
 				}
 				else {state = "900";}
-			r = result +"<tr>" + "<td width=150>"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
+			r = result +"<tr>" + "<td width=200 align="center">"+jsdata.left+"</td>" + "<td width=150>"+ jsdata.right+"</td>" + "</tr>" + "<br/>";
 				}
 				else {out.innerHTML = "mistake";}
 			out2.innerHTML = r;

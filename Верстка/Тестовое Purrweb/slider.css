@@ -1,0 +1,35 @@
+.container{
+	max-width:1000px;
+	position:relative;
+	margin:auto;
+}
+.prev, .next{
+	cursor:pointer;
+	position:absolute;
+	top:50%;
+	width:auto;
+	margin-top:-22px;
+	padding:16px;
+	color:white;
+	font-size:18px;
+	border-radius: 0 3px 3px 0;
+}
+.next{
+	right:0;
+	border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover{
+	background-color:#ffffff;
+}
+.dot{
+	cursor:pointer;
+	height:15px;
+	width:15px;
+	margin: 0 2px;
+	background-color:grey;
+	border-radius: 50%;
+	display:inline-block;
+}
+.active, dot:hover{
+	background-color:black;
+}

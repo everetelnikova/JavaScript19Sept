@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<style>
+h2 {
+	float:left;
+	padding-left:20px;
+}
+ul {
+	padding-inline-start:0px;
+	float:right;
+}
+li {
+    display:inline-block;
+	padding:10px 10px 10px 0px;
+}
+li:not(:first-of-type)::before {
+	content:"-";
+	padding:10px 13px 10px 0px;
+	font-size:16px;
+}
+li:not(:first-of-type):hover::before {
+    padding:0px 3px 0px 0px;
+}
+li:hover {
+	font-size:20px;
+	font-weight:bold;
+	padding:0px;
+}
+div {
+	clear:both;
+	padding:20px;
+}
+		</style>
+	</head>
+	<body>
+	<h2>Главная страница</h2>
+	<ul>
+		<li><a href="#">На главную</a></li>
+		<li><a href="#">О нас</a></li>
+		<li><a href="#">Услуги</a></li>
+		<li><a href="#">Портфолио</a></li>
+		<li><a href="#">Контакты</a></li>
+	</ul>
+	<div>
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	
+	</body>
+</html>
