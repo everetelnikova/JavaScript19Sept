@@ -173,6 +173,49 @@ box-shadow: inset 0 0 2px 1px rgba(47,25,70,0.8);
 .icon-bar a:active {
     background-color: red; 
 }
+.menu-list{
+	position:absolute;	
+	width:120px;
+	height:145px;
+	margin: 0 auto;
+	right:2%;
+	margin-right:3%;
+	margin-top:3.5%;
+	text-align:center;
+	text-decoration:none;
+	z-index:1;
+	transition: all 0.5s ease; 
+	border-radius:3px;
+}
+.drop-list{
+	margin: 0 auto;
+	list-style-type: none;
+	padding:0;
+	border-radius:3px;
+
+}
+.drop-list li{	
+ background-color:#81398b;
+ color: white;
+ font-family: "Dosis";
+ padding:2px;
+
+}
+li.drop-line a:link{
+ color: white;
+ font-family: "Dosis";
+ text-decoration:none;
+}
+li.drop-line a:hover{
+ color: white;
+ font-family: "Dosis";
+ text-decoration:underline;
+ background-color:rgba(98, 44, 105, 1);
+}
+
+li.drop-line:hover{
+ background-color:rgba(98, 44, 105, 1);
+}
 
 .row{
 	position:absolute;
@@ -197,7 +240,11 @@ box-shadow: inset 0 0 2px 1px rgba(47,25,70,0.8);
 	color: white;
 	margin-left:25px;
 	margin-right: 25px;
-
+}
+.icon{
+	position: absolute; 
+    margin-top:15%;
+    transform: translate(-50%, -50%)
 }
  .first1:hover, .second1:hover, .third1:hover{
 	opacity:0.5;
@@ -251,9 +298,7 @@ box-shadow: inset 0 0 2px 1px rgba(47,25,70,0.8);
 	font-family: "Dosis";
 	font-weight:bold;
 }
-#heart{
 
-}
 h3{
 	text-align:center;
 	color:#2f1946;
@@ -287,11 +332,12 @@ cite.author{
 .signIn{
 	position:absolute;
 	bottom:0;
-	display: -ms-flexbox; /* IE 10 */
+	display: -moz-flexbox; /* IE 10 */
     display: flex;
-    -ms-flex-wrap: nowrap; /* IE 10 */
+    -moz-flex-wrap: nowrap; /* IE 10 */
     flex-wrap: nowrap;
 	width: 100%;
+	-moz-flex-direction:row;
 	flex-direction:row;
 	flex: 1 1 auto;
 
@@ -301,9 +347,10 @@ cite.author{
 	position:relative;
 	display: -ms-flexbox; /* IE 10 */
     display: flex;
-    -ms-flex-wrap: nowrap; /* IE 10 */
+    -moz-flex-wrap: nowrap; /* IE 10 */
     flex-wrap: nowrap;
 	width: 33.3%;
+	-moz-flex-direction:row;
 	flex-direction:row;
 	flex: 1 1 auto;
 	padding:10px;
@@ -313,10 +360,11 @@ cite.author{
 	position:relative;
 	display: -ms-flexbox; /* IE 10 */
     display: flex;
-    -ms-flex-wrap: nowrap; /* IE 10 */
+    -moz-flex-wrap: nowrap; /* IE 10 */
     flex-wrap: nowrap;
     padding: 0 4px;
 	width: 50%;
+	-moz-flex-direction:column;
 	flex-direction:column;
 	flex: 1 1 auto;
 	padding:10px;
@@ -325,6 +373,7 @@ cite.author{
 .pic{
 	flex: 1 1 auto;	
 	justify-content:center;
+	-moz-flex-direction:column;
 	flex-direction:column;
 	padding:10px;
 	width: 100%;
@@ -367,16 +416,25 @@ input, .submit1, .submit2{
   line-height: 20px;
   font-family: "Dosis";
   font-size:80%;
-
   border-radius:3px;
+  
 }
 input{
  color:#81398b;
+ opacity:0.5;
  border: 1px solid #cccccc;
+ outline:none;
+}
+input:focus{
+ color:#81398b;
+ opacity:1;
+ border: 1px solid #81398b;
+ outline:none;	
+	
 }
  input::-webkit-input-placeholder { color:#81398b; }
  input:-ms-input-placeholder { color: #81398b; }
- input::-ms-input-placeholder { color: #81398b; }
+ input::-moz-input-placeholder { color: #81398b; }
  input::placeholder { color: #81398b; } 
    
 .submit1, .submit2, .choice{
@@ -394,7 +452,7 @@ input{
 	background-color:rgba(39,69,139,1);
 }
 .submit1:active{
-	 box-shadow: inset 0 0 2px 1px rgba(33,57,116,0.8);
+	box-shadow: inset 0 0 2px 1px rgba(33,57,116,0.8);
 }
 .submit2{
 	background-color:#81398b;
@@ -656,6 +714,11 @@ p.text_in_crcl#join{
 	padding:0;
 	margin-right:-5px;
 }
+.form-control:focus
+{
+  outline:none;
+  border: 1px solid #00cfae; 
+}
 input.form-control::placeholder { color: #cccccc; } 
 input.form-control::placeholder { font-family: Arial; } 
 .btn-default{
@@ -686,16 +749,16 @@ ul.list li {
 	font-family: "Dosis";
 
 }
-li a:link{
+li.nav a:link{
 	color:rgba(47,25,70,1);
 	text-decoration: none;
 	transition: all 0.5s ease; 
 }
-li a:hover{
+li.nav a:hover{
 	color:rgba(47,25,70,1);
 	text-decoration: underline;
 }
-li a:visited{
+li.nav a:visited{
 	color:#fe4a5d;
 	text-decoration: none;
 }

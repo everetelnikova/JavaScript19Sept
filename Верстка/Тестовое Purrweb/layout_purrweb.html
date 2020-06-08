@@ -6,6 +6,7 @@
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <link rel="stylesheet" type="text/css" href="layout_purrweb.css" />
  <link rel="stylesheet" href="./flags/flags.css"/> 
+  <script src= jquery-3.4.1.js> </script>
  
  </head>
 <body>
@@ -16,12 +17,41 @@
 		<a href="#"><i class="fa fa-instagram"></i></a>
 		<a href="#"><i class="fa fa-twitter"></i></a>
 	</div>
+	<div class="menu-list">
+		<ul class="drop-list">
+			<li class="drop-line"><a href="1.html">Link1</a></li>
+			<li class="drop-line"><a href="2.html">Link2 </a></li>
+			<li class="drop-line"><a href="3.html">Link3</a></li>
+			<li class="drop-line"><a href="4.html">Link4</a></li>
+			<li class="drop-line"><a href="5.html">Link5</a></li>
+			<li class="drop-line"><a href="6.html">Link6</a></li>
+			<li class="drop-line"><a href="7.html">Link7</a></li>
+		</ul>
+	</div>
 <header class="menu">	
         <div class="opacity"></div>	
 		<div id="menu_btn" onclick="#"> <span class="mn">MENU </span> &nbsp <span class="burger"><i class="fa fa-bars" aria-hidden="true"></i></span><span class="burger2"><i class="fa fa-times" aria-hidden="true"></i></span></div>
 		<div class="logo"></div>		
 		<h2 class="title"> FIND SOMEONE TO CLICK WITH</h2>
+<script>
+let drop = document.querySelector('.menu-list'); 
+let burger = document.querySelector('.burger');
+let burger2 = document.querySelector('.burger2');  
+ $('.burger2').hide()
+ $('.menu-list').hide();
+ $('#menu_btn').click(function(){
+ if(burger2.style.display == 'none'){
+  $('.burger2').show();
+  $('.burger').hide();
+  $('.menu-list').show();}
+ else{
+  $('.burger2').hide();
+  $('.burger').show();
+  $('.menu-list').hide();
+ }
+  });
 
+</script>
 	<div class="round_button">
 		<button class="start_btn_border">
 			<button class="start_btn" onclick="#"> &nbsp Get Started! &#8595 </button>
@@ -29,9 +59,9 @@
 	</div>	
 	
 		<div class="row">
-			<div class="first"><i class="fa fa-globe"></i> </div>
-			<div class="second"><i class="fa fa-heart-o"></i><i class="fa fa-heart"></i> </div>
-			<div class="third"><i class="fa fa-wifi"></i> </div>
+			<div class="first"><img class="icon" src="./images/world.png"></img> </div>
+			<div class="second"><img class="icon" src="./images/hearts.png"></img></div>
+			<div class="third"><img  class="icon" src="./images/wireless.png"></img></div>
 		
 			<div class="first1"> One World </div>
 			<div class="second1"> Two Hearts </div>
@@ -133,13 +163,13 @@
 	
 	<nav>
       <ul class="list">
-        <li><a href="1.html">ABOUT</a></li>
-        <li><a href="2.html">CONTACT </a></li>
-        <li><a href="3.html">FAQs</a></li>
-		<li><a href="4.html">BLOG</a></li>
-		<li><a href="5.html">ONLINE SAFETY</a></li>
-		<li><a href="6.html">PRIVACY POLICY</a></li>
-		<li><a href="7.html">TERMS OF USE</a></li>
+        <li class="nav"><a href="1.html">ABOUT</a></li>
+        <li class="nav"><a href="2.html">CONTACT </a></li>
+        <li class="nav"><a href="3.html">FAQs</a></li>
+		<li class="nav"><a href="4.html">BLOG</a></li>
+		<li class="nav"><a href="5.html">ONLINE SAFETY</a></li>
+		<li class="nav"><a href="6.html">PRIVACY POLICY</a></li>
+		<li class="nav"><a href="7.html">TERMS OF USE</a></li>
       </ul>
 	</nav>	
 
